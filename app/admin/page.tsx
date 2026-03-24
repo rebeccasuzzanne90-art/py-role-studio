@@ -1,7 +1,29 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Eye, ShoppingCart, ToggleLeft } from "lucide-react";
+import { Users, Eye, MessageSquare, ToggleLeft } from "lucide-react";
+import { getDashboardStats, getRecentActivity } from "@/lib/admin";
+import { formatDistanceToNow } from "@/lib/format-time";
 
-export default function AdminDashboard() {
+export const revalidate = 0;
+
+export default async function AdminDashboard() {
+  let stats = {
+    subscriberCount: 0,
+    contactCount: 0,
+    pageViewCount: 0,
+    enabledFlags: 0,
+    totalFlags: 0,
+  };
+  let activity: Awaited<ReturnType<typeof getRecentActivity>> = [];
+
+  try {
+    [stats, activity] = await Promise.all([
+      getDashboardStats(),
+      getRecentActivity(),
+    ]);
+  } catch {
+    // Supabase not configured
+  }
+
   return (
     <>
       <h1 className="mb-8 text-3xl font-bold">Dashboard</h1>
@@ -15,8 +37,9 @@ export default function AdminDashboard() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">1,248</p>
-            <p className="text-xs text-muted-foreground">+23 this week</p>
+            <p className="text-2xl font-bold">
+              {stats.subscriberCount.toLocaleString()}
+            </p>
           </CardContent>
         </Card>
 
@@ -28,21 +51,23 @@ export default function AdminDashboard() {
             <Eye className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">14,302</p>
-            <p className="text-xs text-muted-foreground">Last 30 days</p>
+            <p className="text-2xl font-bold">
+              {stats.pageViewCount.toLocaleString()}
+            </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Orders
+              Contact Messages
             </CardTitle>
-            <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+            <MessageSquare className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">87</p>
-            <p className="text-xs text-muted-foreground">$26,100 revenue</p>
+            <p className="text-2xl font-bold">
+              {stats.contactCount.toLocaleString()}
+            </p>
           </CardContent>
         </Card>
 
@@ -54,59 +79,50 @@ export default function AdminDashboard() {
             <ToggleLeft className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">5 / 6</p>
+            <p className="text-2xl font-bold">
+              {stats.enabledFlags} / {stats.totalFlags}
+            </p>
             <p className="text-xs text-muted-foreground">Features enabled</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Recent activity */}
       <div className="mt-10">
         <h2 className="mb-4 text-xl font-bold">Recent Activity</h2>
-        <div className="space-y-3">
-          {[
-            {
-              action: "New subscriber",
-              detail: "john@acme.com joined the newsletter",
-              time: "2 hours ago",
-            },
-            {
-              action: "Order completed",
-              detail: "HIPAA Compliance Training purchased",
-              time: "5 hours ago",
-            },
-            {
-              action: "Feature toggled",
-              detail: "Dark mode enabled",
-              time: "1 day ago",
-            },
-            {
-              action: "New subscriber",
-              detail: "sarah@healthco.com joined the newsletter",
-              time: "1 day ago",
-            },
-            {
-              action: "Document uploaded",
-              detail: "Q4 Risk Assessment shared with Acme Corp",
-              time: "2 days ago",
-            },
-          ].map((activity, i) => (
-            <div
-              key={i}
-              className="flex items-center justify-between rounded-lg border p-4"
-            >
-              <div>
-                <p className="font-medium">{activity.action}</p>
-                <p className="text-sm text-muted-foreground">
-                  {activity.detail}
-                </p>
+        {stats.subscriberCount === 0 &&
+         stats.contactCount === 0 &&
+         stats.pageViewCount === 0 &&
+         activity.length === 0 && (
+          <div className="border border-dashed p-6 text-center">
+            <p className="font-medium">No data yet</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Connect Supabase to store subscribers, contact submissions, and
+              page views. Or data will appear here as visitors interact with the site.
+            </p>
+          </div>
+        )}
+        {activity.length === 0 && (stats.subscriberCount > 0 || stats.contactCount > 0) ? (
+          <p className="text-sm text-muted-foreground">
+            No recent activity to display.
+          </p>
+        ) : activity.length > 0 ? (
+          <div className="space-y-3">
+            {activity.map((item, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-between border p-4"
+              >
+                <div>
+                  <p className="font-medium">{item.action}</p>
+                  <p className="text-sm text-muted-foreground">{item.detail}</p>
+                </div>
+                <span className="shrink-0 text-xs text-muted-foreground">
+                  {formatDistanceToNow(item.time)}
+                </span>
               </div>
-              <span className="shrink-0 text-xs text-muted-foreground">
-                {activity.time}
-              </span>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : null}
       </div>
     </>
   );

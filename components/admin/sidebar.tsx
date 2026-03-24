@@ -6,15 +6,19 @@ import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
   Users,
+  MessageSquare,
   ToggleLeft,
   BarChart3,
   FileText,
   ArrowLeft,
+  LogOut,
 } from "lucide-react";
+import { logoutAction } from "@/app/admin/auth-actions";
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Subscribers", href: "/admin/subscribers", icon: Users },
+  { label: "Contacts", href: "/admin/contacts", icon: MessageSquare },
   { label: "Feature Flags", href: "/admin/features", icon: ToggleLeft },
   { label: "Analytics", href: "/admin/analytics", icon: BarChart3 },
   { label: "Documents", href: "/admin/documents", icon: FileText },
@@ -36,7 +40,7 @@ export function AdminSidebar() {
           <h2 className="mt-4 text-lg font-bold">Admin</h2>
         </div>
 
-        <nav className="flex flex-col gap-1">
+        <nav className="flex flex-1 flex-col gap-1">
           {NAV_ITEMS.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -58,6 +62,16 @@ export function AdminSidebar() {
             );
           })}
         </nav>
+
+        <form action={logoutAction}>
+          <button
+            type="submit"
+            className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            <LogOut className="h-4 w-4" />
+            Sign Out
+          </button>
+        </form>
       </div>
     </aside>
   );
