@@ -124,7 +124,7 @@ export async function getResourceAssets(
 ): Promise<ResourceItem[]> {
   const client = getClient(preview);
   const res = await client.getAssets({
-    "metadata.tags.sys.id[all]": "resource",
+    "metadata.tags.sys.id[all]": ["resource"],
     order: ["-sys.createdAt"],
     limit: 100,
   });
