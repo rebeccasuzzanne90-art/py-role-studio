@@ -3,7 +3,6 @@ import { draftMode } from "next/headers";
 import { Geist, Geist_Mono, Playfair_Display, DM_Sans } from "next/font/google";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { CrispChat } from "@/components/crisp-chat";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeInjector } from "@/components/theme-injector";
 import { JsonLd } from "@/components/json-ld";
@@ -94,7 +93,6 @@ export default async function RootLayout({
               <Navigation navData={navData} />
               <main className="flex-1">{children}</main>
               <Footer />
-              <CrispChat />
             </TooltipProvider>
           </ThemeProvider>
           {isDraftMode && <DraftModeBanner />}

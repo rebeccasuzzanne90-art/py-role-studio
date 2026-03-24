@@ -27,7 +27,7 @@ const NUMBERS = [
 
 export function ShockingNumbers() {
   return (
-    <section className="bg-primary py-20 text-primary-foreground">
+    <section className="py-20 text-white" style={{ backgroundColor: "#1e3a2a" }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="mb-12 text-center text-3xl font-bold tracking-tight sm:text-4xl">
           The Numbers Are Shocking
@@ -36,10 +36,10 @@ export function ShockingNumbers() {
           {NUMBERS.map((item) => (
             <div key={item.title} className="text-center">
               <p className="text-3xl font-bold sm:text-4xl">{item.stat}</p>
-              <p className="mt-1 text-sm font-semibold uppercase tracking-wider text-primary-foreground/80">
+              <p className="mt-1 text-sm font-semibold uppercase tracking-wider text-white/80">
                 {item.title}
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-primary-foreground/70">
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
                 {item.description}
               </p>
             </div>

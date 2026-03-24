@@ -4,6 +4,7 @@ import type { Entry, Asset, EntrySkeletonType } from "contentful";
 import type { TrustLogoStripFields } from "@/types/contentful";
 import { SectionWrapper } from "@/components/section-wrapper";
 import { TrustLogos } from "@/components/trust-logos";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,6 +29,7 @@ export function TrustLogoStripSection({ entry }: Props) {
       containerWidth="wide"
       className={f.backgroundColor ? "" : "border-y bg-background"}
     >
+      <Eyebrow text={f.eyebrow} className="mb-6 flex items-center justify-center gap-3" />
       <TrustLogos heading={f.heading} logos={logoData} />
     </SectionWrapper>
   );

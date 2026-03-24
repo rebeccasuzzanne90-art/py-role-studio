@@ -6,7 +6,6 @@ import Image from "next/image";
 import { Menu, ChevronDown, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { ThemeToggle } from "@/components/theme-toggle";
 import type { NavData, NavLink } from "@/lib/parse-navigation";
 
 const FALLBACK_LINKS: NavLink[] = [
@@ -36,7 +35,6 @@ const FALLBACK_LINKS: NavLink[] = [
       { label: "Resources", href: "/resources" },
     ],
   },
-  { label: "Shop", href: "/shop" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -53,7 +51,10 @@ export function Navigation({ navData }: NavigationProps) {
   const ctaHref = navData?.ctaHref ?? "/contact";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header
+      className="sticky top-0 z-50 w-full border-b border-white/10 text-white backdrop-blur"
+      style={{ backgroundColor: "rgba(30, 58, 42, 0.95)" }}
+    >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2">
           {navData?.logoUrl ? (
@@ -62,13 +63,13 @@ export function Navigation({ navData }: NavigationProps) {
               alt={navData.logoAlt ?? "VanRein Compliance"}
               width={120}
               height={24}
-              className="h-6 w-auto"
+              className="h-6 w-auto brightness-0 invert"
               priority
             />
           ) : (
             <>
-              <Shield className="h-6 w-6 text-primary" />
-              <span className="text-lg font-bold tracking-tight">VanRein</span>
+              <Shield className="h-6 w-6 text-white" />
+              <span className="text-lg font-bold tracking-tight text-white">VanRein</span>
             </>
           )}
         </Link>
@@ -86,7 +87,7 @@ export function Navigation({ navData }: NavigationProps) {
             >
               <Link
                 href={link.href}
-                className="flex items-center gap-1 rounded-md px-4 py-2 text-base font-medium text-muted-foreground transition-colors hover:text-foreground"
+                className="flex items-center gap-1 rounded-md px-4 py-2 text-base font-medium text-white/80 transition-colors hover:text-white"
                 {...(link.external
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
@@ -96,12 +97,12 @@ export function Navigation({ navData }: NavigationProps) {
               </Link>
 
               {link.children && openDropdown === link.label && (
-                <div className="absolute left-0 top-full z-50 min-w-[240px] rounded-lg border bg-popover p-2 shadow-lg">
+                <div className="absolute left-0 top-full z-50 min-w-[240px] border border-white/10 bg-[#1e3a2a] p-2 shadow-lg">
                   {link.children.map((child) => (
                     <Link
                       key={child.href}
                       href={child.href}
-                      className="block rounded-md px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                      className="block px-4 py-2.5 text-sm text-white/70 transition-colors hover:bg-white/10 hover:text-white"
                       {...(child.external
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
@@ -116,12 +117,6 @@ export function Navigation({ navData }: NavigationProps) {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <ThemeToggle />
-          <Link href="/portal/login">
-            <Button variant="ghost" size="sm">
-              Client Portal
-            </Button>
-          </Link>
           <Link href={ctaHref}>
             <Button size="sm">{ctaLabel}</Button>
           </Link>
@@ -131,7 +126,7 @@ export function Navigation({ navData }: NavigationProps) {
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
           <SheetTrigger
             className="lg:hidden"
-            render={<Button variant="ghost" size="icon" />}
+            render={<Button variant="ghost" size="icon" className="text-white hover:bg-white/10" />}
           >
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle menu</span>
@@ -173,15 +168,6 @@ export function Navigation({ navData }: NavigationProps) {
                 </div>
               ))}
               <div className="mt-4 flex flex-col gap-2 border-t pt-4">
-                <ThemeToggle />
-                <Link
-                  href="/portal/login"
-                  onClick={() => setSheetOpen(false)}
-                >
-                  <Button variant="outline" className="w-full">
-                    Client Portal
-                  </Button>
-                </Link>
                 <Link href={ctaHref} onClick={() => setSheetOpen(false)}>
                   <Button className="w-full">{ctaLabel}</Button>
                 </Link>

@@ -63,9 +63,9 @@ export function NewsletterForm({
 
   return (
     <div className="mx-auto max-w-xl text-center">
-      <h2 className="text-2xl font-bold sm:text-3xl">{heading}</h2>
+      <h2 className="text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">{heading}</h2>
       {description && (
-        <p className="mt-2 text-muted-foreground">{description}</p>
+        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{description}</p>
       )}
       <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row">
         <Input

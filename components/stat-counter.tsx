@@ -35,12 +35,12 @@ export function StatCounter({ value, label, prefix, suffix }: StatCounterProps) 
 
   return (
     <div ref={ref} className="text-center">
-      <div className="text-3xl font-bold text-primary-foreground sm:text-4xl">
+      <div className="text-3xl font-bold sm:text-4xl">
         {prefix}
         {display.toLocaleString()}
         {suffix}
       </div>
-      <p className="mt-2 text-sm text-primary-foreground/70">{label}</p>
+      <p className="mt-2 text-sm opacity-70">{label}</p>
     </div>
   );
 }

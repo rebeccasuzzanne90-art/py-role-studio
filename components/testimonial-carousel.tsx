@@ -68,11 +68,11 @@ export function TestimonialCarousel({
   return (
     <div>
       <div className="mb-12 text-center">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h2 className="text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">
           {heading}
         </h2>
         {subheading && (
-          <p className="mt-4 text-lg text-muted-foreground">{subheading}</p>
+          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{subheading}</p>
         )}
       </div>
 

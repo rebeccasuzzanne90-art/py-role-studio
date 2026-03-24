@@ -4,6 +4,7 @@ import type { Entry, EntrySkeletonType } from "contentful";
 import type { StatsSectionFields, StatItemFields } from "@/types/contentful";
 import { SectionWrapper } from "@/components/section-wrapper";
 import { StatCounter } from "@/components/stat-counter";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,8 +23,9 @@ export function StatsSection({ entry }: Props) {
       containerWidth={f.containerWidth}
       className={f.backgroundColor ? "" : "bg-primary text-primary-foreground"}
     >
+      <Eyebrow text={f.eyebrow} className="mb-6 flex items-center justify-center gap-3" />
       {f.heading && (
-        <h2 className="mb-12 text-center text-3xl font-bold tracking-tight sm:text-4xl">
+        <h2 className="mb-12 text-center text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">
           {f.heading}
         </h2>
       )}

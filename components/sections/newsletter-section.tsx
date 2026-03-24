@@ -2,6 +2,7 @@ import type { Entry, EntrySkeletonType } from "contentful";
 import type { NewsletterSectionFields } from "@/types/contentful";
 import { SectionWrapper } from "@/components/section-wrapper";
 import { NewsletterForm } from "@/components/newsletter-form";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,6 +17,7 @@ export function NewsletterSection({ entry }: Props) {
       backgroundColor={f.backgroundColor}
       paddingSize={f.paddingSize}
     >
+      <Eyebrow text={f.eyebrow} className="mb-6 flex items-center justify-center gap-3" />
       <NewsletterForm
         heading={f.heading}
         description={f.description}

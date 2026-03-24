@@ -13,12 +13,12 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <section className="bg-primary py-20 text-primary-foreground">
+      <section className="py-20 text-white" style={{ backgroundColor: "#1e3a2a" }}>
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Our Services
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-primary-foreground/80">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">
             We&apos;re not just a platform that runs an audit and gives you a
             to-do list — we provide one-on-one support with the entire data
             security suite.

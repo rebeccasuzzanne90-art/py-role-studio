@@ -41,6 +41,7 @@ export interface FaqItemSkeleton extends EntrySkeletonType {
 
 export interface FaqSectionFields extends SectionStyleFields {
   internalName: string;
+  eyebrow?: string;
   heading?: string;
   subheading?: string;
   items: Entry<FaqItemSkeleton>[];
@@ -171,6 +172,7 @@ export interface FeatureCardSkeleton extends EntrySkeletonType {
 // ─── Duplex / Triplex ───────────────────────────────────────────────
 export interface DuplexFields {
   internalName: string;
+  eyebrow?: string;
   heading?: string;
   items: Entry<FeatureCardSkeleton>[];
 }
@@ -182,6 +184,7 @@ export interface DuplexSkeleton extends EntrySkeletonType {
 
 export interface TriplexFields {
   internalName: string;
+  eyebrow?: string;
   heading?: string;
   items: Entry<FeatureCardSkeleton>[];
 }
@@ -207,6 +210,7 @@ export interface StatItemSkeleton extends EntrySkeletonType {
 
 export interface StatsSectionFields extends SectionStyleFields {
   internalName: string;
+  eyebrow?: string;
   heading?: string;
   stats: Entry<StatItemSkeleton>[];
 }
@@ -235,6 +239,7 @@ export interface TestimonialSkeleton extends EntrySkeletonType {
 
 export interface TestimonialSectionFields extends SectionStyleFields {
   internalName: string;
+  eyebrow?: string;
   heading?: string;
   subheading?: string;
   testimonials: Entry<TestimonialSkeleton>[];
@@ -248,6 +253,7 @@ export interface TestimonialSectionSkeleton extends EntrySkeletonType {
 // ─── Trust Logo Strip ───────────────────────────────────────────────
 export interface TrustLogoStripFields {
   internalName: string;
+  eyebrow?: string;
   heading?: string;
   logos: Asset[];
   backgroundColor?: string;
@@ -264,6 +270,8 @@ export interface ServiceFields {
   internalName: string;
   title: string;
   slug: string;
+  category?: string;
+  tagline?: string;
   iconName?: string;
   shortDescription: string;
   body?: unknown;
@@ -279,10 +287,12 @@ export interface ServiceSkeleton extends EntrySkeletonType {
 
 export interface ServicesSectionFields extends SectionStyleFields {
   internalName: string;
+  eyebrow?: string;
   heading?: string;
   subheading?: string;
   services: Entry<ServiceSkeleton>[];
   columns?: "2" | "3" | "4";
+  displayMode?: "grid" | "cards";
 }
 
 export interface ServicesSectionSkeleton extends EntrySkeletonType {
@@ -293,6 +303,7 @@ export interface ServicesSectionSkeleton extends EntrySkeletonType {
 // ─── Text Block ─────────────────────────────────────────────────────
 export interface TextBlockFields extends SectionStyleFields {
   internalName: string;
+  eyebrow?: string;
   heading?: string;
   subheading?: string;
   body?: unknown;
@@ -310,6 +321,7 @@ export interface TextBlockSkeleton extends EntrySkeletonType {
 // ─── Newsletter Section ─────────────────────────────────────────────
 export interface NewsletterSectionFields {
   internalName: string;
+  eyebrow?: string;
   heading?: string;
   description?: string;
   buttonLabel?: string;
@@ -354,6 +366,29 @@ export interface ArticleSliderSkeleton extends EntrySkeletonType {
   fields: ArticleSliderFields;
 }
 
+// ─── Accordion Section ──────────────────────────────────────────────
+export interface AccordionSectionFields {
+  internalName: string;
+  eyebrow?: string;
+  heading?: string;
+  subheading?: string;
+  quote?: string;
+  items: Entry<FaqItemSkeleton>[];
+  ctas?: Entry<CtaSkeleton>[];
+  layout?: "split" | "stacked";
+  displayMode?: "accordion" | "numberedList";
+  showWaveDivider?: boolean;
+  backgroundColor?: string;
+  textColor?: string;
+  accentColor?: string;
+  paddingSize?: "small" | "medium" | "large";
+}
+
+export interface AccordionSectionSkeleton extends EntrySkeletonType {
+  contentTypeId: "accordionSection";
+  fields: AccordionSectionFields;
+}
+
 // ─── Page ───────────────────────────────────────────────────────────
 export type SectionEntry =
   | Entry<DuplexSkeleton>
@@ -366,7 +401,8 @@ export type SectionEntry =
   | Entry<ServicesSectionSkeleton>
   | Entry<TextBlockSkeleton>
   | Entry<NewsletterSectionSkeleton>
-  | Entry<FaqSectionSkeleton>;
+  | Entry<FaqSectionSkeleton>
+  | Entry<AccordionSectionSkeleton>;
 
 export interface PageFields {
   internalName: string;

@@ -221,11 +221,11 @@ export default async function ServiceDetailPage({
             { name: f.title, path: `/services/${slug}` },
           ])}
         />
-        <section className="bg-primary py-20 text-primary-foreground">
+        <section className="py-20 text-white" style={{ backgroundColor: "#1e3a2a" }}>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Link
               href="/services"
-              className="mb-6 inline-flex items-center gap-1 text-sm text-primary-foreground/70 hover:text-primary-foreground"
+              className="mb-6 inline-flex items-center gap-1 text-sm text-white/70 hover:text-white"
             >
               <ArrowLeft className="h-3.5 w-3.5" /> All Services
             </Link>
@@ -233,7 +233,7 @@ export default async function ServiceDetailPage({
               {f.title}
             </h1>
             {f.shortDescription && (
-              <p className="mt-4 max-w-2xl text-lg text-primary-foreground/80">
+              <p className="mt-4 max-w-2xl text-lg text-white/80">
                 {f.shortDescription}
               </p>
             )}
@@ -300,11 +300,11 @@ export default async function ServiceDetailPage({
           { name: service.title, path: `/services/${slug}` },
         ])}
       />
-      <section className="bg-primary py-20 text-primary-foreground">
+      <section className="py-20 text-white" style={{ backgroundColor: "#1e3a2a" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Link
             href="/services"
-            className="mb-6 inline-flex items-center gap-1 text-sm text-primary-foreground/70 hover:text-primary-foreground"
+            className="mb-6 inline-flex items-center gap-1 text-sm text-white/70 hover:text-white"
           >
             <ArrowLeft className="h-3.5 w-3.5" /> All Services
           </Link>

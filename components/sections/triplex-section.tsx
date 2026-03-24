@@ -4,6 +4,7 @@ import { SectionWrapper } from "@/components/section-wrapper";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,6 +17,7 @@ export function TriplexSection({ entry }: Props) {
 
   return (
     <SectionWrapper>
+      <Eyebrow text={f.eyebrow} className="mb-6 flex items-center justify-center gap-3" />
       {f.heading && (
         <h2 className="mb-12 text-center text-3xl font-bold tracking-tight sm:text-4xl">
           {f.heading}

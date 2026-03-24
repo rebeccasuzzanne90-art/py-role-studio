@@ -11,6 +11,7 @@ import { TriplexSection } from "@/components/sections/triplex-section";
 import { ArticleSliderSection } from "@/components/sections/article-slider-section";
 import { CtaSection } from "@/components/sections/cta-section";
 import { FaqSectionBlock } from "@/components/sections/faq-section-block";
+import { AccordionSectionBlock } from "@/components/sections/accordion-section";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyEntry = Entry<EntrySkeletonType, any, any>;
@@ -27,6 +28,7 @@ const MODULE_MAP: Record<string, React.ComponentType<{ entry: AnyEntry }>> = {
   articleSlider: ArticleSliderSection,
   cta: CtaSection,
   faqSection: FaqSectionBlock,
+  accordionSection: AccordionSectionBlock,
 };
 
 interface ModuleRendererProps {

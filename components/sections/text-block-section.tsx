@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,6 +46,7 @@ export function TextBlockSection({ entry }: Props) {
         )}
       >
         <div className={cn(align, "py-4")}>
+          <Eyebrow text={f.eyebrow} />
           {f.heading && (
             <h2
               className={cn(
@@ -93,7 +95,7 @@ export function TextBlockSection({ entry }: Props) {
                       variant={cf.variant === "primary" ? "default" : "outline"}
                       size="lg"
                       className={cn(
-                        "rounded-full px-8",
+                        "px-8",
                         hasDarkBg &&
                           cf.variant !== "primary" &&
                           "border-white/30 text-white hover:bg-white/10"

@@ -12,12 +12,12 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <>
-      <section className="bg-primary py-20 text-primary-foreground">
+      <section className="py-20 text-white" style={{ backgroundColor: "#1e3a2a" }}>
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Frequently Asked Questions
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-primary-foreground/80">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">
             Find answers to common questions about compliance and our services
           </p>
         </div>

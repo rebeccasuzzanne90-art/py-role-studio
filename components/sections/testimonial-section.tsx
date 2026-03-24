@@ -7,6 +7,7 @@ import type {
 } from "@/types/contentful";
 import { SectionWrapper } from "@/components/section-wrapper";
 import { TestimonialCarousel } from "@/components/testimonial-carousel";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,6 +37,7 @@ export function TestimonialSection({ entry }: Props) {
       containerWidth={f.containerWidth}
       className={f.backgroundColor ? "" : "bg-muted/30"}
     >
+      <Eyebrow text={f.eyebrow} className="mb-6 flex items-center justify-center gap-3" />
       <TestimonialCarousel
         heading={f.heading}
         subheading={f.subheading}

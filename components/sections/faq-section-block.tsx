@@ -11,6 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function FaqSectionBlock({ entry }: { entry: Entry<EntrySkeletonType, any, any> }) {
@@ -39,13 +40,14 @@ export function FaqSectionBlock({ entry }: { entry: Entry<EntrySkeletonType, any
     >
       <JsonLd data={faqJsonLd(faqData)} />
 
+      <Eyebrow text={f.eyebrow} className="mb-6 flex items-center justify-center gap-3" />
       {f.heading && (
-        <h2 className="text-3xl font-bold tracking-tight text-center sm:text-4xl">
+        <h2 className="text-3xl font-normal leading-tight tracking-tight text-center sm:text-4xl lg:text-5xl">
           {f.heading}
         </h2>
       )}
       {f.subheading && (
-        <p className="mt-4 text-center text-lg text-muted-foreground max-w-2xl mx-auto">
+        <p className="mt-4 text-center text-lg leading-relaxed text-muted-foreground max-w-2xl mx-auto">
           {f.subheading}
         </p>
       )}
