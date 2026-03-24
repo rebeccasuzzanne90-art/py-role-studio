@@ -1,9 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
-import crypto from "crypto";
 
 const COOKIE_NAME = "admin_session";
 
-function getSecret() {
+function getSecret(): string {
   return (
     process.env.ADMIN_SESSION_SECRET ??
     process.env.CONTENTFUL_PREVIEW_SECRET ??
@@ -11,24 +10,40 @@ function getSecret() {
   );
 }
 
-function verify(signed: string): boolean {
+async function verify(signed: string): Promise<boolean> {
   const idx = signed.lastIndexOf(".");
   if (idx === -1) return false;
   const value = signed.slice(0, idx);
-  const hmac = crypto.createHmac("sha256", getSecret());
-  hmac.update(value);
-  const expected = `${value}.${hmac.digest("hex")}`;
-  return expected === signed;
+  const signature = signed.slice(idx + 1);
+
+  const enc = new TextEncoder();
+  const key = await globalThis.crypto.subtle.importKey(
+    "raw",
+    enc.encode(getSecret()),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const sigBuffer = await globalThis.crypto.subtle.sign(
+    "HMAC",
+    key,
+    enc.encode(value)
+  );
+  const expected = Array.from(new Uint8Array(sigBuffer))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  return expected === signature;
 }
 
-export function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   if (path === "/admin/login") return NextResponse.next();
 
   if (path.startsWith("/admin")) {
     const token = request.cookies.get(COOKIE_NAME)?.value;
-    if (!token || !verify(token)) {
+    if (!token || !(await verify(token))) {
       const url = request.nextUrl.clone();
       url.pathname = "/admin/login";
       return NextResponse.redirect(url);
