@@ -23,14 +23,13 @@ export function TextBlockSection({ entry }: Props) {
   const align = ALIGN_MAP[f.textAlign ?? "left"] ?? "";
   const ctas = (f.ctas ?? []) as unknown as Entry<EntrySkeletonType>[];
   const image = f.image as Asset | undefined;
-  const imageUrl = image?.fields?.file
-    ? `https:${(image.fields.file as { url: string; details?: { image?: { width: number; height: number } } }).url}`
-    : null;
-  const imageDetails = image?.fields?.file
-    ? (image.fields.file as { url: string; details?: { image?: { width: number; height: number } } }).details?.image
-    : null;
+  const imageFile = image?.fields?.file as
+    | { url: string; details?: { image?: { width: number; height: number } } }
+    | undefined;
+  const imageUrl = imageFile ? `https:${imageFile.url}` : null;
 
   const isHorizontal = f.imagePosition === "left" || f.imagePosition === "right";
+  const hasDarkBg = f.backgroundColor && f.backgroundColor !== "#ffffff" && f.backgroundColor !== "#fafafa";
 
   return (
     <SectionWrapper
@@ -41,39 +40,51 @@ export function TextBlockSection({ entry }: Props) {
     >
       <div
         className={cn(
-          isHorizontal && "grid gap-12 md:grid-cols-2 md:items-center",
-          f.imagePosition === "right" && "md:[&>*:first-child]:order-1"
+          isHorizontal && "grid items-center gap-12 lg:grid-cols-2 lg:gap-16",
+          f.imagePosition === "left" && "lg:[&>div:last-child]:order-first"
         )}
       >
-        {imageUrl && isHorizontal && (
-          <div className="relative aspect-video overflow-hidden rounded-lg">
-            <Image
-              src={imageUrl}
-              alt={(image?.fields?.title as string) ?? ""}
-              fill
-              className="object-cover"
-              width={imageDetails?.width}
-              height={imageDetails?.height}
-            />
-          </div>
-        )}
-
-        <div className={align}>
+        <div className={cn(align, "py-4")}>
           {f.heading && (
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              {f.heading}
-            </h2>
+            <h2
+              className={cn(
+                "text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl",
+                hasDarkBg ? "text-white" : "text-foreground"
+              )}
+              dangerouslySetInnerHTML={{
+                __html: f.heading.replace(
+                  /\*(.*?)\*/g,
+                  '<em class="font-normal italic">$1</em>'
+                ),
+              }}
+            />
           )}
           {f.subheading && (
-            <p className="mt-4 text-lg text-muted-foreground">{f.subheading}</p>
+            <p
+              className={cn(
+                "mt-4 text-lg",
+                hasDarkBg ? "text-white/70" : "text-muted-foreground"
+              )}
+            >
+              {f.subheading}
+            </p>
           )}
           {f.body ? (
-            <div className="prose prose-lg mt-6 max-w-none dark:prose-invert">
-              {documentToReactComponents(f.body as Parameters<typeof documentToReactComponents>[0])}
+            <div
+              className={cn(
+                "mt-8 max-w-none space-y-4 text-base leading-relaxed",
+                hasDarkBg
+                  ? "text-white/80 [&_strong]:text-white"
+                  : "prose prose-lg dark:prose-invert"
+              )}
+            >
+              {documentToReactComponents(
+                f.body as Parameters<typeof documentToReactComponents>[0]
+              )}
             </div>
           ) : null}
           {ctas.length > 0 && (
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-10 flex flex-wrap gap-4">
               {ctas.map((c) => {
                 const cf = c.fields as unknown as CtaFields;
                 return (
@@ -81,6 +92,12 @@ export function TextBlockSection({ entry }: Props) {
                     <Button
                       variant={cf.variant === "primary" ? "default" : "outline"}
                       size="lg"
+                      className={cn(
+                        "rounded-full px-8",
+                        hasDarkBg &&
+                          cf.variant !== "primary" &&
+                          "border-white/30 text-white hover:bg-white/10"
+                      )}
                     >
                       {cf.label}
                     </Button>
@@ -90,6 +107,30 @@ export function TextBlockSection({ entry }: Props) {
             </div>
           )}
         </div>
+
+        {imageUrl && isHorizontal && (
+          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl sm:aspect-[3/4] lg:aspect-auto lg:h-full lg:min-h-[500px]">
+            <Image
+              src={imageUrl}
+              alt={(image?.fields?.title as string) ?? ""}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
+        )}
+
+        {imageUrl && !isHorizontal && f.imagePosition === "top" && (
+          <div className="relative mb-8 aspect-video overflow-hidden rounded-2xl">
+            <Image
+              src={imageUrl}
+              alt={(image?.fields?.title as string) ?? ""}
+              fill
+              className="object-cover"
+              sizes="100vw"
+            />
+          </div>
+        )}
       </div>
     </SectionWrapper>
   );

@@ -60,21 +60,21 @@ export function Navigation({ navData }: NavigationProps) {
             <Image
               src={navData.logoUrl}
               alt={navData.logoAlt ?? "VanRein Compliance"}
-              width={160}
-              height={32}
-              className="h-8 w-auto"
+              width={120}
+              height={24}
+              className="h-6 w-auto"
               priority
             />
           ) : (
             <>
-              <Shield className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold tracking-tight">VanRein</span>
+              <Shield className="h-6 w-6 text-primary" />
+              <span className="text-lg font-bold tracking-tight">VanRein</span>
             </>
           )}
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-2 lg:flex">
           {links.map((link) => (
             <div
               key={link.label}
@@ -86,22 +86,22 @@ export function Navigation({ navData }: NavigationProps) {
             >
               <Link
                 href={link.href}
-                className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                className="flex items-center gap-1 rounded-md px-4 py-2 text-base font-medium text-muted-foreground transition-colors hover:text-foreground"
                 {...(link.external
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
               >
                 {link.label}
-                {link.children && <ChevronDown className="h-3.5 w-3.5" />}
+                {link.children && <ChevronDown className="h-4 w-4" />}
               </Link>
 
               {link.children && openDropdown === link.label && (
-                <div className="absolute left-0 top-full z-50 min-w-[220px] rounded-lg border bg-popover p-2 shadow-lg">
+                <div className="absolute left-0 top-full z-50 min-w-[240px] rounded-lg border bg-popover p-2 shadow-lg">
                   {link.children.map((child) => (
                     <Link
                       key={child.href}
                       href={child.href}
-                      className="block rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                      className="block rounded-md px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                       {...(child.external
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
