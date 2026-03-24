@@ -1,13 +1,44 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
+import type { Entry, EntrySkeletonType } from "contentful";
 import { Shield, Target, Award, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { getPageBySlug, getSiteSettings } from "@/lib/contentful";
+import { buildMetadata } from "@/lib/seo";
+import { Hero } from "@/components/hero";
+import { LiveHero } from "@/components/live-preview/live-hero";
+import { ModuleRenderer } from "@/components/module-renderer";
+import { LiveModuleRenderer } from "@/components/live-preview/live-module-renderer";
+import type { SiteSettingsFields, SeoSkeleton } from "@/types/contentful";
 
-export const metadata: Metadata = {
-  title: "About",
-  description:
-    "Learn about VanRein Compliance — over 25 years of experience helping organizations navigate data security regulations.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const [page, settingsEntry] = await Promise.all([
+      getPageBySlug("about"),
+      getSiteSettings(),
+    ]);
+    const settings = settingsEntry?.fields as unknown as SiteSettingsFields | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const seoEntry = (page?.fields as any)?.seo as Entry<SeoSkeleton> | undefined;
+    return buildMetadata({
+      seoEntry: seoEntry ?? null,
+      fallbackTitle: "About | VanRein Compliance",
+      fallbackDescription:
+        "Learn about VanRein Compliance — over 25 years of experience helping organizations navigate data security regulations.",
+      path: "/about",
+      settings: settings ?? null,
+    });
+  } catch {
+    return {
+      title: "About | VanRein Compliance",
+      description:
+        "Learn about VanRein Compliance — over 25 years of experience helping organizations navigate data security regulations.",
+    };
+  }
+}
+
+// ─── Hardcoded fallback (shown when Contentful is not configured) ────────────
 
 const VALUES = [
   {
@@ -36,10 +67,9 @@ const VALUES = [
   },
 ];
 
-export default function AboutPage() {
+function AboutFallback() {
   return (
     <>
-      {/* Hero */}
       <section className="py-20 text-white" style={{ backgroundColor: "#1e3a2a" }}>
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
@@ -53,7 +83,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Mission */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
@@ -69,7 +98,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values */}
       <section className="border-t bg-muted/30 py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="mb-12 text-center text-3xl font-bold tracking-tight">
@@ -91,7 +119,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
@@ -111,4 +138,46 @@ export default function AboutPage() {
       </section>
     </>
   );
+}
+
+// ─── Page ────────────────────────────────────────────────────────────────────
+
+export default async function AboutPage() {
+  const { isEnabled: isDraft } = await draftMode();
+
+  let page: Awaited<ReturnType<typeof getPageBySlug>> | null = null;
+
+  try {
+    page = await getPageBySlug("about", isDraft);
+  } catch {
+    // Contentful not configured — render fallback
+  }
+
+  const sections = page?.fields?.sections as
+    | Entry<EntrySkeletonType>[]
+    | undefined;
+
+  if (sections && sections.length > 0) {
+    const heroEntry = page?.fields?.hero as
+      | Entry<EntrySkeletonType>
+      | undefined;
+
+    return (
+      <>
+        {heroEntry &&
+          (isDraft ? (
+            <LiveHero entry={heroEntry} />
+          ) : (
+            <Hero entry={heroEntry} />
+          ))}
+        {isDraft ? (
+          <LiveModuleRenderer sections={sections} />
+        ) : (
+          <ModuleRenderer sections={sections} />
+        )}
+      </>
+    );
+  }
+
+  return <AboutFallback />;
 }
