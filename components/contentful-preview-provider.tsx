@@ -8,14 +8,10 @@ interface Props {
 }
 
 export function ContentfulPreviewProvider({ isDraftMode, children }: Props) {
-  if (!isDraftMode) {
-    return <>{children}</>;
-  }
-
   return (
     <ContentfulLivePreviewProvider
       locale="en-US"
-      enableInspectorMode={isDraftMode}
+      enableInspectorMode={true}
       enableLiveUpdates={isDraftMode}
     >
       {children}

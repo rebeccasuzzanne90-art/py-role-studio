@@ -16,11 +16,13 @@ const FALLBACK_LOGOS: LogoItem[] = [
 
 interface TrustLogosProps {
   heading?: string;
+  headingProps?: Record<string, string> | null;
   logos?: LogoItem[];
 }
 
 export function TrustLogos({
   heading = "Trusted by great companies",
+  headingProps,
   logos = FALLBACK_LOGOS,
 }: TrustLogosProps) {
   const doubled = [...logos, ...logos];
@@ -28,7 +30,7 @@ export function TrustLogos({
   return (
     <div>
       {heading && (
-        <p className="mb-8 text-center text-sm font-medium uppercase tracking-wider text-muted-foreground">
+        <p {...headingProps} className="mb-8 text-center text-sm font-medium uppercase tracking-wider text-muted-foreground">
           {heading}
         </p>
       )}

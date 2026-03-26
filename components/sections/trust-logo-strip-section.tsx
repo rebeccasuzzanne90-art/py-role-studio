@@ -2,6 +2,7 @@
 
 import type { Entry, Asset, EntrySkeletonType } from "contentful";
 import type { TrustLogoStripFields } from "@/types/contentful";
+import { useContentfulInspectorMode } from "@contentful/live-preview/react";
 import { SectionWrapper } from "@/components/section-wrapper";
 import { TrustLogos } from "@/components/trust-logos";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -14,6 +15,7 @@ interface Props {
 export function TrustLogoStripSection({ entry }: Props) {
   const f = entry.fields as unknown as TrustLogoStripFields;
   const logos = (f.logos ?? []) as Asset[];
+  const inspectorProps = useContentfulInspectorMode({ entryId: entry.sys.id });
 
   const logoData = logos.map((asset) => ({
     name: asset.fields?.title as string ?? "Logo",
@@ -29,8 +31,8 @@ export function TrustLogoStripSection({ entry }: Props) {
       containerWidth="wide"
       className={f.backgroundColor ? "" : "border-y bg-background"}
     >
-      <Eyebrow text={f.eyebrow} className="mb-6 flex items-center justify-center gap-3" />
-      <TrustLogos heading={f.heading} logos={logoData} />
+      <Eyebrow text={f.eyebrow} className="mb-6 flex items-center justify-center gap-3" inspectorProps={inspectorProps({ fieldId: "eyebrow" })} />
+      <TrustLogos heading={f.heading} headingProps={inspectorProps({ fieldId: "heading" })} logos={logoData} />
     </SectionWrapper>
   );
 }

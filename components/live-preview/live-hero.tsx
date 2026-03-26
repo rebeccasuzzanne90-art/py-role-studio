@@ -1,6 +1,7 @@
 "use client";
 
 import { useContentfulLiveUpdates } from "@contentful/live-preview/react";
+import { encodeCPAResponse } from "@contentful/live-preview";
 import type { Entry, EntrySkeletonType } from "contentful";
 import { Hero } from "@/components/hero";
 
@@ -12,6 +13,6 @@ interface Props {
 }
 
 export function LiveHero({ entry }: Props) {
-  const liveEntry = useContentfulLiveUpdates(entry);
+  const liveEntry = useContentfulLiveUpdates(encodeCPAResponse(entry));
   return <Hero entry={liveEntry as AnyEntry} />;
 }

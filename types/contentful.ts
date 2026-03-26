@@ -140,8 +140,10 @@ export interface CtaSkeleton extends EntrySkeletonType {
 // ─── Hero Banner ────────────────────────────────────────────────────
 export interface HeroBannerFields {
   internalName: string;
+  eyebrow?: string;
   headline: string;
   subheadline?: string;
+  body?: string;
   searchPlaceholder?: string;
   backgroundImage?: Asset;
   primaryCta?: Entry<CtaSkeleton>;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useContentfulLiveUpdates } from "@contentful/live-preview/react";
+import { encodeCPAResponse } from "@contentful/live-preview";
 import type { Entry, EntrySkeletonType } from "contentful";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,6 +13,6 @@ interface LiveEntryProps {
 }
 
 export function LiveEntry({ entry, Component }: LiveEntryProps) {
-  const liveEntry = useContentfulLiveUpdates(entry);
+  const liveEntry = useContentfulLiveUpdates(encodeCPAResponse(entry));
   return <Component entry={liveEntry as AnyEntry} />;
 }

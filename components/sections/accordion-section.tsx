@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import type { Entry, EntrySkeletonType } from "contentful";
-import type { FaqItemFields, CtaFields } from "@/types/contentful";
+import type { FaqItemFields } from "@/types/contentful";
+import { useContentfulInspectorMode } from "@contentful/live-preview/react";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Plus, Minus } from "lucide-react";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { LinkedCtaButton } from "@/components/linked-cta-button";
 
 interface AccordionSectionFields {
   internalName: string;
@@ -40,6 +40,7 @@ const PADDING_MAP: Record<string, string> = {
 
 export function AccordionSectionBlock({ entry }: Props) {
   const f = entry.fields as unknown as AccordionSectionFields;
+  const inspectorProps = useContentfulInspectorMode({ entryId: entry.sys.id });
   const items = (f.items ?? []) as Entry<EntrySkeletonType>[];
   const ctas = (f.ctas ?? []) as unknown as Entry<EntrySkeletonType>[];
   const isSplit = f.layout !== "stacked";
@@ -72,10 +73,11 @@ export function AccordionSectionBlock({ entry }: Props) {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
             {/* Left column */}
             <div className="flex flex-col justify-center">
-              <Eyebrow text={f.eyebrow} color={f.accentColor} className="mb-8 flex items-center gap-3" />
+              <Eyebrow text={f.eyebrow} color={f.accentColor} className="mb-8 flex items-center gap-3" inspectorProps={inspectorProps({ fieldId: "eyebrow" })} />
 
               {f.heading && (
                 <h2
+                  {...inspectorProps({ fieldId: "heading" })}
                   className={cn(
                     "text-4xl font-normal leading-tight tracking-tight sm:text-5xl lg:text-6xl",
                     hasDarkBg ? "text-white" : ""
@@ -86,6 +88,7 @@ export function AccordionSectionBlock({ entry }: Props) {
 
               {f.quote && (
                 <blockquote
+                  {...inspectorProps({ fieldId: "quote" })}
                   className="mt-10 border-l-4 py-1 pl-6 font-heading text-xl font-normal italic leading-snug sm:text-2xl"
                   style={{ borderColor: f.accentColor || "#c9963e" }}
                 >
@@ -95,6 +98,7 @@ export function AccordionSectionBlock({ entry }: Props) {
 
               {f.subheading && (
                 <p
+                  {...inspectorProps({ fieldId: "subheading" })}
                   className={cn(
                     "mt-8 text-base leading-relaxed",
                     hasDarkBg ? "text-white/70" : "text-muted-foreground"
@@ -106,31 +110,9 @@ export function AccordionSectionBlock({ entry }: Props) {
 
               {ctas.length > 0 && (
                 <div className="mt-10 flex flex-wrap gap-4">
-                  {ctas.map((c) => {
-                    const cf = c.fields as unknown as CtaFields;
-                    return (
-                      <Link key={c.sys.id} href={cf.url}>
-                        <Button
-                          variant={
-                            cf.variant === "primary" ? "default" : "outline"
-                          }
-                          size="lg"
-                          className={cn(
-                            hasDarkBg &&
-                              cf.variant !== "primary" &&
-                              "border-white/30 text-white hover:bg-white/10"
-                          )}
-                          style={
-                            cf.variant === "primary" && f.accentColor
-                              ? { backgroundColor: f.accentColor }
-                              : undefined
-                          }
-                        >
-                          {cf.label}
-                        </Button>
-                      </Link>
-                    );
-                  })}
+                  {ctas.map((c) => (
+                    <LinkedCtaButton key={c.sys.id} entry={c} darkBorder={!!hasDarkBg} />
+                  ))}
                 </div>
               )}
             </div>
@@ -150,10 +132,11 @@ export function AccordionSectionBlock({ entry }: Props) {
           </div>
         ) : (
           <div className="mx-auto max-w-3xl">
-            <Eyebrow text={f.eyebrow} color={f.accentColor} className="mb-6 flex items-center justify-center gap-3" />
+            <Eyebrow text={f.eyebrow} color={f.accentColor} className="mb-6 flex items-center justify-center gap-3" inspectorProps={inspectorProps({ fieldId: "eyebrow" })} />
 
             {f.heading && (
               <h2
+                {...inspectorProps({ fieldId: "heading" })}
                 className={cn(
                   "text-center text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl",
                   hasDarkBg ? "text-white" : ""
@@ -163,6 +146,7 @@ export function AccordionSectionBlock({ entry }: Props) {
             )}
             {f.subheading && (
               <p
+                {...inspectorProps({ fieldId: "subheading" })}
                 className={cn(
                   "mt-4 text-center text-lg leading-relaxed",
                   hasDarkBg ? "text-white/70" : "text-muted-foreground"
@@ -184,31 +168,9 @@ export function AccordionSectionBlock({ entry }: Props) {
             </div>
             {ctas.length > 0 && (
               <div className="mt-10 flex justify-center gap-4">
-                {ctas.map((c) => {
-                  const cf = c.fields as unknown as CtaFields;
-                  return (
-                    <Link key={c.sys.id} href={cf.url}>
-                      <Button
-                        variant={
-                          cf.variant === "primary" ? "default" : "outline"
-                        }
-                        size="lg"
-                        className={cn(
-                          hasDarkBg &&
-                            cf.variant !== "primary" &&
-                            "border-white/30 text-white hover:bg-white/10"
-                        )}
-                        style={
-                          cf.variant === "primary" && f.accentColor
-                            ? { backgroundColor: f.accentColor }
-                            : undefined
-                        }
-                      >
-                        {cf.label}
-                      </Button>
-                    </Link>
-                  );
-                })}
+                {ctas.map((c) => (
+                  <LinkedCtaButton key={c.sys.id} entry={c} darkBorder={!!hasDarkBg} />
+                ))}
               </div>
             )}
           </div>
@@ -236,6 +198,61 @@ export function AccordionSectionBlock({ entry }: Props) {
   );
 }
 
+function NumberedListItem({
+  item,
+  idx,
+  hasDarkBg,
+  accentColor,
+}: {
+  item: Entry<EntrySkeletonType>;
+  idx: number;
+  hasDarkBg: boolean;
+  accentColor?: string;
+}) {
+  const fields = item.fields as unknown as FaqItemFields;
+  const inspectorProps = useContentfulInspectorMode({ entryId: item.sys?.id });
+  const num = String(idx + 1).padStart(2, "0");
+
+  if (!fields.question) return null;
+
+  return (
+    <div className="flex gap-5 py-6 sm:gap-6 sm:py-8">
+      <span
+        className="mt-0.5 text-sm font-semibold tabular-nums"
+        style={{ color: accentColor || "#c9963e" }}
+      >
+        {num}
+      </span>
+      <div className="flex-1">
+        <p
+          {...inspectorProps({ fieldId: "question" })}
+          className={cn(
+            "text-base font-semibold leading-snug sm:text-lg",
+            hasDarkBg ? "text-white" : ""
+          )}
+        >
+          {fields.question}
+        </p>
+        <div
+          {...inspectorProps({ fieldId: "answer" })}
+          className={cn(
+            "mt-2 text-sm leading-relaxed sm:text-base",
+            hasDarkBg ? "text-white/70" : "text-muted-foreground"
+          )}
+        >
+          {fields.answer
+            ? documentToReactComponents(
+                fields.answer as Parameters<
+                  typeof documentToReactComponents
+                >[0]
+              )
+            : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function NumberedList({
   items,
   hasDarkBg,
@@ -252,49 +269,94 @@ function NumberedList({
         hasDarkBg ? "divide-white/20" : "divide-border"
       )}
     >
-      {items.map((item, idx) => {
-        const fields = item.fields as unknown as FaqItemFields;
-        if (!fields.question) return null;
-        const num = String(idx + 1).padStart(2, "0");
+      {items.map((item, idx) => (
+        <NumberedListItem
+          key={item.sys?.id ?? idx}
+          item={item}
+          idx={idx}
+          hasDarkBg={hasDarkBg}
+          accentColor={accentColor}
+        />
+      ))}
+    </div>
+  );
+}
 
-        return (
+function AccordionItem({
+  item,
+  idx,
+  isOpen,
+  onToggle,
+  hasDarkBg,
+}: {
+  item: Entry<EntrySkeletonType>;
+  idx: number;
+  isOpen: boolean;
+  onToggle: () => void;
+  hasDarkBg: boolean;
+}) {
+  const fields = item.fields as unknown as FaqItemFields;
+  const inspectorProps = useContentfulInspectorMode({ entryId: item.sys?.id });
+
+  if (!fields.question) return null;
+
+  return (
+    <div className="group">
+      <button
+        onClick={onToggle}
+        className={cn(
+          "flex w-full items-center justify-between gap-4 py-5 text-left transition-colors",
+          hasDarkBg
+            ? "text-white/90 hover:text-white"
+            : "text-foreground hover:text-foreground/80"
+        )}
+      >
+        <span {...inspectorProps({ fieldId: "question" })} className="text-lg font-medium sm:text-xl">
+          {fields.question}
+        </span>
+        <span
+          className={cn(
+            "flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors",
+            hasDarkBg
+              ? "text-white/60 hover:text-white"
+              : "text-muted-foreground"
+          )}
+        >
+          {isOpen ? (
+            <Minus className="h-5 w-5" />
+          ) : (
+            <Plus className="h-5 w-5" />
+          )}
+        </span>
+      </button>
+      <div
+        className={cn(
+          "grid transition-all duration-300 ease-in-out",
+          isOpen
+            ? "grid-rows-[1fr] opacity-100"
+            : "grid-rows-[0fr] opacity-0"
+        )}
+      >
+        <div className="overflow-hidden">
           <div
-            key={item.sys?.id ?? idx}
-            className="flex gap-5 py-6 sm:gap-6 sm:py-8"
+            {...inspectorProps({ fieldId: "answer" })}
+            className={cn(
+              "pb-5 text-base leading-relaxed",
+              hasDarkBg
+                ? "text-white/80 [&_a]:text-white [&_a]:underline"
+                : "prose prose-sm max-w-none"
+            )}
           >
-            <span
-              className="mt-0.5 text-sm font-semibold tabular-nums"
-              style={{ color: accentColor || "#c9963e" }}
-            >
-              {num}
-            </span>
-            <div className="flex-1">
-              <p
-                className={cn(
-                  "text-base font-semibold leading-snug sm:text-lg",
-                  hasDarkBg ? "text-white" : ""
-                )}
-              >
-                {fields.question}
-              </p>
-              <div
-                className={cn(
-                  "mt-2 text-sm leading-relaxed sm:text-base",
-                  hasDarkBg ? "text-white/70" : "text-muted-foreground"
-                )}
-              >
-                {fields.answer
-                  ? documentToReactComponents(
-                      fields.answer as Parameters<
-                        typeof documentToReactComponents
-                      >[0]
-                    )
-                  : null}
-              </div>
-            </div>
+            {fields.answer
+              ? documentToReactComponents(
+                  fields.answer as Parameters<
+                    typeof documentToReactComponents
+                  >[0]
+                )
+              : null}
           </div>
-        );
-      })}
+        </div>
+      </div>
     </div>
   );
 }
@@ -315,70 +377,16 @@ function AccordionList({
         hasDarkBg ? "divide-white/20" : "divide-border"
       )}
     >
-      {items.map((item, idx) => {
-        const fields = item.fields as unknown as FaqItemFields;
-        if (!fields.question) return null;
-        const isOpen = openIndex === idx;
-
-        return (
-          <div key={item.sys?.id ?? idx} className="group">
-            <button
-              onClick={() => setOpenIndex(isOpen ? null : idx)}
-              className={cn(
-                "flex w-full items-center justify-between gap-4 py-5 text-left transition-colors",
-                hasDarkBg
-                  ? "text-white/90 hover:text-white"
-                  : "text-foreground hover:text-foreground/80"
-              )}
-            >
-              <span className="text-lg font-medium sm:text-xl">
-                {fields.question}
-              </span>
-              <span
-                className={cn(
-                  "flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors",
-                  hasDarkBg
-                    ? "text-white/60 hover:text-white"
-                    : "text-muted-foreground"
-                )}
-              >
-                {isOpen ? (
-                  <Minus className="h-5 w-5" />
-                ) : (
-                  <Plus className="h-5 w-5" />
-                )}
-              </span>
-            </button>
-            <div
-              className={cn(
-                "grid transition-all duration-300 ease-in-out",
-                isOpen
-                  ? "grid-rows-[1fr] opacity-100"
-                  : "grid-rows-[0fr] opacity-0"
-              )}
-            >
-              <div className="overflow-hidden">
-                <div
-                  className={cn(
-                    "pb-5 text-base leading-relaxed",
-                    hasDarkBg
-                      ? "text-white/80 [&_a]:text-white [&_a]:underline"
-                      : "prose prose-sm max-w-none"
-                  )}
-                >
-                  {fields.answer
-                    ? documentToReactComponents(
-                        fields.answer as Parameters<
-                          typeof documentToReactComponents
-                        >[0]
-                      )
-                    : null}
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      {items.map((item, idx) => (
+        <AccordionItem
+          key={item.sys?.id ?? idx}
+          item={item}
+          idx={idx}
+          isOpen={openIndex === idx}
+          onToggle={() => setOpenIndex(openIndex === idx ? null : idx)}
+          hasDarkBg={hasDarkBg}
+        />
+      ))}
     </div>
   );
 }

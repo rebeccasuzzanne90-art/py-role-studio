@@ -10,6 +10,9 @@ interface NewsletterFormProps {
   heading?: string;
   description?: string;
   buttonLabel?: string;
+  headingProps?: Record<string, string> | null;
+  descriptionProps?: Record<string, string> | null;
+  buttonLabelProps?: Record<string, string> | null;
 }
 
 export function NewsletterForm({
@@ -17,6 +20,9 @@ export function NewsletterForm({
   heading = "Stay Up to Date",
   description = "Subscribe to our newsletter for data security and compliance updates.",
   buttonLabel = "Subscribe",
+  headingProps,
+  descriptionProps,
+  buttonLabelProps,
 }: NewsletterFormProps) {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -63,9 +69,9 @@ export function NewsletterForm({
 
   return (
     <div className="mx-auto max-w-xl text-center">
-      <h2 className="text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">{heading}</h2>
+      <h2 {...headingProps} className="text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">{heading}</h2>
       {description && (
-        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{description}</p>
+        <p {...descriptionProps} className="mt-4 text-lg leading-relaxed text-muted-foreground">{description}</p>
       )}
       <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row">
         <Input
@@ -84,7 +90,7 @@ export function NewsletterForm({
           className="h-11"
         />
         <Button type="submit" size="lg" disabled={status === "loading"}>
-          {status === "loading" ? "Subscribing..." : buttonLabel}
+          <span {...buttonLabelProps}>{status === "loading" ? "Subscribing..." : buttonLabel}</span>
         </Button>
       </form>
       {status === "error" && (

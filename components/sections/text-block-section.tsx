@@ -1,5 +1,8 @@
+"use client";
+
 import type { Entry, Asset, EntrySkeletonType } from "contentful";
 import type { TextBlockFields, CtaFields } from "@/types/contentful";
+import { useContentfulInspectorMode } from "@contentful/live-preview/react";
 import { SectionWrapper } from "@/components/section-wrapper";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { cn } from "@/lib/utils";
@@ -21,6 +24,7 @@ const ALIGN_MAP: Record<string, string> = {
 
 export function TextBlockSection({ entry }: Props) {
   const f = entry.fields as unknown as TextBlockFields;
+  const inspectorProps = useContentfulInspectorMode({ entryId: entry.sys.id });
   const align = ALIGN_MAP[f.textAlign ?? "left"] ?? "";
   const ctas = (f.ctas ?? []) as unknown as Entry<EntrySkeletonType>[];
   const image = f.image as Asset | undefined;
@@ -46,9 +50,10 @@ export function TextBlockSection({ entry }: Props) {
         )}
       >
         <div className={cn(align, "py-4")}>
-          <Eyebrow text={f.eyebrow} />
+          <Eyebrow text={f.eyebrow} inspectorProps={inspectorProps({ fieldId: "eyebrow" })} />
           {f.heading && (
             <h2
+              {...inspectorProps({ fieldId: "heading" })}
               className={cn(
                 "text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl",
                 hasDarkBg ? "text-white" : "text-foreground"
@@ -63,6 +68,7 @@ export function TextBlockSection({ entry }: Props) {
           )}
           {f.subheading && (
             <p
+              {...inspectorProps({ fieldId: "subheading" })}
               className={cn(
                 "mt-4 text-lg",
                 hasDarkBg ? "text-white/70" : "text-muted-foreground"
@@ -73,6 +79,7 @@ export function TextBlockSection({ entry }: Props) {
           )}
           {f.body ? (
             <div
+              {...inspectorProps({ fieldId: "body" })}
               className={cn(
                 "mt-8 max-w-none space-y-4 text-base leading-relaxed",
                 hasDarkBg

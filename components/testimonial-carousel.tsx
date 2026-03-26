@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { useContentfulInspectorMode } from "@contentful/live-preview/react";
 
 interface Testimonial {
   quote: string;
@@ -48,59 +49,75 @@ const FALLBACK_TESTIMONIALS: Testimonial[] = [
   },
 ];
 
+function TestimonialSlide({ testimonial, visible }: { testimonial: TestimonialWithId; visible: boolean }) {
+  const inspectorProps = useContentfulInspectorMode({ entryId: testimonial.entryId });
+  if (!visible) return null;
+  return (
+    <Card className="border-0 bg-background shadow-md">
+      <CardContent className="px-4 py-8 text-center sm:px-8 sm:py-10">
+        {testimonial.rating && (
+          <div className="mb-4 flex justify-center gap-1">
+            {Array.from({ length: testimonial.rating }).map((_, i) => (
+              <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+            ))}
+          </div>
+        )}
+        <blockquote {...inspectorProps({ fieldId: "quote" })} className="text-lg leading-relaxed text-foreground sm:text-xl">
+          &ldquo;{testimonial.quote}&rdquo;
+        </blockquote>
+        <div className="mt-6">
+          <p {...inspectorProps({ fieldId: "authorName" })} className="font-semibold">{testimonial.authorName}</p>
+          <p className="text-sm text-muted-foreground">
+            <span {...inspectorProps({ fieldId: "authorRole" })}>{testimonial.authorRole}</span>
+            {testimonial.company && (
+              <span {...inspectorProps({ fieldId: "company" })}>{`, ${testimonial.company}`}</span>
+            )}
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+interface TestimonialWithId extends Testimonial {
+  entryId?: string;
+}
+
 interface TestimonialCarouselProps {
   heading?: string;
   subheading?: string;
-  testimonials?: Testimonial[];
+  headingProps?: Record<string, string> | null;
+  subheadingProps?: Record<string, string> | null;
+  testimonials?: TestimonialWithId[];
 }
 
 export function TestimonialCarousel({
   heading = "What Our Clients Are Saying",
   subheading = "Trusted by companies that take data security seriously",
+  headingProps,
+  subheadingProps,
   testimonials = FALLBACK_TESTIMONIALS,
 }: TestimonialCarouselProps) {
   const [current, setCurrent] = useState(0);
   const total = testimonials.length;
   const prev = () => setCurrent((c) => (c === 0 ? total - 1 : c - 1));
   const next = () => setCurrent((c) => (c === total - 1 ? 0 : c + 1));
-  const t = testimonials[current];
 
   return (
     <div>
       <div className="mb-12 text-center">
-        <h2 className="text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+        <h2 {...headingProps} className="text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">
           {heading}
         </h2>
         {subheading && (
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{subheading}</p>
+          <p {...subheadingProps} className="mt-4 text-lg leading-relaxed text-muted-foreground">{subheading}</p>
         )}
       </div>
 
       <div className="mx-auto max-w-3xl">
-        <Card className="border-0 bg-background shadow-md">
-          <CardContent className="px-4 py-8 text-center sm:px-8 sm:py-10">
-            {t.rating && (
-              <div className="mb-4 flex justify-center gap-1">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                  />
-                ))}
-              </div>
-            )}
-            <blockquote className="text-lg leading-relaxed text-foreground sm:text-xl">
-              &ldquo;{t.quote}&rdquo;
-            </blockquote>
-            <div className="mt-6">
-              <p className="font-semibold">{t.authorName}</p>
-              <p className="text-sm text-muted-foreground">
-                {t.authorRole}
-                {t.company && `, ${t.company}`}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+        {testimonials.map((t, idx) => (
+          <TestimonialSlide key={t.entryId ?? idx} testimonial={t} visible={idx === current} />
+        ))}
 
         <div className="mt-6 flex items-center justify-center gap-4">
           <Button variant="outline" size="icon" onClick={prev}>

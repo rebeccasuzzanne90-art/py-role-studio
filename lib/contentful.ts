@@ -9,6 +9,7 @@ function getClient(preview = false) {
     space,
     accessToken: preview && previewToken ? previewToken : accessToken,
     host: preview ? "preview.contentful.com" : "cdn.contentful.com",
+    ...(preview ? { includeContentSourceMaps: true } : {}),
   });
 }
 
