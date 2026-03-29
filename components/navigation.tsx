@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Menu, ChevronDown, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import type { NavData, NavLink } from "@/lib/parse-navigation";
+import type { NavData, NavLink } from "@/types/content";
 
 const FALLBACK_LINKS: NavLink[] = [
   { label: "About", href: "/about" },
@@ -14,16 +14,10 @@ const FALLBACK_LINKS: NavLink[] = [
     label: "Services",
     href: "/services",
     children: [
-      { label: "HIPAA Compliance", href: "/services/hipaa" },
-      { label: "ISO 27001 & ISO 42001", href: "/services/iso-27001" },
-      { label: "SOC2", href: "/services/soc2" },
-      { label: "GDPR", href: "/services/gdpr" },
-      { label: "HITRUST", href: "/services/hitrust" },
-      { label: "Data Security Audits", href: "/services/data-security-audits" },
-      { label: "Fractional CISO", href: "/services/fractional-ciso" },
-      { label: "Pen Tests", href: "/services/pen-tests" },
-      { label: "Disaster Recovery", href: "/services/disaster-recovery" },
-      { label: "Team Training", href: "/services/team-training" },
+      { label: "Understand The Risk", href: "/services/understand-the-risk" },
+      { label: "Build The Foundations", href: "/services/build-the-foundations" },
+      { label: "Stay Ahead Of Problems", href: "/services/stay-ahead-of-problems" },
+      { label: "Prepare For Change", href: "/services/prepare-for-change" },
     ],
   },
   {
@@ -35,7 +29,6 @@ const FALLBACK_LINKS: NavLink[] = [
       { label: "Resources", href: "/resources" },
     ],
   },
-  { label: "Contact", href: "/contact" },
 ];
 
 interface NavigationProps {
@@ -57,25 +50,25 @@ export function Navigation({ navData }: NavigationProps) {
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2">
-          {navData?.logoUrl ? (
+          {navData?.logoPath ? (
             <Image
-              src={navData.logoUrl}
-              alt={navData.logoAlt ?? "VanRein Compliance"}
-              width={120}
-              height={24}
-              className="h-6 w-auto brightness-0 invert"
+              src={navData.logoPath}
+              alt={navData.logoAlt ?? "The Payroll Studio"}
+              width={160}
+              height={32}
+              className="h-8 w-auto brightness-0 invert"
               priority
             />
           ) : (
             <>
               <Shield className="h-6 w-6 text-white" />
-              <span className="text-lg font-bold tracking-tight text-white">VanRein</span>
+              <span className="text-lg font-bold tracking-tight text-white">The Payroll Studio</span>
             </>
           )}
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-2 lg:flex">
+        {/* Desktop nav + CTA */}
+        <div className="hidden items-center gap-2 lg:flex">
           {links.map((link) => (
             <div
               key={link.label}
@@ -114,9 +107,6 @@ export function Navigation({ navData }: NavigationProps) {
               )}
             </div>
           ))}
-        </nav>
-
-        <div className="hidden items-center gap-2 lg:flex">
           <Link href={ctaHref}>
             <Button size="sm">{ctaLabel}</Button>
           </Link>

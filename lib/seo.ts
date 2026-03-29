@@ -1,46 +1,34 @@
 import type { Metadata } from "next";
-import type { Entry, Asset } from "contentful";
-import type {
-  SeoFields,
-  SeoSkeleton,
-  SiteSettingsFields,
-  AuthorFields,
-  AuthorSkeleton,
-} from "@/types/contentful";
+import type { SeoData, SiteSettingsData, AuthorData } from "@/types/content";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://vanreincompliance.com";
 
-function assetUrl(asset?: Asset): string | undefined {
-  const raw = asset?.fields?.file?.url;
-  if (!raw) return undefined;
-  const url = typeof raw === "string" ? raw : String(raw);
-  return url.startsWith("//") ? `https:${url}` : url;
-}
-
 // ─── Metadata builder ────────────────────────────────────────────────
 
 interface BuildMetadataOpts {
-  seoEntry?: Entry<SeoSkeleton> | null;
+  seo?: SeoData | null;
   fallbackTitle: string;
   fallbackDescription?: string;
   path: string;
-  settings?: SiteSettingsFields | null;
+  settings?: SiteSettingsData | null;
 }
 
 export function buildMetadata(opts: BuildMetadataOpts): Metadata {
-  const seo = opts.seoEntry?.fields as SeoFields | undefined;
+  const seo = opts.seo;
   const s = opts.settings;
 
-  const template = s?.titleTemplate ?? "%s | VanRein Compliance";
+  const template = s?.titleTemplate
+    ? `%s | ${s.titleTemplate}`
+    : "%s | The Payroll Studio";
   const title = seo?.metaTitle ?? opts.fallbackTitle;
   const description =
-    seo?.metaDescription ?? opts.fallbackDescription ?? s?.defaultMetaDescription ?? "";
+    seo?.metaDescription ??
+    opts.fallbackDescription ??
+    s?.defaultMetaDescription ??
+    "";
 
-  const ogImageUrl =
-    assetUrl(seo?.ogImage as Asset | undefined) ??
-    assetUrl(s?.defaultOgImage as Asset | undefined);
-
+  const ogImageUrl = seo?.ogImagePath ?? undefined;
   const canonical = seo?.canonicalUrl ?? `${BASE_URL}${opts.path}`;
 
   const robots: Metadata["robots"] = {};
@@ -57,7 +45,7 @@ export function buildMetadata(opts: BuildMetadataOpts): Metadata {
       title: seo?.ogTitle ?? title,
       description: seo?.ogDescription ?? description,
       url: canonical,
-      siteName: s?.siteName ?? "VanRein Compliance",
+      siteName: s?.siteName ?? "The Payroll Studio",
       ...(ogImageUrl ? { images: [{ url: ogImageUrl }] } : {}),
       type: "website",
     },
@@ -72,14 +60,17 @@ export function buildMetadata(opts: BuildMetadataOpts): Metadata {
 
 // ─── JSON-LD generators ──────────────────────────────────────────────
 
-export function organizationJsonLd(settings?: SiteSettingsFields | null) {
+export function organizationJsonLd(settings?: SiteSettingsData | null) {
   if (!settings) return null;
+  const logoUrl = settings.logoPath
+    ? `${BASE_URL}${settings.logoPath}`
+    : undefined;
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: settings.siteName,
     url: BASE_URL,
-    logo: assetUrl(settings.logo as Asset | undefined),
+    logo: logoUrl,
     sameAs: [
       settings.socialLinkedin,
       settings.socialFacebook,
@@ -111,36 +102,31 @@ export function articleJsonLd(opts: {
   path: string;
   publishDate?: string;
   modifiedDate?: string;
-  authorEntry?: Entry<AuthorSkeleton> | null;
+  author?: AuthorData | null;
   imageUrl?: string;
 }) {
-  const author = opts.authorEntry?.fields as AuthorFields | undefined;
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: opts.title,
     description: opts.description,
     url: `${BASE_URL}${opts.path}`,
-    ...(opts.publishDate
-      ? { datePublished: opts.publishDate }
-      : {}),
-    ...(opts.modifiedDate
-      ? { dateModified: opts.modifiedDate }
-      : {}),
+    ...(opts.publishDate ? { datePublished: opts.publishDate } : {}),
+    ...(opts.modifiedDate ? { dateModified: opts.modifiedDate } : {}),
     ...(opts.imageUrl ? { image: opts.imageUrl } : {}),
-    ...(author
+    ...(opts.author
       ? {
           author: {
             "@type": "Person",
-            name: author.name,
-            ...(author.role ? { jobTitle: author.role } : {}),
-            ...(author.linkedIn ? { url: author.linkedIn } : {}),
+            name: opts.author.name,
+            ...(opts.author.role ? { jobTitle: opts.author.role } : {}),
+            ...(opts.author.linkedIn ? { url: opts.author.linkedIn } : {}),
           },
         }
       : {}),
     publisher: {
       "@type": "Organization",
-      name: "VanRein Compliance",
+      name: "The Payroll Studio",
       url: BASE_URL,
     },
   };
@@ -159,15 +145,13 @@ export function serviceJsonLd(opts: {
     url: `${BASE_URL}${opts.path}`,
     provider: {
       "@type": "Organization",
-      name: "VanRein Compliance",
+      name: "The Payroll Studio",
       url: BASE_URL,
     },
   };
 }
 
-export function faqJsonLd(
-  items: { question: string; answer: string }[]
-) {
+export function faqJsonLd(items: { question: string; answer: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -182,9 +166,7 @@ export function faqJsonLd(
   };
 }
 
-export function breadcrumbJsonLd(
-  crumbs: { name: string; path: string }[]
-) {
+export function breadcrumbJsonLd(crumbs: { name: string; path: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

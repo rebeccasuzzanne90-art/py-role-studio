@@ -16,7 +16,7 @@ import {
   ClipboardCheck,
   FileSpreadsheet,
 } from "lucide-react";
-import type { ResourceCategory } from "@/lib/contentful";
+type ResourceCategory = "whitepaper" | "guide" | "template" | "video" | "podcast" | "checklist";
 
 interface Resource {
   id: string;

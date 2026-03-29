@@ -1,59 +1,44 @@
-"use client";
-
-import type { Entry, Asset, EntrySkeletonType } from "contentful";
-import type { TriplexFields, FeatureCardFields } from "@/types/contentful";
-import { useContentfulInspectorMode } from "@contentful/live-preview/react";
+import type { TriplexSectionData, FeatureCardData } from "@/types/content";
 import { SectionWrapper } from "@/components/section-wrapper";
 import Image from "next/image";
 import { LinkedCtaButton } from "@/components/linked-cta-button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  entry: Entry<EntrySkeletonType, any, any>;
+  data: TriplexSectionData;
 }
 
-function TriplexItem({ item }: { item: Entry<EntrySkeletonType> }) {
-  const ff = item.fields as unknown as FeatureCardFields;
-  const img = ff.image as Asset | undefined;
-  const imgUrl = img?.fields?.file
-    ? `https:${(img.fields.file as { url: string }).url}`
-    : null;
-  const cta = ff.cta as unknown as Entry<EntrySkeletonType> | undefined;
-  const inspectorProps = useContentfulInspectorMode({ entryId: item.sys.id });
-
+function TriplexItem({ item }: { item: FeatureCardData }) {
   return (
     <div className="space-y-4">
-      {imgUrl && (
+      {item.imageUrl && (
         <div className="relative aspect-video overflow-hidden rounded-lg">
-          <Image src={imgUrl} alt={ff.title} fill className="object-cover" />
+          <Image src={item.imageUrl} alt={item.title} fill className="object-cover" />
         </div>
       )}
-      <h3 {...inspectorProps({ fieldId: "title" })} className="text-xl font-semibold">{ff.title}</h3>
-      {ff.description && (
-        <p {...inspectorProps({ fieldId: "description" })} className="text-muted-foreground">{ff.description}</p>
+      <h3 className="text-xl font-semibold">{item.title}</h3>
+      {item.description && (
+        <p className="text-muted-foreground">{item.description}</p>
       )}
-      {cta && <LinkedCtaButton entry={cta} />}
+      {item.cta && <LinkedCtaButton cta={item.cta} />}
     </div>
   );
 }
 
-export function TriplexSection({ entry }: Props) {
-  const f = entry.fields as unknown as TriplexFields;
-  const items = (f.items ?? []) as unknown as Entry<EntrySkeletonType>[];
-  const inspectorProps = useContentfulInspectorMode({ entryId: entry.sys.id });
+export function TriplexSection({ data }: Props) {
+  const items = data.items ?? [];
 
   return (
     <SectionWrapper>
-      <Eyebrow text={f.eyebrow} className="mb-6 flex items-center justify-center gap-3" inspectorProps={inspectorProps({ fieldId: "eyebrow" })} />
-      {f.heading && (
-        <h2 {...inspectorProps({ fieldId: "heading" })} className="mb-12 text-center text-3xl font-bold tracking-tight sm:text-4xl">
-          {f.heading}
+      <Eyebrow text={data.eyebrow} className="mb-6 flex items-center justify-center gap-3" />
+      {data.heading && (
+        <h2 className="mb-12 text-center text-3xl font-bold tracking-tight sm:text-4xl">
+          {data.heading}
         </h2>
       )}
       <div className="grid gap-8 md:grid-cols-3">
-        {items.map((item) => (
-          <TriplexItem key={item.sys.id} item={item} />
+        {items.map((item, idx) => (
+          <TriplexItem key={idx} item={item} />
         ))}
       </div>
     </SectionWrapper>

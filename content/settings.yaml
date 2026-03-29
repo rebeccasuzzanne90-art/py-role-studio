@@ -1,0 +1,15 @@
+siteName: The Payroll Studio
+logoPath: /logo.png
+primaryColor: "#c9963e"
+secondaryColor: "#1e3a2a"
+accentColor: "#c9963e"
+backgroundColor: "#fafafa"
+fontHeading: Playfair Display
+fontBody: DM Sans
+borderRadius: full
+footerText: |
+    The Payroll Studio helps organisations build payroll functions that are compliant, well-governed, and built to scale.
+socialLinkedin: "https://www.linkedin.com/company/the-payroll-studio/"
+titleTemplate: The Payroll Studio
+defaultMetaDescription: |
+    The Payroll Studio helps Australian organisations build payroll functions that are compliant, well-governed, and built to scale.

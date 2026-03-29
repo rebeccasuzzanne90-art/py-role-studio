@@ -1,13 +1,7 @@
-"use client";
-
-import type { Entry, EntrySkeletonType } from "contentful";
-import { useContentfulInspectorMode } from "@contentful/live-preview/react";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer";
+import type { FaqSectionData } from "@/types/content";
 import { SectionWrapper } from "@/components/section-wrapper";
 import { JsonLd } from "@/components/json-ld";
 import { faqJsonLd } from "@/lib/seo";
-import type { FaqSectionFields, FaqItemFields } from "@/types/contentful";
 import {
   Accordion,
   AccordionContent,
@@ -15,73 +9,68 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import ReactMarkdown from "react-markdown";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
-function FaqItemRow({ item, idx }: { item: Entry<EntrySkeletonType>; idx: number }) {
-  const fields = item.fields as unknown as FaqItemFields;
-  const inspectorProps = useContentfulInspectorMode({ entryId: item.sys?.id });
-  if (!fields.question) return null;
-  return (
-    <AccordionItem value={`faq-${idx}`}>
-      <AccordionTrigger {...inspectorProps({ fieldId: "question" })}>{fields.question}</AccordionTrigger>
-      <AccordionContent>
-        <div {...inspectorProps({ fieldId: "answer" })} className="prose prose-sm max-w-none">
-          {fields.answer
-            ? documentToReactComponents(
-                fields.answer as Parameters<typeof documentToReactComponents>[0]
-              )
-            : null}
-        </div>
-      </AccordionContent>
-    </AccordionItem>
-  );
+interface Props {
+  data: FaqSectionData;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function FaqSectionBlock({ entry }: { entry: Entry<EntrySkeletonType, any, any> }) {
-  const f = entry.fields as unknown as FaqSectionFields;
-  const items = (f.items ?? []) as Entry<EntrySkeletonType>[];
-  const inspectorProps = useContentfulInspectorMode({ entryId: entry.sys.id });
+export function FaqSectionBlock({ data }: Props) {
+  const items = data.items ?? [];
 
   const faqData = items
-    .map((item) => {
-      const fields = item.fields as unknown as FaqItemFields;
-      if (!fields.question) return null;
-      return {
-        question: fields.question,
-        answer: fields.answer
-          ? documentToPlainTextString(fields.answer as Parameters<typeof documentToPlainTextString>[0])
-          : "",
-      };
-    })
-    .filter(Boolean) as { question: string; answer: string }[];
+    .filter((item) => item.question)
+    .map((item) => ({ question: item.question, answer: item.answer ?? "" }));
 
   return (
     <SectionWrapper
-      backgroundColor={f.backgroundColor}
-      textColor={f.textColor}
-      paddingSize={f.paddingSize}
-      containerWidth={f.containerWidth}
+      backgroundColor={data.backgroundColor}
+      textColor={data.textColor}
+      paddingSize={data.paddingSize}
+      containerWidth={data.containerWidth}
     >
       <JsonLd data={faqJsonLd(faqData)} />
 
-      <Eyebrow text={f.eyebrow} className="mb-6 flex items-center justify-center gap-3" inspectorProps={inspectorProps({ fieldId: "eyebrow" })} />
-      {f.heading && (
-        <h2 {...inspectorProps({ fieldId: "heading" })} className="text-3xl font-normal leading-tight tracking-tight text-center sm:text-4xl lg:text-5xl">
-          {f.heading}
+      <Eyebrow text={data.eyebrow} className="mb-6 flex items-center justify-center gap-3" />
+      {data.heading && (
+        <h2 className="text-3xl font-normal leading-tight tracking-tight text-center sm:text-4xl lg:text-5xl">
+          {data.heading}
         </h2>
       )}
-      {f.subheading && (
-        <p {...inspectorProps({ fieldId: "subheading" })} className="mt-4 text-center text-lg leading-relaxed text-muted-foreground max-w-2xl mx-auto">
-          {f.subheading}
+      {data.subheading && (
+        <p className="mt-4 text-center text-lg leading-relaxed text-muted-foreground max-w-2xl mx-auto">
+          {data.subheading}
         </p>
       )}
 
       <div className="mt-10 mx-auto max-w-3xl">
         <Accordion>
-          {items.map((item, idx) => (
-            <FaqItemRow key={item.sys?.id ?? idx} item={item} idx={idx} />
-          ))}
+          {items.map((item, idx) => {
+            if (!item.question) return null;
+            return (
+              <AccordionItem key={idx} value={`faq-${idx}`}>
+                <AccordionTrigger>{item.question}</AccordionTrigger>
+                <AccordionContent>
+                  <div className="prose prose-sm max-w-none">
+                    {item.answer && <ReactMarkdown>{item.answer}</ReactMarkdown>}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            );
+          })}
         </Accordion>
+      </div>
+
+      <div className="mt-10 text-center">
+        <Link
+          href="/faq"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-primary/80"
+        >
+          View all FAQs
+          <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
       </div>
     </SectionWrapper>
   );

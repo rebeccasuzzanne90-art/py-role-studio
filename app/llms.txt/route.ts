@@ -1,18 +1,28 @@
-import { getAllArticles, getAllServices, getSiteSettings } from "@/lib/contentful";
+import { getAllArticles, getSiteSettings } from "@/lib/content";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://vanreincompliance.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://thepayrollstudio.com";
 
-export async function GET() {
-  let siteName = "VanRein Compliance";
-  let siteDescription = "Compliance and data security consulting services.";
+const SERVICES = [
+  { title: "HIPAA Compliance", slug: "hipaa", description: "Expert HIPAA compliance consulting and risk assessment." },
+  { title: "ISO 27001 & ISO 42001", slug: "iso-27001", description: "ISO 27001 certification guidance and ISMS design." },
+  { title: "SOC2 Compliance", slug: "soc2", description: "SOC2 Type I and Type II audit preparation and support." },
+  { title: "GDPR Compliance", slug: "gdpr", description: "GDPR data protection strategy and implementation." },
+  { title: "HITRUST Certification", slug: "hitrust", description: "HITRUST CSF readiness assessment and certification support." },
+  { title: "Data Security Audits", slug: "data-security-audits", description: "Comprehensive vulnerability assessments and security audits." },
+  { title: "Fractional CISO", slug: "fractional-ciso", description: "On-demand CISO expertise for your organization." },
+  { title: "Penetration Testing", slug: "pen-tests", description: "External, internal, and web application penetration testing." },
+  { title: "Disaster Recovery", slug: "disaster-recovery", description: "Business continuity and disaster recovery planning." },
+  { title: "Team Training", slug: "team-training", description: "Security awareness training and phishing simulations." },
+];
+
+export function GET() {
+  let siteName = "The Payroll Studio";
+  let siteDescription = "Payroll compliance and governance support.";
 
   try {
-    const settings = await getSiteSettings();
-    if (settings?.fields) {
-      const f = settings.fields as Record<string, unknown>;
-      if (f.siteName) siteName = f.siteName as string;
-      if (f.defaultMetaDescription) siteDescription = f.defaultMetaDescription as string;
-    }
+    const settings = getSiteSettings();
+    if (settings.siteName) siteName = settings.siteName;
+    if (settings.defaultMetaDescription) siteDescription = settings.defaultMetaDescription;
   } catch {
     // use defaults
   }
@@ -21,44 +31,29 @@ export async function GET() {
     `# ${siteName}`,
     `> ${siteDescription}`,
     "",
-    `## About`,
-    `${siteName} provides compliance consulting, data security audits, and regulatory framework implementation for businesses of all sizes.`,
+    "## About",
+    `${siteName} provides payroll compliance consulting and governance support for businesses of all sizes.`,
     "",
-    `## Links`,
+    "## Links",
     `- Homepage: ${BASE_URL}/`,
     `- Services: ${BASE_URL}/services`,
-    `- Resources: ${BASE_URL}/blog`,
+    `- Blog: ${BASE_URL}/blog`,
     `- Contact: ${BASE_URL}/contact`,
     "",
+    "## Services",
   ];
 
-  try {
-    const services = await getAllServices();
-    if (services.length > 0) {
-      lines.push("## Services");
-      for (const svc of services) {
-        const f = svc.fields as Record<string, unknown>;
-        const title = f.title as string;
-        const slug = f.slug as string;
-        const desc = f.shortDescription as string | undefined;
-        lines.push(`- [${title}](${BASE_URL}/services/${slug})${desc ? `: ${desc.slice(0, 200)}` : ""}`);
-      }
-      lines.push("");
-    }
-  } catch {
-    // skip
+  for (const svc of SERVICES) {
+    lines.push(`- [${svc.title}](${BASE_URL}/services/${svc.slug}): ${svc.description}`);
   }
+  lines.push("");
 
   try {
-    const articles = await getAllArticles();
+    const articles = getAllArticles();
     if (articles.length > 0) {
       lines.push("## Articles & Resources");
       for (const art of articles.slice(0, 20)) {
-        const f = art.fields as Record<string, unknown>;
-        const title = f.title as string;
-        const slug = f.slug as string;
-        const summary = (f.summary as string | undefined) || (f.excerpt as string | undefined);
-        lines.push(`- [${title}](${BASE_URL}/blog/${slug})${summary ? `: ${summary.slice(0, 200)}` : ""}`);
+        lines.push(`- [${art.title}](${BASE_URL}/blog/${art.slug})${art.excerpt ? `: ${art.excerpt.slice(0, 200)}` : ""}`);
       }
       lines.push("");
     }

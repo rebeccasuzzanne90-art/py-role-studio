@@ -1,49 +1,45 @@
 import type { Metadata } from "next";
-import { ServicesGrid } from "@/components/services-grid";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import Script from "next/script";
+import { getPageBySlug } from "@/lib/content";
+import { ModuleRenderer } from "@/components/module-renderer";
 
 export const metadata: Metadata = {
   title: "Services",
-  description:
-    "Explore our comprehensive data security and compliance services including HIPAA, SOC2, ISO 27001, GDPR, HITRUST, and more.",
+  description: "Payroll compliance and governance support, built around your situation.",
 };
 
 export default function ServicesPage() {
+  const page = getPageBySlug("services");
+
   return (
     <>
-      <section className="py-20 text-white" style={{ backgroundColor: "#1e3a2a" }}>
-        <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Our Services
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">
-            We&apos;re not just a platform that runs an audit and gives you a
-            to-do list — we provide one-on-one support with the entire data
-            security suite.
-          </p>
-        </div>
-      </section>
+      {page?.sections && page.sections.length > 0 && (
+        <ModuleRenderer sections={page.sections} />
+      )}
 
-      <ServicesGrid />
-
-      <section className="border-t bg-muted/30 py-16">
-        <div className="mx-auto max-w-3xl px-4 text-center">
-          <h2 className="text-2xl font-bold">
-            Not Sure Which Service You Need?
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            Start with a free risk review and our team will recommend the right
-            path for your organization.
-          </p>
-          <div className="mt-6">
-            <Link href="/contact">
-              <Button size="lg" className="gap-2">
-                Get a Free Risk Review
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
+      <section id="contact" className="py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-start gap-12 lg:grid-cols-3">
+            <div>
+              <h2 className="text-3xl font-normal leading-tight tracking-tight sm:text-4xl">
+                Contact Us
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                Ready to talk through your payroll governance situation? Get in touch and we'll take it from there.
+              </p>
+            </div>
+            <div className="lg:col-span-2">
+              <Script
+                src="https://js-ap1.hsforms.net/forms/embed/442998450.js"
+                strategy="lazyOnload"
+              />
+              <div
+                className="hs-form-frame"
+                data-region="ap1"
+                data-form-id="b8475605-26c1-402b-9976-047a89532d6a"
+                data-portal-id="442998450"
+              />
+            </div>
           </div>
         </div>
       </section>

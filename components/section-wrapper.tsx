@@ -1,4 +1,3 @@
-import type { SectionStyleFields } from "@/types/contentful";
 import { cn } from "@/lib/utils";
 
 const PADDING_MAP: Record<string, string> = {
@@ -14,7 +13,14 @@ const WIDTH_MAP: Record<string, string> = {
   full: "max-w-full",
 };
 
-interface SectionWrapperProps extends SectionStyleFields {
+interface SectionStyleProps {
+  backgroundColor?: string;
+  textColor?: string;
+  paddingSize?: "small" | "medium" | "large";
+  containerWidth?: "narrow" | "default" | "wide" | "full";
+}
+
+interface SectionWrapperProps extends SectionStyleProps {
   children: React.ReactNode;
   className?: string;
   as?: "section" | "div";

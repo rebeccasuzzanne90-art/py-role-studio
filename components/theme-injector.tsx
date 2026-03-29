@@ -1,4 +1,4 @@
-import type { SiteSettingsFields } from "@/types/contentful";
+import type { SiteSettingsData } from "@/types/content";
 
 function hexToHslColor(hex: string): string | null {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -59,7 +59,7 @@ const RADIUS_MAP: Record<string, string> = {
 };
 
 interface ThemeInjectorProps {
-  settings: SiteSettingsFields | null;
+  settings: SiteSettingsData | null;
 }
 
 export function ThemeInjector({ settings }: ThemeInjectorProps) {

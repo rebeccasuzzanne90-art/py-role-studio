@@ -1,4 +1,4 @@
-import type { Entry, EntrySkeletonType } from "contentful";
+import type { SectionData } from "@/types/content";
 import { SectionWrapper } from "@/components/section-wrapper";
 import { StatsSection } from "@/components/sections/stats-section";
 import { TestimonialSection } from "@/components/sections/testimonial-section";
@@ -14,9 +14,7 @@ import { FaqSectionBlock } from "@/components/sections/faq-section-block";
 import { AccordionSectionBlock } from "@/components/sections/accordion-section";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AnyEntry = Entry<EntrySkeletonType, any, any>;
-
-const MODULE_MAP: Record<string, React.ComponentType<{ entry: AnyEntry }>> = {
+const MODULE_MAP: Record<string, React.ComponentType<{ data: any }>> = {
   statsSection: StatsSection,
   testimonialSection: TestimonialSection,
   trustLogoStrip: TrustLogoStripSection,
@@ -31,31 +29,27 @@ const MODULE_MAP: Record<string, React.ComponentType<{ entry: AnyEntry }>> = {
   accordionSection: AccordionSectionBlock,
 };
 
-interface ModuleRendererProps {
-  sections: AnyEntry[];
+interface Props {
+  sections: SectionData[];
 }
 
-export function ModuleRenderer({ sections }: ModuleRendererProps) {
+export function ModuleRenderer({ sections }: Props) {
   return (
     <>
-      {sections.map((entry) => {
-        const contentTypeId = entry.sys.contentType?.sys?.id;
-        const Component = contentTypeId ? MODULE_MAP[contentTypeId] : null;
+      {sections.map((section, idx) => {
+        const Component = MODULE_MAP[section._type];
 
         if (!Component) {
-          if (process.env.NODE_ENV === "development") {
-            return (
-              <SectionWrapper key={entry.sys.id} paddingSize="small">
-                <p className="text-sm text-muted-foreground">
-                  Unknown module: <code>{contentTypeId ?? "unknown"}</code>
-                </p>
-              </SectionWrapper>
-            );
-          }
-          return null;
+          return (
+            <SectionWrapper key={idx} paddingSize="small">
+              <p className="text-sm text-muted-foreground">
+                Unknown module: <code>{section._type}</code>
+              </p>
+            </SectionWrapper>
+          );
         }
 
-        return <Component key={entry.sys.id} entry={entry} />;
+        return <Component key={idx} data={section} />;
       })}
     </>
   );

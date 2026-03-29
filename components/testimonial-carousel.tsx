@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { useContentfulInspectorMode } from "@contentful/live-preview/react";
 
 interface Testimonial {
   quote: string;
@@ -49,8 +48,7 @@ const FALLBACK_TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-function TestimonialSlide({ testimonial, visible }: { testimonial: TestimonialWithId; visible: boolean }) {
-  const inspectorProps = useContentfulInspectorMode({ entryId: testimonial.entryId });
+function TestimonialSlide({ testimonial, visible }: { testimonial: Testimonial; visible: boolean }) {
   if (!visible) return null;
   return (
     <Card className="border-0 bg-background shadow-md">
@@ -62,16 +60,14 @@ function TestimonialSlide({ testimonial, visible }: { testimonial: TestimonialWi
             ))}
           </div>
         )}
-        <blockquote {...inspectorProps({ fieldId: "quote" })} className="text-lg leading-relaxed text-foreground sm:text-xl">
+        <blockquote className="text-lg leading-relaxed text-foreground sm:text-xl">
           &ldquo;{testimonial.quote}&rdquo;
         </blockquote>
         <div className="mt-6">
-          <p {...inspectorProps({ fieldId: "authorName" })} className="font-semibold">{testimonial.authorName}</p>
+          <p className="font-semibold">{testimonial.authorName}</p>
           <p className="text-sm text-muted-foreground">
-            <span {...inspectorProps({ fieldId: "authorRole" })}>{testimonial.authorRole}</span>
-            {testimonial.company && (
-              <span {...inspectorProps({ fieldId: "company" })}>{`, ${testimonial.company}`}</span>
-            )}
+            {testimonial.authorRole}
+            {testimonial.company && `, ${testimonial.company}`}
           </p>
         </div>
       </CardContent>
@@ -79,23 +75,15 @@ function TestimonialSlide({ testimonial, visible }: { testimonial: TestimonialWi
   );
 }
 
-interface TestimonialWithId extends Testimonial {
-  entryId?: string;
-}
-
 interface TestimonialCarouselProps {
   heading?: string;
   subheading?: string;
-  headingProps?: Record<string, string> | null;
-  subheadingProps?: Record<string, string> | null;
-  testimonials?: TestimonialWithId[];
+  testimonials?: Testimonial[];
 }
 
 export function TestimonialCarousel({
   heading = "What Our Clients Are Saying",
   subheading = "Trusted by companies that take data security seriously",
-  headingProps,
-  subheadingProps,
   testimonials = FALLBACK_TESTIMONIALS,
 }: TestimonialCarouselProps) {
   const [current, setCurrent] = useState(0);
@@ -106,17 +94,17 @@ export function TestimonialCarousel({
   return (
     <div>
       <div className="mb-12 text-center">
-        <h2 {...headingProps} className="text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+        <h2 className="text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">
           {heading}
         </h2>
         {subheading && (
-          <p {...subheadingProps} className="mt-4 text-lg leading-relaxed text-muted-foreground">{subheading}</p>
+          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{subheading}</p>
         )}
       </div>
 
       <div className="mx-auto max-w-3xl">
         {testimonials.map((t, idx) => (
-          <TestimonialSlide key={t.entryId ?? idx} testimonial={t} visible={idx === current} />
+          <TestimonialSlide key={idx} testimonial={t} visible={idx === current} />
         ))}
 
         <div className="mt-6 flex items-center justify-center gap-4">

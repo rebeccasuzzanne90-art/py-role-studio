@@ -1,87 +1,79 @@
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { getArticleBySlug, getAllArticles, getSiteSettings } from "@/lib/contentful";
+import { getArticleBySlug, getAllArticles, getSiteSettings } from "@/lib/content";
 import { buildMetadata, articleJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/json-ld";
-import { LiveArticle } from "@/components/live-preview/live-article";
-import type { SiteSettingsFields, SeoSkeleton, ArticleFields } from "@/types/contentful";
-import type { Entry } from "contentful";
-
-export const revalidate = 60;
+import { compileMDX } from "next-mdx-remote/rsc";
 
 type Params = Promise<{ slug: string }>;
 
-export async function generateStaticParams() {
-  try {
-    const articles = await getAllArticles();
-    return articles.map((a) => ({
-      slug: (a.fields as unknown as ArticleFields).slug,
-    }));
-  } catch {
-    return [];
-  }
+export function generateStaticParams() {
+  return getAllArticles().map((a) => ({ slug: a.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const { slug } = await params;
-
-  try {
-    const [article, settingsEntry] = await Promise.all([
-      getArticleBySlug(slug),
-      getSiteSettings(),
-    ]);
-    if (article) {
-      const f = article.fields as unknown as ArticleFields;
-      const settings = settingsEntry?.fields as unknown as SiteSettingsFields | undefined;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const seoEntry = (f as any).seo as Entry<SeoSkeleton> | undefined;
-      return buildMetadata({
-        seoEntry: seoEntry ?? null,
-        fallbackTitle: f.title,
-        fallbackDescription: f.excerpt as string | undefined,
-        path: `/blog/${slug}`,
-        settings: settings ?? null,
-      });
+export function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  return params.then(({ slug }) => {
+    try {
+      const [article, settings] = [getArticleBySlug(slug), getSiteSettings()];
+      if (article) {
+        return buildMetadata({
+          seo: article.seo ?? null,
+          fallbackTitle: article.title,
+          fallbackDescription: article.excerpt,
+          path: `/blog/${slug}`,
+          settings,
+        });
+      }
+    } catch {
+      // fall through
     }
-  } catch {
-    // Contentful not configured
-  }
-
-  return { title: "Blog Post" };
+    return { title: "Blog Post" };
+  });
 }
 
 export default async function BlogPostPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const { isEnabled: isDraft } = await draftMode();
+  const article = getArticleBySlug(slug);
 
-  let article: Awaited<ReturnType<typeof getArticleBySlug>> | null = null;
-  try {
-    article = await getArticleBySlug(slug, isDraft);
-  } catch {
-    // Contentful not configured
+  if (!article) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-20 text-center">
+        <h1 className="text-2xl font-bold">Post Not Found</h1>
+        <p className="mt-4 text-muted-foreground">This article could not be found.</p>
+        <Link href="/blog" className="mt-4 inline-block text-primary">
+          Back to Blog
+        </Link>
+      </div>
+    );
   }
 
-  if (article) {
-    if (isDraft) {
-      return <LiveArticle entry={article} slug={slug} />;
-    }
+  const { content: BodyContent } = article.body
+    ? await compileMDX({ source: article.body })
+    : { content: null };
 
-    const f = article.fields as unknown as ArticleFields;
-    return (
+  const settings = getSiteSettings();
+
+  return (
+    <>
+      <JsonLd
+        data={articleJsonLd({
+          title: article.title,
+          description: article.excerpt,
+          path: `/blog/${slug}`,
+          publishDate: article.publishDate,
+          author: article.author ?? null,
+          imageUrl: article.imagePath
+            ? `${process.env.NEXT_PUBLIC_SITE_URL ?? ""}${article.imagePath}`
+            : undefined,
+        })}
+      />
+
       <article className="py-16">
-        <JsonLd
-          data={articleJsonLd({
-            title: f.title,
-            description: (f.excerpt as string) ?? f.title,
-            path: `/blog/${slug}`,
-            publishDate: f.publishDate as string | undefined,
-          })}
-        />
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <Link
             href="/blog"
@@ -91,11 +83,11 @@ export default async function BlogPostPage({ params }: { params: Params }) {
           </Link>
 
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            {f.category && <Badge variant="secondary">{f.category as string}</Badge>}
-            {f.publishDate && (
+            {article.category && <Badge variant="secondary">{article.category}</Badge>}
+            {article.publishDate && (
               <span className="flex items-center gap-1">
                 <Calendar className="h-3.5 w-3.5" />
-                {new Date(f.publishDate as string).toLocaleDateString("en-US", {
+                {new Date(article.publishDate).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
@@ -105,44 +97,46 @@ export default async function BlogPostPage({ params }: { params: Params }) {
           </div>
 
           <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-            {f.title}
+            {article.title}
           </h1>
+
+          {article.author && (
+            <p className="mt-3 text-sm text-muted-foreground">
+              By {article.author.name}
+              {article.author.role && <span> &middot; {article.author.role}</span>}
+            </p>
+          )}
+
+          {article.imagePath && (
+            <div className="relative mt-8 aspect-video overflow-hidden rounded-xl">
+              <Image
+                src={article.imagePath}
+                alt={article.title}
+                fill
+                className="object-cover"
+              />
+            </div>
+          )}
 
           <Separator className="my-8" />
 
           <div className="prose prose-neutral max-w-none dark:prose-invert">
-            {f.body && typeof f.body === "object" && "nodeType" in f.body
-              ? (await import("@contentful/rich-text-react-renderer")).documentToReactComponents(
-                  f.body as import("@contentful/rich-text-types").Document,
-                )
-              : null}
+            {BodyContent}
           </div>
 
           <Separator className="my-8" />
 
-          <div className="border bg-muted/30 p-8 text-center">
-            <h3 className="text-xl font-bold">Need Help With Compliance?</h3>
+          <div className="rounded-xl border bg-muted/30 p-8 text-center">
+            <h3 className="text-xl font-bold">Need help with your payroll compliance or governance?</h3>
             <p className="mt-2 text-muted-foreground">
-              Our experts can help you navigate these requirements.
+              We can help you navigate these requirements.
             </p>
             <Link href="/contact" className="mt-4 inline-block">
-              <Button>Get a Free Consultation</Button>
+              <Button>Get In Touch</Button>
             </Link>
           </div>
         </div>
       </article>
-    );
-  }
-
-  return (
-    <div className="mx-auto max-w-3xl px-4 py-20 text-center">
-      <h1 className="text-2xl font-bold">Post Not Found</h1>
-      <p className="mt-4 text-muted-foreground">
-        This article could not be found.
-      </p>
-      <Link href="/blog" className="mt-4 inline-block text-primary">
-        Back to Blog
-      </Link>
-    </div>
+    </>
   );
 }
