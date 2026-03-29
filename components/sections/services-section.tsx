@@ -103,7 +103,7 @@ function ServiceCardItem({ svc, hasDarkBg }: { svc: ServiceCardData; hasDarkBg: 
   const Icon = ICON_MAP[svc.iconName ?? ""] ?? Shield;
 
   return (
-    <div className="group flex flex-col border border-white/10 bg-white/5 p-8 rounded-xl transition-colors hover:bg-white/10 sm:p-10">
+    <div className="group flex flex-col border border-white/10 bg-white/5 p-8 rounded-sm transition-colors hover:bg-white/10 sm:p-10">
       <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#c9963e]/40 text-[#c9963e]">
         <Icon className="h-5 w-5" />
       </div>
