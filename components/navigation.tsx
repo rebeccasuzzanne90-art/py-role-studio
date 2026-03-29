@@ -121,13 +121,13 @@ export function Navigation({ navData }: NavigationProps) {
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle menu</span>
           </SheetTrigger>
-          <SheetContent side="right" className="w-80">
+          <SheetContent side="right" className="w-80 border-white/10 text-white" style={{ backgroundColor: "#1e3a2a" }}>
             <div className="flex flex-col gap-4 pt-8">
               {links.map((link) => (
                 <div key={link.label}>
                   <Link
                     href={link.href}
-                    className="block py-2 text-lg font-medium"
+                    className="block py-2 text-lg font-medium text-white/90 hover:text-white"
                     onClick={() => setSheetOpen(false)}
                     {...(link.external
                       ? { target: "_blank", rel: "noopener noreferrer" }
@@ -141,7 +141,7 @@ export function Navigation({ navData }: NavigationProps) {
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block py-1.5 text-sm text-muted-foreground"
+                          className="block py-1.5 text-sm text-white/60 hover:text-white"
                           onClick={() => setSheetOpen(false)}
                           {...(child.external
                             ? {
@@ -157,7 +157,7 @@ export function Navigation({ navData }: NavigationProps) {
                   )}
                 </div>
               ))}
-              <div className="mt-4 flex flex-col gap-2 border-t pt-4">
+              <div className="mt-4 flex flex-col gap-2 border-t border-white/10 pt-4">
                 <Link href={ctaHref} onClick={() => setSheetOpen(false)}>
                   <Button className="w-full">{ctaLabel}</Button>
                 </Link>

@@ -17,24 +17,13 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("system");
-
-  useEffect(() => {
-    const stored = localStorage.getItem("theme") as Theme | null;
-    if (stored) setThemeState(stored);
-  }, []);
+  const [theme, setThemeState] = useState<Theme>("light");
 
   useEffect(() => {
     const root = document.documentElement;
     root.classList.remove("light", "dark");
-
-    if (theme === "system") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      root.classList.add(prefersDark ? "dark" : "light");
-    } else {
-      root.classList.add(theme);
-    }
-  }, [theme]);
+    root.classList.add("light");
+  }, []);
 
   function setTheme(t: Theme) {
     setThemeState(t);

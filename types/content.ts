@@ -111,6 +111,8 @@ export interface DuplexSectionData {
   heading?: string;
   items: FeatureCardData[];
   variant?: "default" | "boxed";
+  backgroundColor?: string;
+  textColor?: string;
 }
 
 export interface TriplexSectionData {

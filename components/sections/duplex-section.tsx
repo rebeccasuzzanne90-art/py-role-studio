@@ -30,7 +30,7 @@ export function DuplexSection({ data }: Props) {
   const boxed = data.variant === "boxed";
 
   return (
-    <SectionWrapper>
+    <SectionWrapper backgroundColor={data.backgroundColor} textColor={data.textColor}>
       <Eyebrow text={data.eyebrow} className="mb-6 flex items-center gap-3" />
       {data.heading && (
         <h2 className="mb-12 text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">
