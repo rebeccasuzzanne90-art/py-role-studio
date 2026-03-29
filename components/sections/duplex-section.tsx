@@ -10,7 +10,7 @@ interface Props {
 
 function DuplexItem({ item, boxed }: { item: FeatureCardData; boxed?: boolean }) {
   return (
-    <div className={boxed ? "border border-border bg-muted/30 p-8 space-y-4" : "space-y-4"}>
+    <div className={boxed ? "border border-border bg-muted/30 p-8 space-y-4 rounded-xl" : "space-y-4"}>
       {item.imageUrl && (
         <div className="relative aspect-video overflow-hidden rounded-lg">
           <Image src={item.imageUrl} alt={item.title} fill className="object-cover" />

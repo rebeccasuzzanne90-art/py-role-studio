@@ -24,6 +24,7 @@ export function TextBlockSection({ data }: Props) {
 
   const isHorizontal = data.imagePosition === "left" || data.imagePosition === "right";
   const hasDarkBg = data.backgroundColor && data.backgroundColor !== "#ffffff" && data.backgroundColor !== "#fafafa";
+  const hasTextColor = !!data.textColor;
 
   return (
     <SectionWrapper
@@ -44,7 +45,7 @@ export function TextBlockSection({ data }: Props) {
             <h2
               className={cn(
                 "text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl",
-                hasDarkBg ? "text-white" : "text-foreground"
+                hasDarkBg ? "text-white" : hasTextColor ? "" : "text-foreground"
               )}
               dangerouslySetInnerHTML={{
                 __html: data.heading.replace(
@@ -55,7 +56,7 @@ export function TextBlockSection({ data }: Props) {
             />
           )}
           {data.subheading && (
-            <p className={cn("mt-4 text-lg", hasDarkBg ? "text-white/70" : "text-muted-foreground")}>
+            <p className={cn("mt-4 text-lg", hasDarkBg ? "text-white/70" : hasTextColor ? "opacity-70" : "text-muted-foreground")}>
               {data.subheading}
             </p>
           )}
@@ -63,7 +64,7 @@ export function TextBlockSection({ data }: Props) {
             <div
               className={cn(
                 "mt-8 max-w-none space-y-4 text-base leading-relaxed",
-                hasDarkBg ? "text-white/80 [&_strong]:text-white" : "prose prose-lg dark:prose-invert"
+                hasDarkBg ? "text-white/80 [&_strong]:text-white" : hasTextColor ? "opacity-80" : "prose prose-lg dark:prose-invert"
               )}
             >
               <ReactMarkdown>{data.body}</ReactMarkdown>

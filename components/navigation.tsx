@@ -122,12 +122,12 @@ export function Navigation({ navData }: NavigationProps) {
             <span className="sr-only">Toggle menu</span>
           </SheetTrigger>
           <SheetContent side="right" className="w-80 border-white/10 text-white" style={{ backgroundColor: "#1e3a2a" }}>
-            <div className="flex flex-col gap-4 pt-8">
+            <div className="flex flex-col gap-4 pt-8 items-center">
               {links.map((link) => (
                 <div key={link.label}>
                   <Link
                     href={link.href}
-                    className="block py-2 text-lg font-medium text-white/90 hover:text-white"
+                    className="block py-2 text-lg font-medium text-white/90 hover:text-white text-center"
                     onClick={() => setSheetOpen(false)}
                     {...(link.external
                       ? { target: "_blank", rel: "noopener noreferrer" }
