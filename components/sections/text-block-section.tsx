@@ -23,7 +23,10 @@ export function TextBlockSection({ data }: Props) {
   const imageUrl = data.imageUrl ?? null;
 
   const isHorizontal = data.imagePosition === "left" || data.imagePosition === "right";
-  const hasDarkBg = data.backgroundColor && data.backgroundColor !== "#ffffff" && data.backgroundColor !== "#fafafa";
+  const hasDarkBg = data.backgroundColor &&
+    data.backgroundColor !== "#ffffff" &&
+    data.backgroundColor !== "#fafafa" &&
+    data.backgroundColor !== "#f5f1eb";
   const hasTextColor = !!data.textColor;
 
   return (
