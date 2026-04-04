@@ -4,6 +4,8 @@ links:
     href: /about
   - label: Services
     href: /services
+  - label: How We Work
+    href: /how-we-work
 primaryCta:
   label: Contact
   href: /contact
