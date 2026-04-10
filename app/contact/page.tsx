@@ -9,8 +9,7 @@ export default function ContactPage() {
             Contact Us
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">
-            Ready to start your compliance journey? Get in touch for a free risk
-            review.
+            Ready to start your payroll governance journey? Talk to one of our experts.
           </p>
         </div>
       </section>
