@@ -32,10 +32,12 @@ export function AccordionSectionBlock({ data }: Props) {
     data.backgroundColor !== "#f5f1eb";
 
   const headingHtml = data.heading
-    ? data.heading.replace(
-        /\*(.*?)\*/g,
-        `<em class="font-normal italic" style="color: ${data.accentColor || "inherit"}"}>$1</em>`
-      )
+    ? data.heading
+        .replace(/\*\*\*(.*?)\*\*\*/g, `<strong><em>$1</em></strong>`)
+        .replace(
+          /\*(.*?)\*/g,
+          `<em class="font-normal italic" style="color: ${data.accentColor || "inherit"}"}>$1</em>`
+        )
     : "";
 
   return (
