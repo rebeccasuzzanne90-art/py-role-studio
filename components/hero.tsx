@@ -80,7 +80,7 @@ export function Hero({ data }: HeroProps) {
   const parts = headline.split(/\*(.*?)\*/);
 
   const headingNode = (
-    <h1 className="font-heading text-5xl font-normal leading-[1.1] tracking-tight text-white sm:text-6xl lg:text-7xl">
+    <h1 className="text-5xl font-normal leading-[1.1] tracking-tight text-white sm:text-6xl lg:text-7xl">
       {parts.map((part, i) =>
         i % 2 === 1 ? (
           <em key={i} className="font-normal italic" style={{ color: "#c9963e" }}>{part}</em>
