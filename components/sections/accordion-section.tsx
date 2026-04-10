@@ -99,6 +99,13 @@ export function AccordionSectionBlock({ data }: Props) {
               ) : (
                 <AccordionList items={items} hasDarkBg={!!hasDarkBg} />
               )}
+              {(data.rightCtas ?? []).length > 0 && (
+                <div className="mt-10 flex flex-wrap gap-4">
+                  {(data.rightCtas ?? []).map((c, i) => (
+                    <LinkedCtaButton key={i} cta={c} darkBorder={!!hasDarkBg} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         ) : (

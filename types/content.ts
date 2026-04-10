@@ -61,6 +61,7 @@ export interface AccordionSectionData extends SectionStyleData {
   quote?: string;
   items: FaqItemData[];
   ctas?: CtaData[];
+  rightCtas?: CtaData[];
   layout?: "split" | "stacked";
   displayMode?: "accordion" | "numberedList";
   showWaveDivider?: boolean;
