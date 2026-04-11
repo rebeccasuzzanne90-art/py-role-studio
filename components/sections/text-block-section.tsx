@@ -42,7 +42,7 @@ export function TextBlockSection({ data }: Props) {
           data.imagePosition === "left" && "lg:[&>div:last-child]:order-first"
         )}
       >
-        <div className={cn(align, "py-4")}>
+        <div className={cn(align, "py-4", !isHorizontal && "max-w-3xl")}>
           <Eyebrow text={data.eyebrow} />
           {data.heading && (
             <h2
