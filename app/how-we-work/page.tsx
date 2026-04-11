@@ -200,6 +200,9 @@ Where you start depends on where you are.`,
             <p>
               If you are not certain which stage applies to your organisation, the discovery conversation will make it clear. That conversation is free and there is no obligation to proceed.
             </p>
+            <p>
+              Not sure where you sit in the journey? The first conversation is free, and there&apos;s no obligation.
+            </p>
           </div>
           <div className="mt-8">
             <Link href="/contact">
@@ -208,7 +211,7 @@ Where you start depends on where you are.`,
                 className="font-medium text-white hover:brightness-110"
                 style={{ backgroundColor: "#c9963e" }}
               >
-                Book a conversation
+                Book a call
               </Button>
             </Link>
           </div>
@@ -234,7 +237,7 @@ Where you start depends on where you are.`,
                 className="font-medium text-white hover:brightness-110"
                 style={{ backgroundColor: "#c9963e" }}
               >
-                Book a conversation
+                Book a call
               </Button>
             </Link>
           </div>
