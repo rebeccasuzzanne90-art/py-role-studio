@@ -1,44 +1,26 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import path from "node:path";
+import { getSitemapContent, type SitemapContentEntry } from "@/lib/sitemap-content";
+import { PRODUCTS } from "@/lib/products";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://vanreincompliance.com";
+const BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.thepayrollstudio.com.au").replace(/\/+$/, "");
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPages = [
-    "",
-    "/about",
-    "/services",
-    "/blog",
-    "/resources",
-    "/faq",
-    "/contact",
-    "/shop",
+  // These routes are implemented in the app rather than MDX.
+  const appPages = ["/how-we-work", "/blog", "/resources", "/faq", "/contact", "/shop"];
+  const contentPages = getSitemapContent(path.join(process.cwd(), "content"), BASE_URL);
+  const entries = new Map<string, MetadataRoute.Sitemap[number]>();
+  const pages: SitemapContentEntry[] = [
+    ...appPages.map(path => ({ path })),
+    ...Object.keys(PRODUCTS).map(slug => ({ path: `/shop/${slug}` })),
+    ...contentPages,
   ];
-
-  const servicePages = [
-    "hipaa",
-    "iso-27001",
-    "soc2",
-    "gdpr",
-    "hitrust",
-    "data-security-audits",
-    "fractional-ciso",
-    "pen-tests",
-    "disaster-recovery",
-    "team-training",
-  ];
-
-  return [
-    ...staticPages.map((path) => ({
-      url: `${BASE_URL}${path}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: path === "" ? 1 : 0.8,
-    })),
-    ...servicePages.map((slug) => ({
-      url: `${BASE_URL}/services/${slug}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    })),
-  ];
+  for (const page of pages) {
+    const url = new URL(page.path, `${BASE_URL}/`).href;
+    entries.set(url, {
+      url,
+      ...(page.lastModified ? { lastModified: page.lastModified } : {}),
+    });
+  }
+  return [...entries.values()];
 }
