@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy",
@@ -16,7 +17,7 @@ export default function PrivacyPage() {
       <p>We use Google Analytics to understand website visits, pages viewed and successful enquiry submissions. Google Analytics uses cookies and similar identifiers to measure website activity. Our enquiry tracking event does not include your name, email address, phone number or message.</p>
       <p>Learn <a className="underline" href="https://policies.google.com/technologies/partner-sites">how Google uses information from websites that use its services</a>. You can manage cookies in your browser or use the <a className="underline" href="https://tools.google.com/dlpage/gaoptout">Google Analytics opt-out browser add-on</a>.</p>
       <h2 className="text-2xl font-semibold">Questions</h2>
-      <p>For questions about information you have provided through this website, please <a className="underline" href="/contact">contact us</a>.</p>
+      <p>For questions about information you have provided through this website, please <Link className="underline" href="/contact">contact us</Link>.</p>
     </article>
   );
 }
