@@ -3,7 +3,14 @@ import { contactEmail, validateContact } from "@/lib/contact";
 
 export async function POST(request: Request) {
   const origin = request.headers.get("origin");
-  if (origin && origin !== new URL(request.url).origin) {
+  // Render terminates HTTPS before forwarding requests to the Next.js server.
+  const allowedOrigins = new Set([
+    new URL(request.url).origin,
+    "https://www.thepayrollstudio.com.au",
+    "https://thepayrollstudio.com.au",
+    "https://py-role-studio.onrender.com",
+  ]);
+  if (origin && !allowedOrigins.has(origin)) {
     return Response.json({ error: "Please submit the form from this website." }, { status: 403 });
   }
   if (Number(request.headers.get("content-length")) > 20000) {
