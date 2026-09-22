@@ -7,7 +7,7 @@ const BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.thepayrollstu
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // These routes are implemented in the app rather than MDX.
-  const appPages = ["/how-we-work", "/blog", "/resources", "/faq", "/contact", "/shop"];
+  const appPages = ["/how-we-work", "/blog", "/resources", "/faq", "/contact", "/shop", "/privacy"];
   const contentPages = getSitemapContent(path.join(process.cwd(), "content"), BASE_URL);
   const entries = new Map<string, MetadataRoute.Sitemap[number]>();
   const pages: SitemapContentEntry[] = [

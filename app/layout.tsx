@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Geist, Geist_Mono, Playfair_Display, DM_Sans, Bricolage_Grotesque, Inter } from "next/font/google";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
@@ -76,6 +77,7 @@ export default function RootLayout({
           </TooltipProvider>
         </ThemeProvider>
       </body>
+      {process.env.NODE_ENV === "production" && <GoogleAnalytics gaId="G-T23JJH27FJ" />}
     </html>
   );
 }

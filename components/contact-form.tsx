@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { sendGAEvent } from "@next/third-parties/google";
 import { Button } from "@/components/ui/button";
 import { phoneCountries } from "@/lib/contact";
 
@@ -27,6 +28,9 @@ export function ContactForm() {
       const result = await response.json();
       if (!response.ok || !result.success) throw new Error(result.error || "Unable to send your message. Please try again.");
       setStatus("success");
+      if (process.env.NODE_ENV === "production") {
+        sendGAEvent("event", "generate_lead", { form_name: "contact_enquiry" });
+      }
       form.reset();
       setCountry("AU");
     } catch (cause) {
