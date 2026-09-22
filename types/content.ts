@@ -106,14 +106,12 @@ export interface FeatureCardData {
   cta?: CtaData;
 }
 
-export interface DuplexSectionData {
+export interface DuplexSectionData extends SectionStyleData {
   _type: "duplex";
   eyebrow?: string;
   heading?: string;
   items: FeatureCardData[];
   variant?: "default" | "boxed";
-  backgroundColor?: string;
-  textColor?: string;
 }
 
 export interface TriplexSectionData {
