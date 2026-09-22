@@ -34,7 +34,7 @@ const FOOTER_SECTIONS = [
 
 export function Footer() {
   return (
-    <footer className="text-white" style={{ backgroundColor: "#1e3a2a" }}>
+    <footer className="text-foreground" style={{ backgroundColor: "var(--muted)" }}>
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-2">
           <div className="space-y-8">
@@ -44,7 +44,7 @@ export function Footer() {
                 alt="The Payroll Studio"
                 width={160}
                 height={32}
-                className="h-8 w-auto brightness-0 invert"
+                className="h-8 w-auto brightness-0"
               />
             </Link>
             <NewsletterForm variant="footer" />
@@ -53,13 +53,13 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
             {FOOTER_SECTIONS.map((section) => (
               <div key={section.title}>
-                <h3 className="mb-4 text-sm font-semibold text-[#c9963e]">{section.title}</h3>
+                <h3 className="mb-4 text-sm font-semibold text-muted-foreground">{section.title}</h3>
                 <ul className="space-y-2.5">
                   {section.links.map((link) => (
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-sm text-white/60 transition-colors hover:text-white"
+                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                       >
                         {link.label}
                       </Link>
@@ -71,19 +71,19 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
-          <p className="text-xs text-white/40">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
+          <p className="text-xs text-muted-foreground">
             &copy; {new Date().getFullYear()} The Payroll Studio. All rights
             reserved.
           </p>
-          <div className="flex gap-6 text-xs text-white/40">
-            <Link href="/privacy" className="hover:text-white">
+          <div className="flex gap-6 text-xs text-muted-foreground">
+            <Link href="/privacy" className="hover:text-foreground">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-white">
+            <Link href="/terms" className="hover:text-foreground">
               Terms of Service
             </Link>
-            <Link href="/accessibility" className="hover:text-white">
+            <Link href="/accessibility" className="hover:text-foreground">
               Accessibility
             </Link>
           </div>

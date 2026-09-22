@@ -23,11 +23,8 @@ export function TextBlockSection({ data }: Props) {
   const imageUrl = data.imageUrl ?? null;
 
   const isHorizontal = data.imagePosition === "left" || data.imagePosition === "right";
-  const hasDarkBg = data.backgroundColor &&
-    data.backgroundColor !== "#ffffff" &&
-    data.backgroundColor !== "#fafafa" &&
-    data.backgroundColor !== "#f5f1eb";
-  const hasTextColor = !!data.textColor;
+  const hasDarkBg = false;
+  const hasTextColor = false;
 
   return (
     <SectionWrapper
@@ -48,20 +45,20 @@ export function TextBlockSection({ data }: Props) {
             <h2
               className={cn(
                 "text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl",
-                hasDarkBg ? "text-white" : !hasTextColor ? "text-foreground" : ""
+                hasDarkBg ? "text-foreground" : !hasTextColor ? "text-foreground" : ""
               )}
               style={hasTextColor && !hasDarkBg ? { color: data.textColor } : undefined}
               dangerouslySetInnerHTML={{
                 __html: data.heading.replace(
                   /\*(.*?)\*/g,
-                  '<em class="font-normal italic">$1</em>'
+                  '<em class="font-normal not-italic">$1</em>'
                 ),
               }}
             />
           )}
           {data.subheading && (
             <p
-              className={cn("mt-4 text-lg", hasDarkBg ? "text-white/70" : !hasTextColor ? "text-muted-foreground" : "")}
+              className={cn("mt-4 text-lg", hasDarkBg ? "text-muted-foreground" : !hasTextColor ? "text-muted-foreground" : "")}
               style={hasTextColor && !hasDarkBg ? { color: data.textColor, opacity: 0.75 } : undefined}
             >
               {data.subheading}
@@ -71,7 +68,7 @@ export function TextBlockSection({ data }: Props) {
             <div
               className={cn(
                 "mt-8 max-w-none space-y-4 text-base leading-relaxed",
-                hasDarkBg ? "text-white/80 [&_strong]:text-white" : !hasTextColor ? "prose prose-lg dark:prose-invert" : ""
+                hasDarkBg ? "text-muted-foreground [&_strong]:text-foreground" : !hasTextColor ? "prose prose-lg dark:prose-invert" : ""
               )}
               style={hasTextColor && !hasDarkBg ? { color: data.textColor, opacity: 0.85 } : undefined}
             >
@@ -87,7 +84,7 @@ export function TextBlockSection({ data }: Props) {
                     size="lg"
                     className={cn(
                       "px-8",
-                      hasDarkBg && c.variant !== "primary" && "border-white/30 text-white hover:bg-white/10"
+                      hasDarkBg && c.variant !== "primary" && "border-border text-foreground hover:bg-muted"
                     )}
                   >
                     {c.label}

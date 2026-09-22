@@ -8,7 +8,8 @@ interface EyebrowProps {
 export function Eyebrow({ text, className, color, inspectorProps }: EyebrowProps) {
   if (!text) return null;
 
-  const c = color || "#c9963e";
+  const c = "var(--muted-foreground)";
+  void color;
 
   return (
     <div className={className ?? "mb-6 flex items-center gap-3"}>

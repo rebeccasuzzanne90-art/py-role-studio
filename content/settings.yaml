@@ -1,12 +1,12 @@
 siteName: The Payroll Studio
 logoPath: /logo.png
-primaryColor: "#c9963e"
-secondaryColor: "#1e3a2a"
-accentColor: "#c9963e"
-backgroundColor: "#fafafa"
-fontHeading: Playfair Display
-fontBody: DM Sans
-borderRadius: full
+primaryColor: "#b34a22"
+secondaryColor: "#f6f7f9"
+accentColor: "#b34a22"
+backgroundColor: "#ffffff"
+fontHeading: Bricolage Grotesque
+fontBody: Inter
+borderRadius: large
 footerText: |
     The Payroll Studio helps organisations build payroll functions that are compliant, well-governed, and built to scale.
 socialLinkedin: "https://www.linkedin.com/company/the-payroll-studio/"

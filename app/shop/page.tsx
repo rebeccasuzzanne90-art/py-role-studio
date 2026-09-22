@@ -60,12 +60,12 @@ const PRODUCTS = [
 export default function ShopPage() {
   return (
     <>
-      <section className="py-20 text-white" style={{ backgroundColor: "#1e3a2a" }}>
+      <section className="py-20 text-foreground" style={{ backgroundColor: "var(--muted)" }}>
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Shop
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
             Training courses, policy packages, and tools to strengthen your
             compliance
           </p>

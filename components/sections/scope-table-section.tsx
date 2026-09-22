@@ -20,28 +20,28 @@ export function ScopeTableSection() {
   return (
     <SectionWrapper backgroundColor="#f5f1eb" textColor="#1e3a2a" paddingSize="large">
       <div className="mb-3 flex items-center gap-3">
-        <span className="block h-px w-8" style={{ backgroundColor: "#c9963e" }} />
-        <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#c9963e" }}>
+        <span className="block h-px w-8" style={{ backgroundColor: "var(--border)" }} />
+        <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--muted-foreground)" }}>
           Scope
         </span>
       </div>
-      <h2 className="font-heading text-3xl font-normal text-[#1e3a2a] sm:text-4xl">
+      <h2 className="font-heading text-3xl font-normal text-foreground sm:text-4xl">
         What The Payroll Studio does and does not do
       </h2>
-      <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#1e3a2a]/70">
+      <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
         Being clear about the boundaries of this work is part of how we maintain independence. The Payroll Studio is a governance and risk advisory practice. The following makes the scope explicit.
       </p>
 
-      <div className="mt-10 grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-px" style={{ backgroundColor: "#d1c8bb" }}>
+      <div className="mt-10 grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-px" style={{ backgroundColor: "var(--border)" }}>
         {/* What we do */}
-        <div className="bg-[#f5f1eb] p-6 sm:p-8">
-          <h3 className="mb-4 text-base font-semibold uppercase tracking-wide text-[#1e3a2a]">
+        <div className="bg-muted p-6 sm:p-8">
+          <h3 className="mb-4 text-base font-semibold uppercase tracking-wide text-foreground">
             What we do
           </h3>
           <ul className="space-y-3">
             {WHAT_WE_DO.map((item, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-[#1e3a2a]/80">
-                <span className="mt-0.5 shrink-0 text-base leading-none" style={{ color: "#c9963e" }}>✓</span>
+              <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
+                <span className="mt-0.5 shrink-0 text-base leading-none" style={{ color: "var(--muted-foreground)" }}>✓</span>
                 <span>{item}</span>
               </li>
             ))}
@@ -49,14 +49,14 @@ export function ScopeTableSection() {
         </div>
 
         {/* What we don't */}
-        <div className="bg-[#f5f1eb] p-6 sm:p-8">
-          <h3 className="mb-4 text-base font-semibold uppercase tracking-wide text-[#1e3a2a]">
+        <div className="bg-muted p-6 sm:p-8">
+          <h3 className="mb-4 text-base font-semibold uppercase tracking-wide text-foreground">
             What we don&apos;t do
           </h3>
           <ul className="space-y-3">
             {WHAT_WE_DONT.map((item, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-[#1e3a2a]/80">
-                <span className="mt-0.5 shrink-0 text-base leading-none text-[#1e3a2a]/30">✗</span>
+              <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
+                <span className="mt-0.5 shrink-0 text-base leading-none text-muted-foreground">✗</span>
                 <span>{item}</span>
               </li>
             ))}
@@ -64,7 +64,7 @@ export function ScopeTableSection() {
         </div>
       </div>
 
-      <p className="mt-6 max-w-2xl text-sm leading-relaxed text-[#1e3a2a]/60">
+      <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
         This distinction matters. It is what allows The Payroll Studio to sit in an independent governance role rather than as a delivery participant with a conflict of interest in the outcome.
       </p>
     </SectionWrapper>

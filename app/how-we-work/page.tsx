@@ -131,33 +131,33 @@ Where you start depends on where you are.`,
         >
           <div id={stage.id} className="scroll-mt-24 max-w-3xl">
             <div className="mb-4 flex items-center gap-3">
-              <span className="block h-px w-8" style={{ backgroundColor: "#c9963e" }} />
-              <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#c9963e" }}>
+              <span className="block h-px w-8" style={{ backgroundColor: "var(--border)" }} />
+              <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--muted-foreground)" }}>
                 {stage.number}
               </span>
             </div>
-            <h2 className="font-heading text-3xl font-normal text-[#1e3a2a] sm:text-4xl">
+            <h2 className="font-heading text-3xl font-normal text-foreground sm:text-4xl">
               {stage.label}
             </h2>
-            <p className="mt-1 font-heading text-lg font-normal italic text-[#1e3a2a]/60">
+            <p className="mt-1 font-heading text-lg font-normal not-italic text-muted-foreground">
               {stage.service}
             </p>
-            <p className="mt-6 text-base leading-relaxed text-[#1e3a2a]/80">
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
               {stage.description}
             </p>
             {stage.note && (
-              <div className="mt-6 rounded border border-[#c9963e]/30 bg-[#c9963e]/8 px-5 py-4">
-                <p className="text-sm text-[#1e3a2a]/70">{stage.note}</p>
+              <div className="mt-6 rounded border border-border bg-muted px-5 py-4">
+                <p className="text-sm text-muted-foreground">{stage.note}</p>
               </div>
             )}
             <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[#1e3a2a]/40">Output</p>
-                <p className="text-sm leading-relaxed text-[#1e3a2a]/70">{stage.output}</p>
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Output</p>
+                <p className="text-sm leading-relaxed text-muted-foreground">{stage.output}</p>
               </div>
               <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[#1e3a2a]/40">When this applies</p>
-                <p className="text-sm leading-relaxed text-[#1e3a2a]/70">{stage.trigger}</p>
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">When this applies</p>
+                <p className="text-sm leading-relaxed text-muted-foreground">{stage.trigger}</p>
               </div>
             </div>
             {stage.serviceHref && (
@@ -165,7 +165,7 @@ Where you start depends on where you are.`,
                 <Link
                   href={stage.serviceHref}
                   className="text-sm font-semibold underline underline-offset-4 hover:no-underline"
-                  style={{ color: "#c9963e" }}
+                  style={{ color: "var(--muted-foreground)" }}
                 >
                   Explore this service →
                 </Link>
@@ -179,15 +179,15 @@ Where you start depends on where you are.`,
       <SectionWrapper backgroundColor="#1e3a2a" textColor="#ffffff" paddingSize="large">
         <div className="max-w-3xl">
           <div className="mb-4 flex items-center gap-3">
-            <span className="block h-px w-8" style={{ backgroundColor: "#c9963e" }} />
-            <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#c9963e" }}>
+            <span className="block h-px w-8" style={{ backgroundColor: "var(--border)" }} />
+            <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--muted-foreground)" }}>
               Starting point
             </span>
           </div>
-          <h2 className="font-heading text-3xl font-normal text-white sm:text-4xl">
+          <h2 className="font-heading text-3xl font-normal text-foreground sm:text-4xl">
             Not sure where you fit?
           </h2>
-          <div className="mt-6 space-y-4 text-base leading-relaxed text-white/70">
+          <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground">
             <p>
               Most organisations begin at Stage 1 — the Payroll Governance Review. It gives your leadership team an independent picture of where risk sits without committing to a larger program. The findings from that review make the path forward clear.
             </p>
@@ -208,8 +208,7 @@ Where you start depends on where you are.`,
             <Link href="/contact">
               <Button
                 size="lg"
-                className="font-medium text-white hover:brightness-110"
-                style={{ backgroundColor: "#c9963e" }}
+                className="font-medium"
               >
                 Book a call
               </Button>
@@ -224,18 +223,17 @@ Where you start depends on where you are.`,
       {/* Closing CTA */}
       <SectionWrapper backgroundColor="#ffffff" paddingSize="large" containerWidth="narrow">
         <div className="text-center">
-          <h2 className="font-heading text-3xl font-normal text-[#1e3a2a] sm:text-4xl">
+          <h2 className="font-heading text-3xl font-normal text-foreground sm:text-4xl">
             Ready to talk through where you are in the journey?
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-[#1e3a2a]/70">
+          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
             The first conversation is a discovery call — no cost, no commitment. We will talk through your situation and tell you clearly whether and how The Payroll Studio can help.
           </p>
           <div className="mt-8">
             <Link href="/contact">
               <Button
                 size="lg"
-                className="font-medium text-white hover:brightness-110"
-                style={{ backgroundColor: "#c9963e" }}
+                className="font-medium"
               >
                 Book a call
               </Button>

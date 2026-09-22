@@ -2,7 +2,7 @@
 
 import type { CtaData } from "@/types/content";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface LinkedCtaButtonProps {
@@ -12,18 +12,10 @@ interface LinkedCtaButtonProps {
   darkBorder?: boolean;
 }
 
-export function LinkedCtaButton({ cta, className, size = "lg", darkBorder }: LinkedCtaButtonProps) {
+export function LinkedCtaButton({ cta, className, size = "lg" }: LinkedCtaButtonProps) {
   return (
-    <Link href={cta.href ?? "#"} className={className}>
-      <Button
-        size={size}
-        variant={cta.variant === "primary" ? "default" : "outline"}
-        className={cn(
-          darkBorder && cta.variant !== "primary" && "border-white/25 bg-transparent text-white hover:bg-white/10"
-        )}
-      >
-        {cta.label}
-      </Button>
+    <Link href={cta.href ?? "#"} className={cn(buttonVariants({ size, variant: cta.variant === "primary" ? "default" : "outline" }), className)}>
+      {cta.label}
     </Link>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display, DM_Sans } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, DM_Sans, Bricolage_Grotesque, Inter } from "next/font/google";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -9,6 +9,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { getSiteSettings, getNavigation } from "@/lib/content";
 import { organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
+
+const displayFont = Bricolage_Grotesque({ variable: "--font-display", subsets: ["latin"], display: "swap" });
+const bodyFont = Inter({ variable: "--font-body", subsets: ["latin"], display: "swap" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,7 +60,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} ${dmSans.variable} h-full antialiased`}
+      className={`${displayFont.variable} ${bodyFont.variable} ${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} ${dmSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

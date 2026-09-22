@@ -45,10 +45,10 @@ export function Navigation({ navData }: NavigationProps) {
 
   return (
     <header
-      className="sticky top-0 z-50 w-full border-b border-white/10 text-white backdrop-blur"
-      style={{ backgroundColor: "rgba(30, 58, 42, 0.95)" }}
+      className="sticky top-0 z-50 w-full border-b border-border text-foreground"
+      style={{ backgroundColor: "var(--background)" }}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2">
           {navData?.logoPath ? (
             <Image
@@ -56,13 +56,13 @@ export function Navigation({ navData }: NavigationProps) {
               alt={navData.logoAlt ?? "The Payroll Studio"}
               width={160}
               height={32}
-              className="h-8 w-auto brightness-0 invert"
+              className="h-8 w-auto brightness-0"
               priority
             />
           ) : (
             <>
-              <Shield className="h-6 w-6 text-white" />
-              <span className="text-lg font-bold tracking-tight text-white">The Payroll Studio</span>
+              <Shield className="h-6 w-6 text-foreground" />
+              <span className="text-lg font-bold tracking-tight text-foreground">The Payroll Studio</span>
             </>
           )}
         </Link>
@@ -77,10 +77,13 @@ export function Navigation({ navData }: NavigationProps) {
                 link.children && setOpenDropdown(link.label)
               }
               onMouseLeave={() => setOpenDropdown(null)}
+              onFocus={() => link.children && setOpenDropdown(link.label)}
+              onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setOpenDropdown(null); }}
+              onKeyDown={(event) => { if (event.key === "Escape") setOpenDropdown(null); }}
             >
               <Link
                 href={link.href}
-                className="flex items-center gap-1 rounded-md px-4 py-2 text-base font-medium text-white/80 transition-colors hover:text-white"
+                className="flex items-center gap-1 rounded-md px-4 py-2 text-base font-medium text-muted-foreground transition-colors hover:text-foreground"
                 {...(link.external
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
@@ -90,12 +93,12 @@ export function Navigation({ navData }: NavigationProps) {
               </Link>
 
               {link.children && openDropdown === link.label && (
-                <div className="absolute left-0 top-full z-50 min-w-[240px] border border-white/10 bg-[#1e3a2a] p-2 shadow-lg">
+                <div className="absolute left-0 top-full z-50 min-w-[240px] border border-border bg-muted p-2 shadow-lg">
                   {link.children.map((child) => (
                     <Link
                       key={child.href}
                       href={child.href}
-                      className="block px-4 py-2.5 text-sm text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+                      className="block px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                       {...(child.external
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
@@ -108,7 +111,7 @@ export function Navigation({ navData }: NavigationProps) {
             </div>
           ))}
           <Link href={ctaHref}>
-            <Button size="sm">{ctaLabel}</Button>
+            <Button>{ctaLabel}</Button>
           </Link>
         </div>
 
@@ -116,18 +119,18 @@ export function Navigation({ navData }: NavigationProps) {
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
           <SheetTrigger
             className="lg:hidden"
-            render={<Button variant="ghost" size="icon" className="text-white hover:bg-white/10" />}
+            render={<Button variant="ghost" size="icon" className="text-foreground hover:bg-muted" />}
           >
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle menu</span>
           </SheetTrigger>
-          <SheetContent side="right" className="w-80 border-white/10 text-white" style={{ backgroundColor: "#1e3a2a" }}>
+          <SheetContent side="right" className="w-80 border-border text-foreground" style={{ backgroundColor: "var(--muted)" }}>
             <div className="flex flex-col gap-4 pt-8 items-center">
               {links.map((link) => (
                 <div key={link.label}>
                   <Link
                     href={link.href}
-                    className="block py-2 text-lg font-medium text-white/90 hover:text-white text-center"
+                    className="block py-2 text-lg font-medium text-muted-foreground hover:text-foreground text-center"
                     onClick={() => setSheetOpen(false)}
                     {...(link.external
                       ? { target: "_blank", rel: "noopener noreferrer" }
@@ -141,7 +144,7 @@ export function Navigation({ navData }: NavigationProps) {
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block py-1.5 text-sm text-white/60 hover:text-white"
+                          className="block py-1.5 text-sm text-muted-foreground hover:text-foreground"
                           onClick={() => setSheetOpen(false)}
                           {...(child.external
                             ? {
@@ -157,7 +160,7 @@ export function Navigation({ navData }: NavigationProps) {
                   )}
                 </div>
               ))}
-              <div className="mt-4 flex flex-col gap-2 border-t border-white/10 pt-4">
+              <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
                 <Link href={ctaHref} onClick={() => setSheetOpen(false)}>
                   <Button className="w-full">{ctaLabel}</Button>
                 </Link>

@@ -1,14 +1,14 @@
-import Script from "next/script";
+import { ContactForm } from "@/components/contact-form";
 
 export default function ContactPage() {
   return (
     <>
-      <section className="py-20 text-white" style={{ backgroundColor: "#1e3a2a" }}>
+      <section className="py-20 text-foreground" style={{ backgroundColor: "var(--muted)" }}>
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Contact Us
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
             Ready to start your payroll governance journey? Talk to one of our experts.
           </p>
         </div>
@@ -16,16 +16,7 @@ export default function ContactPage() {
 
       <section className="py-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <Script
-            src="https://js-ap1.hsforms.net/forms/embed/442998450.js"
-            strategy="lazyOnload"
-          />
-          <div
-            className="hs-form-frame"
-            data-region="ap1"
-            data-form-id="b8475605-26c1-402b-9976-047a89532d6a"
-            data-portal-id="442998450"
-          />
+          <ContactForm />
         </div>
       </section>
     </>

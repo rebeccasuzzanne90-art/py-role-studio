@@ -40,10 +40,10 @@ export function SectionWrapper({
 
   return (
     <Tag
-      className={cn(padding, className)}
+      className={cn("studio-section border-b", padding, className)}
       style={{
-        backgroundColor: backgroundColor || undefined,
-        color: textColor || undefined,
+        backgroundColor: backgroundColor ? (backgroundColor === "#ffffff" ? "var(--background)" : "var(--muted)") : undefined,
+        color: textColor ? "var(--foreground)" : undefined,
       }}
     >
       <div className={cn("mx-auto px-4 sm:px-6 lg:px-8", width)}>

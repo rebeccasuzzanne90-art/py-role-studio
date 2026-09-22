@@ -49,7 +49,7 @@ function ArrowDown() {
   return (
     <div className="flex justify-center py-2" aria-hidden="true">
       <svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 0 L10 20 M2 13 L10 22 L18 13" stroke="#1e3a2a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.35" />
+        <path d="M10 0 L10 20 M2 13 L10 22 L18 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.35" />
       </svg>
     </div>
   );
@@ -61,23 +61,23 @@ export function JourneyFlowSection() {
       {/* Section heading */}
       <div className="mb-10 text-center">
         <div className="mb-3 flex items-center justify-center gap-3">
-          <span className="block h-px w-8" style={{ backgroundColor: "#c9963e" }} />
-          <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#c9963e" }}>
+          <span className="block h-px w-8" style={{ backgroundColor: "var(--border)" }} />
+          <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--muted-foreground)" }}>
             The Journey
           </span>
-          <span className="block h-px w-8" style={{ backgroundColor: "#c9963e" }} />
+          <span className="block h-px w-8" style={{ backgroundColor: "var(--border)" }} />
         </div>
-        <h2 className="font-heading text-3xl font-normal text-[#1e3a2a] sm:text-4xl">
+        <h2 className="font-heading text-3xl font-normal text-foreground sm:text-4xl">
           Five stages. One progression.
         </h2>
       </div>
 
       {/* Trigger row */}
-      <div className="mb-4 rounded border border-dashed border-[#1e3a2a]/20 bg-[#f5f1eb]/60 px-4 py-3 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#1e3a2a]/50">
+      <div className="mb-4 rounded border border-dashed border-border bg-muted px-4 py-3 text-center">
+        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
           Trigger
         </p>
-        <p className="mt-1 text-sm text-[#1e3a2a]/70">
+        <p className="mt-1 text-sm text-muted-foreground">
           Audit finding&ensp;·&ensp;Underpayment concern&ensp;·&ensp;System change&ensp;·&ensp;Board question
         </p>
       </div>
@@ -90,28 +90,28 @@ export function JourneyFlowSection() {
           <div key={stage.number}>
             <Link
               href={stage.anchor}
-              className="group block rounded border border-[#1e3a2a]/10 px-6 py-5 transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c9963e]"
-              style={{ backgroundColor: stage.bg }}
+              className="group block rounded-xl border border-border px-6 py-5 transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              style={{ backgroundColor: "var(--card)" }}
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
-                  <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#c9963e" }}>
+                  <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--muted-foreground)" }}>
                     Stage {stage.number}
                   </p>
-                  <h3 className="font-heading text-lg font-normal text-[#1e3a2a] group-hover:underline sm:text-xl">
+                  <h3 className="font-heading text-lg font-normal text-foreground group-hover:underline sm:text-xl">
                     {stage.label}
                   </h3>
-                  <p className="mt-1 text-sm text-[#1e3a2a]/70">
+                  <p className="mt-1 text-sm text-muted-foreground">
                     {stage.service}
                   </p>
                 </div>
                 <div className="hidden shrink-0 text-right sm:block">
-                  <p className="text-xs uppercase tracking-wide text-[#1e3a2a]/40">Output</p>
-                  <p className="mt-0.5 max-w-[200px] text-sm text-[#1e3a2a]/60">{stage.output}</p>
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground">Output</p>
+                  <p className="mt-0.5 max-w-[200px] text-sm text-muted-foreground">{stage.output}</p>
                 </div>
               </div>
               {/* Output on mobile */}
-              <p className="mt-3 text-xs text-[#1e3a2a]/50 sm:hidden">
+              <p className="mt-3 text-xs text-muted-foreground sm:hidden">
                 <span className="font-semibold uppercase tracking-wide">Output: </span>
                 {stage.output}
               </p>
@@ -124,7 +124,7 @@ export function JourneyFlowSection() {
                 {/* Callout between stage 3 and 4 */}
                 {index === 2 && (
                   <div className="mb-2 px-2 text-center">
-                    <p className="inline-block rounded-full border border-[#c9963e]/30 bg-[#c9963e]/8 px-4 py-1.5 text-xs text-[#1e3a2a]/60">
+                    <p className="inline-block rounded-full border border-border bg-muted px-4 py-1.5 text-xs text-muted-foreground">
                       Stages 3 and 4 are typically engaged as a combined program governance package
                     </p>
                   </div>
@@ -136,7 +136,7 @@ export function JourneyFlowSection() {
       </div>
 
       {/* Footer scope note */}
-      <p className="mt-8 text-center text-xs text-[#1e3a2a]/40">
+      <p className="mt-8 text-center text-xs text-muted-foreground">
         Governance and risk clarity only. No payroll processing, legal advice, or system configuration.
       </p>
     </SectionWrapper>

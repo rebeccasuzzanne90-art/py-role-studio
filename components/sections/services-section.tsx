@@ -103,29 +103,29 @@ function ServiceCardItem({ svc, hasDarkBg }: { svc: ServiceCardData; hasDarkBg: 
   const Icon = ICON_MAP[svc.iconName ?? ""] ?? Shield;
 
   return (
-    <div className="group flex flex-col border border-white/10 bg-white/5 p-8 transition-colors hover:bg-white/10 sm:p-10">
-      <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#c9963e]/40 text-[#c9963e]">
+    <div className="group flex flex-col rounded-xl border border-border bg-card p-8 shadow-sm sm:p-10">
+      <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-border text-muted-foreground">
         <Icon className="h-5 w-5" />
       </div>
       {svc.category && (
-        <span className="mb-4 inline-block w-fit rounded-full border border-[#c9963e]/40 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#c9963e]">
+        <span className="mb-4 inline-block w-fit rounded-full border border-border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
           {svc.category}
         </span>
       )}
-      <h3 className={cn("text-xl font-semibold sm:text-2xl", hasDarkBg ? "text-white" : "text-foreground")}>
+      <h3 className={cn("text-xl font-semibold sm:text-2xl", hasDarkBg ? "text-foreground" : "text-foreground")}>
         {svc.title}
       </h3>
       {svc.tagline && (
-        <p className={cn("mt-3 font-heading text-base italic leading-snug sm:text-lg", hasDarkBg ? "text-white/70" : "text-muted-foreground")}>
+        <p className={cn("mt-3 text-base leading-snug sm:text-lg", hasDarkBg ? "text-muted-foreground" : "text-muted-foreground")}>
           {svc.tagline}
         </p>
       )}
-      <p className={cn("mt-4 flex-1 text-sm leading-relaxed sm:text-base", hasDarkBg ? "text-white/50" : "text-muted-foreground")}>
+      <p className={cn("mt-4 flex-1 text-sm leading-relaxed sm:text-base", hasDarkBg ? "text-muted-foreground" : "text-muted-foreground")}>
         {svc.shortDescription}
       </p>
       <Link
         href={`/services/${svc.slug}`}
-        className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-[#c9963e] transition-colors hover:text-[#d4a64e]"
+        className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Find out more
         <ArrowRight className="h-3.5 w-3.5" />
@@ -135,29 +135,25 @@ function ServiceCardItem({ svc, hasDarkBg }: { svc: ServiceCardData; hasDarkBg: 
 }
 
 function CardsLayout({ data, services, cols }: { data: ServicesSectionData; services: ServiceCardData[]; cols: string }) {
-  const hasDarkBg =
-    data.backgroundColor &&
-    data.backgroundColor !== "#ffffff" &&
-    data.backgroundColor !== "#fafafa" &&
-    data.backgroundColor !== "#f5f1eb";
+  const hasDarkBg = false;
 
   const headingHtml = data.heading
-    ? data.heading.replace(/\*(.*?)\*/g, '<em class="font-normal italic" style="color: #c9963e">$1</em>')
+    ? data.heading.replace(/\*(.*?)\*/g, '<em class="font-normal not-italic" style="color: var(--muted-foreground)">$1</em>')
     : "";
 
   return (
-    <section className="py-28" style={{ backgroundColor: data.backgroundColor || "#1e3a2a" }}>
+    <section className="studio-section border-b py-28" style={{ backgroundColor: "var(--muted)" }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 max-w-2xl">
           <Eyebrow text={data.eyebrow} className="mb-8 flex items-center gap-3" />
           {data.heading && (
             <h2
-              className={cn("text-4xl font-normal leading-tight tracking-tight sm:text-5xl lg:text-6xl", hasDarkBg ? "text-white" : "text-foreground")}
+              className={cn("text-4xl font-normal leading-tight tracking-tight sm:text-5xl lg:text-6xl", hasDarkBg ? "text-foreground" : "text-foreground")}
               dangerouslySetInnerHTML={{ __html: headingHtml }}
             />
           )}
           {data.subheading && (
-            <p className={cn("mt-6 text-base leading-relaxed sm:text-lg", hasDarkBg ? "text-white/60" : "text-muted-foreground")}>
+            <p className={cn("mt-6 text-base leading-relaxed sm:text-lg", hasDarkBg ? "text-muted-foreground" : "text-muted-foreground")}>
               {data.subheading}
             </p>
           )}

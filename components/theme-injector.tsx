@@ -38,7 +38,8 @@ function autoForeground(hex: string): string {
 }
 
 const FONT_STACKS: Record<string, string> = {
-  "Inter": "'Inter', sans-serif",
+  "Inter": "var(--font-body), sans-serif",
+  "Bricolage Grotesque": "var(--font-display), sans-serif",
   "Geist": "var(--font-geist-sans), sans-serif",
   "Poppins": "'Poppins', sans-serif",
   "DM Sans": "var(--font-dm-sans), 'DM Sans', sans-serif",
