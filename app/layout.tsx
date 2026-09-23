@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
+import { GOOGLE_ADS_ID } from "@/lib/contact-conversion";
 import { Geist, Geist_Mono, Playfair_Display, DM_Sans, Bricolage_Grotesque, Inter } from "next/font/google";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
@@ -77,7 +79,14 @@ export default function RootLayout({
           </TooltipProvider>
         </ThemeProvider>
       </body>
-      {process.env.NODE_ENV === "production" && <GoogleAnalytics gaId="G-T23JJH27FJ" />}
+      {process.env.NODE_ENV === "production" && <>
+        <GoogleAnalytics gaId="G-T23JJH27FJ" />
+        <Script id="google-ads-config">{`
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+          window.gtag('config', '${GOOGLE_ADS_ID}');
+        `}</Script>
+      </>}
     </html>
   );
 }

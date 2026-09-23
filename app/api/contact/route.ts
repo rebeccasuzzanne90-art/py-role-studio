@@ -35,7 +35,7 @@ export async function POST(request: Request) {
   try {
     const { data: sent, error } = await new Resend(apiKey).emails.send({ from, ...contactEmail(data) });
     if (error || !sent?.id) return Response.json({ error: unavailable }, { status: 502 });
-    return Response.json({ success: true });
+    return Response.json({ success: true, submissionId: sent.id });
   } catch {
     return Response.json({ error: unavailable }, { status: 502 });
   }

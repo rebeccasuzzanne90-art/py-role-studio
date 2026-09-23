@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { sendGAEvent } from "@next/third-parties/google";
 import { Button } from "@/components/ui/button";
 import { phoneCountries } from "@/lib/contact";
+import { createContactConversionTracker } from "@/lib/contact-conversion";
+
+const reportConversion = createContactConversionTracker(sendGAEvent);
 
 const inputClass = "mt-2 min-h-12 w-full rounded-lg border border-input bg-white px-3 py-2 text-base text-foreground";
 
@@ -11,10 +14,12 @@ export function ContactForm() {
   const [country, setCountry] = useState("AU");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [error, setError] = useState("");
+  const submitting = useRef(false);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (status === "sending") return;
+    if (submitting.current) return;
+    submitting.current = true;
     const form = event.currentTarget;
     const fields = new FormData(form);
     setStatus("sending");
@@ -29,13 +34,15 @@ export function ContactForm() {
       if (!response.ok || !result.success) throw new Error(result.error || "Unable to send your message. Please try again.");
       setStatus("success");
       if (process.env.NODE_ENV === "production") {
-        sendGAEvent("event", "generate_lead", { form_name: "contact_enquiry" });
+        reportConversion(response.ok, result);
       }
       form.reset();
       setCountry("AU");
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Unable to send your message. Please try again.");
       setStatus("error");
+    } finally {
+      submitting.current = false;
     }
   }
 
