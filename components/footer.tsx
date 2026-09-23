@@ -21,6 +21,8 @@ const FOOTER_SECTIONS = [
       { label: "Build The Foundations", href: "/services/build-the-foundations" },
       { label: "Stay Ahead Of Problems", href: "/services/stay-ahead-of-problems" },
       { label: "Prepare For Change", href: "/services/prepare-for-change" },
+      { label: "Payroll Training", href: "/services/payroll-training" },
+      { label: "Remediation Governance", href: "/services/payroll-remediation" },
     ],
   },
   {

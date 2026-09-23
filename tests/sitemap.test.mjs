@@ -5,9 +5,9 @@ import os from 'node:os';
 import path from 'node:path';
 import { getSitemapContent } from '../lib/sitemap-content.ts';
 
-test('includes current MDX pages, four payroll services and all six articles', () => {
+test('includes current MDX pages, six payroll services and all six articles', () => {
  const entries=getSitemapContent(path.resolve('content'),'https://www.thepayrollstudio.com.au');
- assert.equal(entries.filter(e=>e.path.startsWith('/services/')).length,4);
+ assert.equal(entries.filter(e=>e.path.startsWith('/services/')).length,6);
  assert.equal(entries.filter(e=>e.path.startsWith('/blog/')).length,6);
  assert.ok(entries.some(e=>e.path==='/'));
  assert.ok(entries.some(e=>e.path==='/about'));

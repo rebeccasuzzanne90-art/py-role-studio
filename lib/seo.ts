@@ -36,7 +36,7 @@ export function buildMetadata(opts: BuildMetadataOpts): Metadata {
   if (seo?.noFollow) robots.follow = false;
 
   return {
-    title: template.replace("%s", title),
+    title: { absolute: template.replace("%s", title) },
     description,
     keywords: seo?.keywords,
     alternates: { canonical },

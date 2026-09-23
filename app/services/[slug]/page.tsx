@@ -32,6 +32,8 @@ export function generateStaticParams() {
     { slug: "build-the-foundations" },
     { slug: "stay-ahead-of-problems" },
     { slug: "prepare-for-change" },
+    { slug: "payroll-training" },
+    { slug: "payroll-remediation" },
   ];
 }
 
