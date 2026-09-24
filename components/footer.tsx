@@ -90,6 +90,11 @@ export function Footer() {
             </Link>
           </div>
         </div>
+        <p className="mt-5 text-center text-xs text-muted-foreground sm:text-right">
+          <a href="https://www.citeagentic.com/" className="underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">
+            Website maintained by CiteAgentic.com
+          </a>
+        </p>
       </div>
     </footer>
   );
