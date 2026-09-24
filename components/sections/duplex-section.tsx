@@ -38,7 +38,7 @@ export function DuplexSection({ data }: Props) {
               <figure className="relative pb-6 pr-6">
                 <div aria-hidden="true" className="absolute inset-0 left-6 top-6 rounded-sm bg-primary/10" />
                 <div className="relative aspect-[4/5] overflow-hidden rounded-sm sm:aspect-[6/5] lg:aspect-[4/5]">
-                  <Image src={data.imageUrl} alt={data.imageAlt ?? ""} fill sizes="(min-width: 1280px) 568px, (min-width: 1024px) 45vw, 100vw" className="object-cover" />
+                  <Image src={data.imageUrl} alt={data.imageAlt ?? ""} fill unoptimized={data.imageUrl.endsWith(".webp")} sizes="(min-width: 1280px) 568px, (min-width: 1024px) 45vw, 100vw" className="object-cover" />
                 </div>
                 {data.imageCaption && <figcaption className="absolute bottom-0 right-0 max-w-[85%] border-l-2 border-primary bg-card px-6 py-5 font-heading text-lg shadow-sm sm:px-8">{data.imageCaption}</figcaption>}
               </figure>

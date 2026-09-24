@@ -6,6 +6,8 @@ links:
     href: /services
   - label: How We Work
     href: /how-we-work
+  - label: Blog
+    href: /blog
 primaryCta:
   label: Contact
   href: /contact

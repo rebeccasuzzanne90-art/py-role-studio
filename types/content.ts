@@ -35,6 +35,7 @@ export interface HeroData {
   primaryCta?: CtaData;
   secondaryCta?: CtaData;
   backgroundImagePath?: string;
+  imageAspectRatio?: string;
   imageUrl?: string;
   imageAlt?: string;
   textColor?: string;
@@ -77,6 +78,9 @@ export interface ServiceCardData {
   shortDescription: string;
   category?: string;
   iconName?: string;
+  bestFor?: string;
+  outcome?: string;
+  ctaLabel?: string;
 }
 
 export interface ServicesSectionData extends SectionStyleData {
@@ -86,7 +90,7 @@ export interface ServicesSectionData extends SectionStyleData {
   subheading?: string;
   services: ServiceCardData[];
   columns?: "2" | "3" | "4";
-  displayMode?: "grid" | "cards";
+  displayMode?: "grid" | "cards" | "comparison";
 }
 
 export interface TextBlockSectionData extends SectionStyleData {

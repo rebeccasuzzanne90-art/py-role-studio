@@ -31,10 +31,10 @@ export function Hero({ data }: HeroProps) {
           </div>
           <figure className="relative pb-6 pl-6">
             <div aria-hidden="true" className="absolute bottom-0 left-0 h-2/3 w-2/3 rounded-sm bg-primary/15" />
-            <div className="relative aspect-[6/5] overflow-hidden rounded-sm lg:aspect-[4/5]">
-              <Image src={data.imageUrl} alt={data.imageAlt ?? ""} fill preload sizes="(min-width: 1280px) 540px, (min-width: 1024px) 45vw, 100vw" className="object-cover" />
+            <div className="relative aspect-[6/5] overflow-hidden rounded-sm lg:aspect-[4/5]" style={data.imageAspectRatio ? { aspectRatio: data.imageAspectRatio } : undefined}>
+              <Image src={data.imageUrl} alt={data.imageAlt ?? ""} fill preload unoptimized={data.imageUrl.endsWith(".webp")} sizes="(min-width: 1280px) 540px, (min-width: 1024px) 45vw, 100vw" className="object-cover" />
             </div>
-            <figcaption className="absolute bottom-0 left-0 max-w-[85%] border-l-2 border-primary bg-card px-6 py-5 shadow-sm">
+            <figcaption className={`${data.imageAspectRatio ? "relative mt-3" : "absolute bottom-0 left-0 max-w-[85%]"} border-l-2 border-primary bg-card px-6 py-5 shadow-sm`}>
               <span className="block text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">The Payroll Studio</span>
               <span className="mt-1 block font-heading text-lg">People. Process. Peace of mind.</span>
             </figcaption>

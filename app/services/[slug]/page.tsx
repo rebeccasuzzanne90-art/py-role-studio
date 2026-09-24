@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getPageBySlug, getSiteSettings } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 import { Hero } from "@/components/hero";
+import { TrainingPage } from "@/components/training-page";
 import { ModuleRenderer } from "@/components/module-renderer";
 
 type Params = Promise<{ slug: string }>;
@@ -44,6 +45,8 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
   if (!page) {
     notFound();
   }
+
+  if (slug === "payroll-training") return <TrainingPage page={page} />;
 
   return (
     <>

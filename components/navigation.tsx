@@ -10,6 +10,7 @@ import type { NavData, NavLink } from "@/types/content";
 
 const FALLBACK_LINKS: NavLink[] = [
   { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
   {
     label: "Services",
     href: "/services",

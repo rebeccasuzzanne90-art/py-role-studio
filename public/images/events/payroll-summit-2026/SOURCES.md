@@ -1,0 +1,1 @@
+User-supplied Australian Payroll Summit photographs, added 24 September 2026. Originals from the three WhatsApp JPEG files supplied in this conversation. Used on the homepage and About page with natural proportions. Event backdrop logos are part of the photographs and are not presented as endorsements.

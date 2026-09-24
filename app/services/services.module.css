@@ -1,0 +1,49 @@
+.hero{position:relative;isolation:isolate;min-height:620px;display:flex;align-items:center;background:#111;color:#fff}
+.heroImage{object-fit:cover;object-position:center 42%;z-index:-2}
+.heroShade{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,0,0,.88),rgba(0,0,0,.69) 42%,rgba(0,0,0,.12))}
+.heroContent{width:min(1280px,100%);margin:auto;padding:80px 32px}
+.eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;margin:0 0 22px}
+.hero h1{font-family:var(--font-heading);font-size:clamp(44px,5.4vw,72px);font-weight:500;letter-spacing:-.045em;line-height:1.06;max-width:760px}
+.hero h1 span{color:#e4ded5}
+.heroBody{max-width:590px;font-size:19px;line-height:1.65;margin-top:25px;color:#eee}
+.actions{display:flex;align-items:center;flex-wrap:wrap;gap:28px;margin-top:32px}
+.primary{display:inline-flex;align-items:center;justify-content:center;gap:18px;background:#a5522c;color:#fff;padding:15px 22px;border-radius:5px;font-size:15px;font-weight:500;transition:background .2s}
+.primary:hover{background:#874121}
+.heroLink,.textLink{display:inline-flex;align-items:center;gap:16px;font-size:15px;font-weight:500;border-bottom:1px solid currentColor;padding:10px 0}
+.serviceNav{border-bottom:1px solid #ddd8d1;background:#f5f1eb}
+.serviceNav>div{max-width:1280px;margin:auto;display:flex;justify-content:space-between;flex-wrap:wrap;padding:13px 32px;gap:8px 20px}
+.serviceNav a{display:flex;align-items:center;gap:15px;font-size:13px;padding:13px 0}
+.serviceNav a:hover,.textLink:hover{color:#a5522c}
+.intro{max-width:1280px;margin:auto;padding:85px 32px;display:grid;grid-template-columns:1fr 1.2fr;gap:80px}
+.intro h2,.sectionHeading h2,.nextHeading h2{font-family:var(--font-heading);font-size:clamp(34px,3.5vw,48px);letter-spacing:-.035em;line-height:1.12;font-weight:500}
+.intro p:not(.eyebrow){line-height:1.75;color:#555}
+.intro .introLead{font-size:23px;line-height:1.4!important;color:#111!important;margin-bottom:18px}
+.intro ul{margin-top:24px;padding-left:20px;list-style:disc;color:#333;line-height:1.65}
+.intro li+li{margin-top:10px}
+.services{max-width:1280px;margin:auto;padding:0 32px 90px;scroll-margin-top:110px}
+.sectionHeading{padding:35px 0 45px;border-top:1px solid #dedbd6}
+.serviceRow{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:72px;padding:35px 0;scroll-margin-top:110px}
+.reverse .servicePanel{order:2}.reverse .serviceCopy{order:1}
+.servicePanel{min-height:340px;padding:38px;background:#eee7df;border-radius:5px;display:flex;flex-direction:column;justify-content:space-between;gap:55px;color:#111;position:relative;overflow:hidden}
+.servicePanel::after{content:"";position:absolute;right:-70px;top:-100px;width:280px;height:280px;border:1px solid currentColor;border-radius:50%;opacity:.09;pointer-events:none}
+.darkPanel{background:#181818;color:#f9f6f0}
+.panelTop{display:flex;align-items:center;justify-content:space-between}
+.panelTop span{font-size:14px;opacity:.55;font-variant-numeric:tabular-nums}
+.servicePanel .eyebrow{margin-bottom:13px;opacity:.65}
+.servicePanel h3{font-family:var(--font-heading);font-size:clamp(28px,3vw,38px);line-height:1.16;letter-spacing:-.025em;max-width:450px;font-weight:500}
+.serviceCopy>p{line-height:1.75;color:#555;margin-bottom:20px}
+.serviceCopy .bestFor{font-size:21px;line-height:1.5;color:#151515}
+.outcome{border-left:2px solid #a5522c;padding-left:20px;margin:24px 0}
+.outcome span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#875035}
+.outcome p{font-size:15px;line-height:1.65;margin-top:7px;color:#444}
+.nextStep{background:#111;color:#fff;padding:80px 32px}
+.nextInner{max-width:1216px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:center}
+.nextHeading>p:not(.eyebrow){color:#ccc;line-height:1.75;max-width:460px;margin:24px 0}
+.steps{list-style:none;padding:0;margin:0}
+.steps li{display:flex;gap:25px;border-top:1px solid #444;padding:27px 0}
+.steps li>span{font-size:13px;color:#bfa78e;padding-top:4px}
+.steps h3{font-size:21px;font-weight:500;margin-bottom:10px}
+.steps p{line-height:1.7;color:#bbb;font-size:15px}
+.hero a:focus-visible,.serviceNav a:focus-visible,.services a:focus-visible,.nextStep a:focus-visible{outline:2px solid currentColor;outline-offset:6px}
+@media(max-width:767px){.hero{min-height:600px}.heroContent{padding:60px 20px}.heroShade{background:linear-gradient(90deg,rgba(0,0,0,.85),rgba(0,0,0,.57))}.heroImage{object-position:57% center}.heroBody{font-size:17px}.actions{gap:14px 24px}.serviceNav>div{padding:12px 20px;display:grid;grid-template-columns:1fr 1fr;gap:0 24px}.serviceNav a{justify-content:space-between}.intro{grid-template-columns:1fr;gap:30px;padding:55px 20px}.intro .introLead{font-size:21px}.services{padding:0 20px 50px}.sectionHeading{padding-bottom:20px}.serviceRow{grid-template-columns:1fr;gap:25px;padding:25px 0 40px}.reverse .servicePanel,.reverse .serviceCopy{order:initial}.servicePanel{min-height:270px;padding:28px;gap:35px}.serviceCopy .bestFor{font-size:19px}.nextStep{padding:55px 20px}.nextInner{grid-template-columns:1fr;gap:40px}.steps li{gap:20px}}
+@media(prefers-reduced-motion:reduce){.primary{transition:none}}

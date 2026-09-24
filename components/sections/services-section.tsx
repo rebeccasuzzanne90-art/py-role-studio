@@ -60,6 +60,34 @@ export function ServicesSectionBlock({ data }: Props) {
   const cols = COL_MAP[data.columns ?? "2"] ?? COL_MAP["2"];
   const isCards = data.displayMode === "cards";
 
+  if (data.displayMode === "comparison") {
+    return (
+      <section id="service-options" aria-labelledby="service-options-heading" className="scroll-mt-24 border-b py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 id="service-options-heading" className="mb-8 text-2xl font-medium tracking-tight sm:text-3xl">{data.heading}</h2>
+          <div className="grid gap-5 lg:grid-cols-2">
+            {services.map((service, index) => (
+              <article key={service.slug} className="flex flex-col rounded-xl border bg-card p-6 sm:p-8">
+                <div className="mb-5 flex items-center justify-between text-xs font-medium uppercase tracking-[0.14em] text-primary">
+                  <span>{service.category}</span><span aria-hidden="true" className="text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
+                </div>
+                <h3 className="max-w-lg text-2xl font-medium leading-tight tracking-tight">{service.title}</h3>
+                <dl className="mt-6 flex-1 space-y-4 text-sm leading-relaxed sm:text-base">
+                  <div><dt className="font-semibold">When to choose this</dt><dd className="mt-1 text-muted-foreground">{service.bestFor}</dd></div>
+                  <div><dt className="font-semibold">How we help</dt><dd className="mt-1 text-muted-foreground">{service.shortDescription}</dd></div>
+                  <div><dt className="font-semibold">What you gain</dt><dd className="mt-1 text-muted-foreground">{service.outcome}</dd></div>
+                </dl>
+                <Link href={`/services/${service.slug}`} className="mt-6 inline-flex min-h-11 items-center gap-3 self-start rounded-sm border-t pt-4 font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
+                  {service.ctaLabel}<ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0" />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (isCards) {
     return <CardsLayout data={data} services={services} cols={cols} />;
   }
