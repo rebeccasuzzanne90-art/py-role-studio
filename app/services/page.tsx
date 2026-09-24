@@ -4,8 +4,9 @@ import { getPageBySlug } from "@/lib/content";
 import { ModuleRenderer } from "@/components/module-renderer";
 
 export const metadata: Metadata = {
-  title: "Services",
-  description: "Payroll compliance and governance support, built around your situation.",
+  title: { absolute: "Payroll Advisory Services | The Payroll Studio" },
+  description: "Explore payroll advisory services for Australian organisations: compliance reviews, governance frameworks, transformation oversight, remediation and training.",
+  alternates: { canonical: "https://www.thepayrollstudio.com.au/services" },
 };
 
 export default function ServicesPage() {
@@ -13,6 +14,12 @@ export default function ServicesPage() {
 
   return (
     <>
+      <section className="border-b bg-muted py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h1 className="font-heading text-4xl font-semibold tracking-tight sm:text-5xl">Payroll advisory services</h1>
+          <p className="mt-6 max-w-2xl text-lg text-muted-foreground">Find the right support for payroll compliance, governance, transformation, remediation or team training.</p>
+        </div>
+      </section>
       {page?.sections && page.sections.length > 0 && (
         <ModuleRenderer sections={page.sections} />
       )}

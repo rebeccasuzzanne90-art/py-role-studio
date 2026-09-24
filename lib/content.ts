@@ -79,7 +79,15 @@ export function getAllArticles(): ArticleCardData[] {
   const dir = path.join(CONTENT_DIR, "blog", "posts");
   if (!fs.existsSync(dir)) return [];
 
-  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".mdx"));
+  function listPosts(folder: string, prefix = ""): string[] {
+    return fs.readdirSync(folder, { withFileTypes: true }).flatMap((entry) => {
+      const relative = `${prefix}${entry.name}`;
+      return entry.isDirectory()
+        ? listPosts(path.join(folder, entry.name), `${relative}/`)
+        : entry.name.endsWith(".mdx") ? [relative] : [];
+    });
+  }
+  const files = listPosts(dir);
 
   return files
     .map((file) => {
@@ -106,6 +114,7 @@ export function getAllArticles(): ArticleCardData[] {
 }
 
 export function getArticleBySlug(slug: string): ArticleData | null {
+  if (!/^[a-z0-9-]+(?:\/[a-z0-9-]+)*$/.test(slug)) return null;
   const filePath = `blog/posts/${slug}.mdx`;
   if (!fileExists(filePath)) return null;
   const { data, content } = readMdx<ArticleData>(filePath);

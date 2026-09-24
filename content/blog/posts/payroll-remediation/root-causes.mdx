@@ -1,0 +1,155 @@
+---
+title: "Payroll errors that cause underpayments—and how to fix them"
+slug: payroll-remediation/root-causes
+excerpt: "Investigate system, process, policy and data issues behind payroll underpayments, then test whether the corrective action works."
+answer: "Payroll errors can cause underpayments when systems, processes, policies or data produce the wrong pay outcome. Trace the error to its cause, correct it and test the full path to payment."
+category: Remediation
+modifiedDate: "2026-09-24"
+contributor: Rebecca Wade
+parentSlug: payroll-remediation
+relatedSlugs:
+  - payroll-remediation
+  - payroll-remediation/validating-results
+faqs:
+  - question: "Does a payroll variance always mean an underpayment?"
+    answer: "No. A variance is a difference that needs investigation. It may reflect an underpayment, but it can also arise from data mapping, timing, scope or assumptions in the comparison. Establish the relevant entitlement and examine the records before deciding the cause and employee impact."
+  - question: "Can one underpayment have several causes?"
+    answer: "Yes. An incorrect system mapping may combine with a weak approval process and an unowned exception report. Correcting one part can leave the same employee outcome exposed elsewhere. Record the contributing causes and test the full path from source data to pay."
+  - question: "Who should own the corrective action?"
+    answer: "The person with authority to change the affected process, policy, system or data should own the action. Payroll may identify the symptom without owning every cause. Programme governance should bring the relevant owners together and identify who accepts the evidence that the change works."
+  - question: "How do you know a payroll fix has worked?"
+    answer: "Retest the original failure, relevant variations and neighbouring rules that might be affected by the change. Compare the results with independently established expectations, resolve exceptions and confirm how future transactions will be monitored. A closed technical ticket is not sufficient evidence on its own."
+  - question: "Do you need to find every cause before correcting current pay?"
+    answer: "Do not allow an ongoing known error to continue simply because the historical investigation is incomplete. Agree appropriate interim controls and corrective steps with the relevant specialists while continuing the wider diagnosis. Record what the interim measure covers and what remains unresolved."
+seo:
+  canonicalUrl: https://www.thepayrollstudio.com.au/blog/payroll-remediation/root-causes
+  metaTitle: 'Payroll Errors: Find and Fix Underpayment Causes'
+  metaDescription: A practical guide to investigating payroll underpayment drivers across systems, processes, policies and data, with a worked example and action register.
+---
+
+## Which payroll errors can lead to underpayments?
+
+Payroll errors include missing or incorrect inputs, rules applied to the wrong circumstances and failures between systems. Some cause underpayments; others create overpayments, reporting differences or a variance that needs explanation. This guide focuses on errors that leave employees short and the controls needed to prevent them recurring.
+
+Use the examples below to frame an investigation, not to determine an entitlement. Confirm the applicable instrument and approved methodology for the employee's circumstances.
+
+<ArticleTable caption="Payroll errors: from observed outcome to investigation">
+<thead><tr><th scope="col">Observed error</th><th scope="col">Possible driver to investigate</th><th scope="col">First evidence to trace</th></tr></thead>
+<tbody>
+<tr><th scope="row">Missing hours</th><td>A timesheet adjustment did not reach the pay run.</td><td>Original record, approval history, interface output and payment record.</td></tr>
+<tr><th scope="row">Incorrect rate after a role change</th><td>Classification or effective-date data was not updated.</td><td>Role history, approved classification, rate version and change log.</td></tr>
+<tr><th scope="row">An allowance is absent</th><td>A qualifying event was not captured or its code was dropped.</td><td>Activity record, entitlement decision, mapping and payslip component.</td></tr>
+<tr><th scope="row">Overtime or a penalty is missing</th><td>A rule, approval practice or time-data transformation excluded the scenario.</td><td>Actual work records, approved interpretation, settings and output.</td></tr>
+<tr><th scope="row">A manual correction keeps recurring</th><td>The adjustment fixes the payment without fixing the source process.</td><td>Adjustment history, recurring scenarios and the control owner's response.</td></tr>
+</tbody>
+</ArticleTable>
+
+These are illustrative investigation paths, not findings about a particular employer. Avoid treating "human error" as the final explanation: identify what allowed the incorrect input or decision to reach payroll and why the checking process did not catch it.
+
+## Where should an underpayment investigation start?
+
+Start with one specific pay outcome and trace how it was produced. That gives the team a testable question before it labels the problem a system error or a payroll mistake.
+
+Capture the employee scenario, relevant period, actual payment and basis for the expected result. Then follow the information through its journey: work performed, record captured, approval, interface, rule application and payment.
+
+Rebecca’s practitioner input identifies configuration, process, policy and data as useful investigation areas. They help frame the questions; they are not mutually exclusive categories or a complete legal classification of underpayment causes.
+
+This investigation sits inside the wider [payroll remediation programme](/blog/payroll-remediation). Its purpose is to connect the finding to an effective correction and assess whether other employees or periods may share the exposure.
+
+## What should you check across systems, processes, policies and data?
+
+Check both the rule and how the organisation actually operates it. The same headline discrepancy can have very different causes and require different owners.
+
+<ArticleTable caption="Four places to investigate an underpayment driver">
+<thead><tr><th scope="col">Area</th><th scope="col">Question to investigate</th><th scope="col">Evidence to examine</th></tr></thead>
+<tbody>
+<tr><th scope="row">System configuration</th><td>Does the configured rule apply the approved entitlement correctly, including effective dates?</td><td>Rule settings, change history, mapping and test outputs.</td></tr>
+<tr><th scope="row">Process</th><td>Does the information reach the right person or system in time, with exceptions handled?</td><td>Workflow records, approvals, interface logs and manual adjustments.</td></tr>
+<tr><th scope="row">Policy and practice</th><td>Do instructions and local practices align with applicable obligations?</td><td>Written policy, employee and manager accounts, instructions and actual work patterns.</td></tr>
+<tr><th scope="row">Data</th><td>Are the inputs complete, accurate and correctly associated with the employee and period?</td><td>Master data, time and leave records, classifications and effective dates.</td></tr>
+</tbody>
+</ArticleTable>
+
+Fair Work recommends drawing on a broad range of information, including actual working patterns and relevant enterprise systems, when diagnosing an issue. Its [remediation guide, pages 6–7](https://www.fairwork.gov.au/sites/default/files/2025-04/Payroll%20remediation%20program%20guide.pdf#page=7), also discusses manual processes, record practices and local behaviour as investigation areas.
+
+An interview can explain a process; transaction evidence helps establish what happened. Use both. A policy document alone will not tell you whether a manager regularly bypassed the intended workflow.
+
+## How do you distinguish a symptom from a cause?
+
+A symptom is the observed result. A cause explains the mechanism that produced it and points to an action that can be tested.
+
+“The allowance was missing” describes a symptom. “The approved allowance code was dropped during the time-system interface, and the reconciliation did not check that code” identifies a testable mechanism and a control gap.
+
+Ask successive questions without assuming the answer:
+
+1. What evidence establishes that the payment differed from the applicable entitlement?
+2. Was the source information present and accurate?
+3. Did it survive each handoff and transformation?
+4. Did the correct rule apply at the correct time?
+5. Which control should have detected the discrepancy, and what happened to it?
+
+Different answers may change the review scope. Finding a shared mapping issue, for example, gives a reason to examine other transactions using that mapping rather than limiting the review to the original complaint.
+
+## What does a root-cause investigation look like in practice?
+
+Consider a hypothetical employer where a review identifies unpaid allowances for a group of employees. This is an illustrative scenario, not a TPS client result or advice about a particular award.
+
+**The starting evidence:** the approved methodology says an allowance is payable in the scenario, and source records show the qualifying activity. The payment records do not show the allowance.
+
+**The investigation:** the team traces the records through the time-system export and finds that the allowance code is missing from the interface mapping. It also finds that the monthly reconciliation compares overall hours, so it does not expose the missing code.
+
+**The correction:** the responsible system owner updates the mapping under change control. The process owner adds a reconciliation for the affected transaction type. The programme assesses which employees and historical periods used the same mapping.
+
+**The validation:** the team retests the original scenario and relevant variations, including an employee moving between eligible and ineligible roles. It checks that the change has not introduced duplicate allowances or altered unrelated payments.
+
+**The ongoing control:** a named owner reviews the exception report and records how discrepancies are resolved. The programme agrees when the evidence is sufficient to move from intensive monitoring to normal controls.
+
+The example contains both a technical defect and a process weakness. Addressing both produces a stronger corrective action than changing the mapping alone.
+
+## What belongs in a root-cause and corrective-action register?
+
+Keep the finding, its evidence, the action and the verification together. This makes it easier for leaders to see what remains open and for delivery teams to know the next step.
+
+Use these fields as a starting template:
+
+- **Finding and affected scenario:** a specific description with links to source evidence.
+- **Cause and contributing factors:** what the investigation establishes, with assumptions marked separately.
+- **Potential scope:** related employees, periods, entities or rules requiring examination.
+- **Current-pay protection:** any interim measure and its limitations.
+- **Corrective action and owner:** the change, accountable person and dependencies.
+- **Test and acceptance evidence:** expected outcome, actual outcome, exceptions and approval.
+- **Ongoing control:** who monitors what, how often and where an exception goes.
+
+Avoid closing an action simply because a task was completed. “Updated the policy” records activity. “Tested the revised process and retained evidence that the affected scenarios now pay correctly” describes a more meaningful outcome.
+
+## How should you test a corrective change?
+
+Test the change against an agreed expected result and check for unintended effects. Include the original failure, relevant edge cases and neighbouring rules that share data or configuration.
+
+For example, a change involving effective dates may need cases on either side of the date boundary. A classification change may require a mid-period transition. Select cases from the actual risk and methodology rather than using a generic list as proof of compliance.
+
+Keep the result reproducible: record the data version, rule version, test scenario, expected outcome, actual outcome and the reviewer’s decision. Where the expectation is uncertain, resolve the methodology question before treating a matching output as a pass.
+
+Our guide to [validating payroll remediation results](/blog/payroll-remediation/validating-results) explains how to turn those checks into a documented strategy.
+
+## How do you prevent the driver from returning?
+
+Assign ownership for the control after the remediation project ends. Build the relevant check into normal operations, change management and team learning.
+
+A correction can fail later if the control depends on one person’s memory. Make the handoff explicit: who owns the rule, who checks the source data, who investigates an exception and who approves a change?
+
+Use a short scenario from the investigation in team training. Ask participants to identify the decision owner, evidence required and escalation point. That connects payroll compliance responsibilities to work people actually do.
+
+Fair Work’s [guidance on future compliance, pages 27–31](https://www.fairwork.gov.au/sites/default/files/2025-04/Payroll%20remediation%20program%20guide.pdf#page=28), covers ongoing assurance, governance, systems and capability. Return to the [remediation hub](/blog/payroll-remediation) to connect corrective action with employee outcomes and programme closure.
+
+## Where can your team get remediation support?
+
+If your team needs help turning these checks into a working program, explore our [payroll remediation support](/services/payroll-remediation). We can discuss root-cause investigation, program management, validation, reconciliation and the employee-payment journey, with responsibilities agreed around your existing providers and advisers.
+
+## Sources and scope
+
+This article draws on practitioner input from Rebecca Wade and the [Fair Work Ombudsman’s Payroll Remediation Program Guide](https://www.fairwork.gov.au/sites/default/files/2025-04/Payroll%20remediation%20program%20guide.pdf). The hypothetical scenario and register are original editorial tools; they do not establish compliance or describe a completed client engagement.
+
+Portions adapt the Payroll Remediation Program Guide, April 2025. © Fair Work Ombudsman, [www.fairwork.gov.au](https://www.fairwork.gov.au/), under [CC BY 3.0 Australia](https://creativecommons.org/licenses/by/3.0/au/). Guidance has been summarised and combined with original explanations and examples. No FWO endorsement is implied.
+
+![Creative Commons Attribution 3.0 Australia](https://licensebuttons.net/l/by/3.0/au/88x31.png)

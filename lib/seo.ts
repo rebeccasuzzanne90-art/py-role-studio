@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import type { SeoData, SiteSettingsData, AuthorData } from "@/types/content";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://vanreincompliance.com";
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+// Local preview settings must not become canonical or structured-data URLs.
+const BASE_URL = (
+  configuredSiteUrl && !/^https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?(?:\/|$)/i.test(configuredSiteUrl)
+    ? configuredSiteUrl
+    : "https://www.thepayrollstudio.com.au"
+).replace(/\/+$/, "");
 
 // ─── Metadata builder ────────────────────────────────────────────────
 

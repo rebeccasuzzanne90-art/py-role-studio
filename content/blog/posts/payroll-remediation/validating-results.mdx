@@ -1,0 +1,155 @@
+---
+title: "How to validate payroll remediation results"
+slug: payroll-remediation/validating-results
+excerpt: "Build a payroll remediation validation strategy covering data, methodology, test scenarios, exceptions and the handoff to employee payment."
+answer: "Validate remediation results against reliable data, approved rules and independently established expectations. Investigate exceptions and reconcile the approved results through to employee payment."
+category: Remediation
+modifiedDate: "2026-09-24"
+contributor: Rebecca Wade
+parentSlug: payroll-remediation
+relatedSlugs:
+  - payroll-remediation/employee-communications
+  - payroll-remediation
+  - payroll-remediation/root-causes
+faqs:
+  - question: "Is data validation the same as validating remediation results?"
+    answer: "No. Data validation examines whether inputs are complete, accurate and suitable for their use. Result validation also examines the agreed methodology, how rules have been applied, expected outcomes and exceptions. Payment reconciliation is a further check that approved outcomes reach the right employees."
+  - question: "Can sampling prove every remediation result is correct?"
+    answer: "Sampling provides evidence about the cases examined and can help test defined risks. It does not automatically prove every employee result is correct. The strategy should explain population-level checks, case selection, coverage gaps and when a failure requires a wider review."
+  - question: "Who should approve the validation strategy?"
+    answer: "The programme should name an accountable approver and the specialist owners of its methodology and technical decisions. Include the people responsible for data, calculation, payroll execution and relevant legal or tax advice. The reviewer’s responsibilities and degree of independence should be explicit."
+  - question: "How should previously remediated payments be checked?"
+    answer: "Establish the approved treatment of prior payments, then test that employee, period and entitlement mapping follow it. Keep the revised entitlement and previous payments separately traceable. Do not assume subtracting one total from another is an adequate or permissible reconciliation method."
+  - question: "Does an independent review guarantee compliance?"
+    answer: "No. A review provides evidence within its stated scope and limitations. Its value depends on the quality of the data, the agreed methodology, coverage and resolution of findings. It does not replace the employer’s obligations or the specialist advice required for particular decisions."
+  - question: "What should happen when a test fails?"
+    answer: "Record the difference, investigate whether it comes from data, methodology, configuration or the expected result, and identify related cases. Assign an owner, resolve the cause through the appropriate approval process, then rerun affected tests and assess whether broader retesting is needed."
+seo:
+  canonicalUrl: https://www.thepayrollstudio.com.au/blog/payroll-remediation/validating-results
+  metaTitle: 'Payroll Remediation Validation: Strategy and Checklist'
+  metaDescription: 'Plan payroll remediation validation: check data and rules, build test coverage, investigate exceptions and reconcile results through to employee payment.'
+---
+
+## What does payroll remediation validation need to establish?
+
+Validation needs to establish whether the results are supported by the agreed scope, evidence and methodology. The team should be able to explain how a result was reached and what limitations remain.
+
+Three questions anchor the work:
+
+1. **Input:** are the right employee records and periods represented accurately?
+2. **Method:** do the calculation rules reflect the approved approach for those circumstances?
+3. **Output:** do the results match independently established expectations, and can differences be explained?
+
+Rebecca’s practitioner input describes validation strategy, approach and testing as substantive parts of remediation programme work. This guide turns that experience into a practical planning framework. It belongs alongside the wider [payroll remediation guide](/blog/payroll-remediation), which covers employee communication, payment and prevention.
+
+## What should the validation strategy contain?
+
+Document the scope, coverage, responsibilities and acceptance criteria before results are presented for approval. This gives the team a consistent basis for deciding what to test and when an issue needs escalation.
+
+<ArticleTable caption="A working validation strategy worksheet">
+<thead><tr><th scope="col">Plan element</th><th scope="col">What to record</th><th scope="col">Question for the approver</th></tr></thead>
+<tbody>
+<tr><th scope="row">Scope</th><td>Employees, entities, periods, instruments, entitlements and exclusions.</td><td>Does the coverage match the approved remediation scope?</td></tr>
+<tr><th scope="row">Data</th><td>Source ownership, extract versions, completeness checks, transformations and gaps.</td><td>Can the input be traced to the original records?</td></tr>
+<tr><th scope="row">Methodology</th><td>Approved rules, assumptions, effective dates and unresolved questions.</td><td>Who has authority to approve each interpretation or change?</td></tr>
+<tr><th scope="row">Test coverage</th><td>Population checks, scenario selection, expected outcomes and boundaries.</td><td>Which material risks could remain untested?</td></tr>
+<tr><th scope="row">Exceptions</th><td>Severity, affected cases, owner, escalation and retest requirements.</td><td>What happens if a failure appears systemic?</td></tr>
+<tr><th scope="row">Release and handoff</th><td>Evidence required for approval, reconciliation and payment preparation.</td><td>What remains open, and who accepts responsibility for it?</td></tr>
+</tbody>
+</ArticleTable>
+
+This worksheet is a TPS editorial tool. Fair Work’s [remediation guide, pages 10–12](https://www.fairwork.gov.au/sites/default/files/2025-04/Payroll%20remediation%20program%20guide.pdf#page=11), discusses governance, documented business rules, testing and assurance; it does not prescribe this particular template.
+
+## How should source data be checked?
+
+Check both whether the data arrived and whether it means what the calculation assumes it means. A file with the expected number of rows can still have incorrect classifications, missing effective dates or a field mapped to the wrong purpose.
+
+Start with a source inventory covering payslip, master, timesheet, leave and previous remediation records as relevant to the scope. For each source, record its owner, period covered, version and known limitations.
+
+Useful checks include:
+
+- Matching employee identifiers across sources, including changes to those identifiers.
+- Reconciling record counts and control totals between source and loaded data.
+- Checking duplicates, missing periods and unexpected date boundaries.
+- Confirming that employment changes and classification histories are represented.
+- Tracing material transformations, exclusions and manual adjustments.
+
+Do not silently replace a missing record with an assumption. Document the gap, seek alternative evidence and obtain approval for the treatment. Fair Work discusses data sources and assumptions in [pages 13–17](https://www.fairwork.gov.au/sites/default/files/2025-04/Payroll%20remediation%20program%20guide.pdf#page=14).
+
+## How do you establish an expected result?
+
+Create the expected outcome from an approved interpretation and a controlled set of facts. Comparing two outputs generated from the same incorrect assumption can produce agreement without confidence.
+
+For a selected scenario, preserve the input records, relevant rule, calculation steps and reviewer rationale. If legal interpretation is unresolved, identify that as a methodology decision rather than treating it as a software defect.
+
+Use a simple scenario before adding complexity. A baseline case can establish that a rule works in straightforward circumstances; boundary and interaction cases then test where the logic may behave differently.
+
+Possible scenarios include an effective-date change, a mid-period classification change, leave interacting with another entitlement, and a previously remediated period. Their relevance depends on the actual instruments and scope. They are prompts for test design, not a universal set of legal rules.
+
+## What does a useful test case look like?
+
+A useful case has a clear purpose, a reproducible expectation and an explicit decision after execution. It should let another reviewer understand why the result passed or failed.
+
+Consider a hypothetical employee whose classification changes during a pay period. The approved approach requires different rates before and after the effective date.
+
+**Purpose:** test whether the date change is applied to the correct transactions.
+
+**Inputs:** the classification history, relevant work records, applicable rate versions and original payment records.
+
+**Expectation:** independently worked results based on the approved methodology, with each part traceable to its date and classification.
+
+**Observed issue:** the system uses the newer classification for the whole period. The reviewer logs the difference and links it to the affected rule and data version.
+
+**Response:** the team investigates other cases sharing that behaviour, corrects the cause through change control and reruns the affected cases. It also checks that employees without a mid-period change remain correct.
+
+This is an illustrative testing example, not a client case or a determination of an award entitlement. The point is to connect the discrepancy, its cause, its reach and the evidence of correction.
+
+## How do you choose test coverage and handle exceptions?
+
+Choose coverage based on the risks and variation in the population, then document the limits. Include population-level checks where useful and targeted cases for material rules, transitions and interactions.
+
+A random sample may miss a small group with a distinct entitlement or data problem. Conversely, testing only unusual cases can miss a broad issue in a common rule. Explain what each check is designed to establish.
+
+For every exception, retain:
+
+- The expected and actual result, with the evidence behind both.
+- The affected employee scenario, period and relevant version.
+- The suspected cause and what is needed to establish it.
+- The owner, decision required and potential impact on other cases.
+- The approved resolution and retest evidence.
+
+If a result points to a repeated pattern, investigate the pattern’s scope. The companion article on [underpayment drivers](/blog/payroll-remediation/root-causes) explains how to distinguish a data issue from a configuration, policy or process cause.
+
+## How should re-remediation and prior payments be validated?
+
+Validate prior-payment reconciliation as its own workstream. The revised entitlement and the earlier payment need a traceable relationship under the approved methodology.
+
+Check whether the employee identifiers, periods and entitlement components align. Keep original records of earlier payments and document how each is treated. A single aggregate difference can hide unmatched amounts or unsupported offsets.
+
+Avoid ambiguous reporting labels. Separate residual entitlement after permitted recognition of prior payments from take-home pay after withholding. Superannuation and interest need their own reviewed treatment, rather than being folded into an unexplained “net” figure.
+
+Where contractual offsetting is relevant, use [Fair Work’s current explanation of offsetting and annualised wage arrangements](https://www.fairwork.gov.au/newsroom/news/offsetting-and-record-keeping-salaried-employees) as a starting source, then confirm the application and current proceedings with legal advisers. A change in approach needs documented approval and appropriate retesting.
+
+## What should be checked before the results go to Payroll?
+
+Reconcile the approved output to the authorised payment instructions and define how payment completion will be checked. A validated entitlement can still be mishandled during a later handoff.
+
+Confirm the approved file version, employee identifiers, payment components and exception list. Assign ownership of bank and super detail confirmation, tax and reporting treatment, failed payments and employee queries.
+
+Record who authorises release and what they are relying on. After payment, reconcile the executed results and keep outstanding items visible. Employee questions may reveal new information that needs to feed back into the review.
+
+The [employee communications guide](/blog/payroll-remediation/employee-communications) shows how to connect those approvals to outcome explanations, verified details, employee queries and payment follow-up.
+
+The [remediation hub](/blog/payroll-remediation#how-do-results-become-an-employee-payment) connects these checks to the wider employee journey. A validation strategy is most useful when it supports that whole path and gives leaders a clear account of what has—and has not—been established.
+
+## Where can your team get remediation support?
+
+If your team needs help turning these checks into a working program, explore our [payroll remediation support](/services/payroll-remediation). We can discuss root-cause investigation, program management, validation, reconciliation and the employee-payment journey, with responsibilities agreed around your existing providers and advisers.
+
+## Sources and scope
+
+This article combines practitioner input supplied by Rebecca Wade with the [Fair Work Ombudsman’s Payroll Remediation Program Guide](https://www.fairwork.gov.au/sites/default/files/2025-04/Payroll%20remediation%20program%20guide.pdf). The worksheet and hypothetical test case are original editorial tools. They do not replace specialist methodology approval or establish that a programme complies with every obligation.
+
+Portions adapt the Payroll Remediation Program Guide, April 2025. © Fair Work Ombudsman, [www.fairwork.gov.au](https://www.fairwork.gov.au/), under [CC BY 3.0 Australia](https://creativecommons.org/licenses/by/3.0/au/). Guidance has been summarised and combined with original explanations and examples. No FWO endorsement is implied.
+
+![Creative Commons Attribution 3.0 Australia](https://licensebuttons.net/l/by/3.0/au/88x31.png)

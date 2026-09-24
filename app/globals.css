@@ -276,6 +276,81 @@
 /* V4 shared marketing tokens. Content and routes remain in MDX. */
 
 body { font-family: var(--font-body), sans-serif; line-height: 1.65; }
+
+/* Long-form guides: readable answers, navigable sections, and source context. */
+.studio-article { --article-accent: #963e20; color: var(--foreground); }
+.article-shell { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
+.article-hero { padding: 30px 0 46px; background: #f8f6f2; border-bottom: 1px solid #e5ded4; }
+.article-breadcrumb ol { display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px; color: #62605b; margin: 0 0 42px; }
+.article-breadcrumb li { display: flex; gap: 10px; }
+.article-breadcrumb a:hover { text-decoration: underline; }
+.article-eyebrow { color: var(--article-accent); font-size: 11px; text-transform: uppercase; letter-spacing: .16em; font-weight: 650; margin-bottom: 18px; }
+.article-eyebrow span { padding-inline: 12px; }
+.article-hero h1 { font-size: clamp(2.25rem, 4.5vw, 3.75rem); max-width: 920px; font-weight: 550; line-height: 1.08; letter-spacing: -.035em; margin-bottom: 25px; }
+.article-answer { max-width: 830px; border-left: 3px solid var(--article-accent); padding-left: 22px; font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.65; }
+.article-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 28px; font-size: 12px; color: #62605b; }
+.article-contributor { font-size: 12px; margin-top: 9px; color: #62605b; }
+.article-contributor a { text-decoration: underline; text-underline-offset: 3px; }
+.article-layout { display: grid; grid-template-columns: minmax(0, 780px) minmax(220px, 280px); gap: 80px; padding-block: 50px 90px; align-items: start; }
+.article-main { grid-column: 1; grid-row: 1; min-width: 0; }
+.article-sidebar { grid-column: 2; grid-row: 1; position: sticky; top: 110px; max-height: calc(100dvh - 140px); overflow-y: auto; }
+.article-desktop-toc > p { text-transform: uppercase; font-weight: 600; font-size: 11px; letter-spacing: .16em; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.article-sidebar ol { list-style: none; padding: 0; margin: 12px 0; }
+.article-sidebar li a { display: flex; gap: 12px; padding: 9px 0; font-size: 12px; line-height: 1.5; color: var(--muted-foreground); }
+.article-sidebar li a span { color: var(--article-accent); font-variant-numeric: tabular-nums; }
+.article-sidebar a:hover { color: var(--article-accent); text-decoration: underline; text-underline-offset: 3px; }
+.article-back-top { display: inline-block; margin-top: 16px; font-size: 12px; }
+.article-mobile-toc { display: none; }
+.article-prose { font-size: 16px; line-height: 1.85; }
+.article-prose > p { margin-block: 0 1.1em; }
+.article-prose h2 { font-size: clamp(1.5rem, 2.3vw, 2rem); font-weight: 550; letter-spacing: -.025em; margin-top: 2.2em; margin-bottom: .7em; }
+.article-prose h2:first-child { margin-top: 0; }
+.article-prose h3 { font-size: 1.2rem; font-weight: 600; }
+.studio-article :is(h2, h3, section, #article-top) { scroll-margin-top: 110px; }
+#article-top { scroll-margin-top: 90px; }
+.article-prose a { color: var(--article-accent); text-underline-offset: 3px; }
+.article-prose blockquote { border-left: 3px solid #c9a281; background: #faf7f2; font-style: normal; margin-block: 26px; padding: 18px 22px; }
+.article-table { max-width: 100%; overflow-x: auto; margin-block: 28px; border: 1px solid #dfd8ce; }
+.article-table table { margin: 0; min-width: 560px; font-size: 13px; line-height: 1.65; }
+.article-table caption { text-align: left; font-weight: 600; padding: 14px 16px; background: #f4f0e9; color: var(--foreground); }
+.article-table :is(th, td) { padding: 14px 16px !important; vertical-align: top; border-bottom: 1px solid #e8e2d9; }
+.article-table thead { background: #faf8f5; }
+.article-table tbody th { font-weight: 600; min-width: 125px; }
+.article-table tr:last-child :is(th,td) { border-bottom: 0; }
+.article-faqs, .article-related { margin-top: 60px; padding-top: 32px; border-top: 1px solid var(--border); }
+.article-faqs h2, .article-related h2, .article-cta h2 { font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 550; line-height: 1.25; margin-bottom: 26px; }
+.article-faq { padding-block: 22px; border-top: 1px solid var(--border); }
+.article-faq h3 { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+.article-faq p { font-size: 15px; line-height: 1.8; }
+.article-related > a { display: flex; justify-content: space-between; gap: 24px; padding: 20px 0; border-top: 1px solid var(--border); font-size: 18px; }
+.article-related > a:hover { color: var(--article-accent); }
+.article-cta { background: #f4f0e9; padding: 36px; margin-top: 44px; }
+.article-cta p:not(.article-eyebrow) { font-size: 15px; max-width: 530px; }
+.article-cta > a { display: inline-flex; gap: 28px; background: #963e20; color: white; margin-top: 24px; padding: 13px 19px; font-size: 14px; }
+.studio-article :is(a, summary, [tabindex]):focus-visible { outline: 2px solid var(--article-accent); outline-offset: 4px; }
+.dark .article-hero, .dark .article-cta, .dark .article-table caption, .dark .article-table thead, .dark .article-prose blockquote { background: var(--muted); }
+.dark .studio-article { --article-accent: #edab8f; }
+.dark .article-meta, .dark .article-contributor, .dark .article-breadcrumb { color: var(--muted-foreground); }
+@media (max-width: 1023px) {
+  .article-layout { display: flex; flex-direction: column; gap: 32px; padding-top: 28px; }
+  .article-sidebar { position: static; max-height: none; width: 100%; overflow: visible; }
+  .article-main { width: 100%; }
+  .article-desktop-toc { display: none; }
+  .article-mobile-toc { display: block; border-block: 1px solid var(--border); padding-block: 16px; }
+  .article-mobile-toc summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+  .article-mobile-toc summary > span { float: right; color: var(--muted-foreground); font-weight: 400; font-size: 12px; }
+  .article-sidebar li a { font-size: 14px; }
+}
+@media (max-width: 600px) {
+  .article-shell { width: calc(100% - 36px); }
+  .article-hero { padding-block: 20px 32px; }
+  .article-breadcrumb ol { margin-bottom: 30px; }
+  .article-hero h1 { font-size: 2.25rem; }
+  .article-answer { padding-left: 16px; }
+  .article-meta { gap: 6px 16px; }
+  .article-prose { font-size: 15px; }
+  .article-cta { padding: 26px 22px; }
+}
 h1, h2, h3, h4 { font-family: var(--font-display), sans-serif; text-wrap: balance; }
 h1, h2 { letter-spacing: -0.04em; }
 .studio-hero { background-image: radial-gradient(#dfe3e8 .7px, transparent .7px); background-size: 20px 20px; }

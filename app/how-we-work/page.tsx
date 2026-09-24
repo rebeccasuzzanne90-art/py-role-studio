@@ -13,18 +13,18 @@ export function generateMetadata(): Metadata {
     const settings = getSiteSettings();
     return buildMetadata({
       seo: {
-        metaTitle: "How We Work | The Payroll Studio",
+        metaTitle: "The Payroll Studio Approach",
         metaDescription:
-          "The Payroll Studio works across the full payroll governance journey — from diagnosing risk you may not fully see yet, to building the structures that make compliance sustainable, to independent oversight that holds over time.",
+          "Explore The Payroll Studio approach to payroll advisory: diagnose risk, establish governance, prepare for change and maintain independent oversight.",
       },
-      fallbackTitle: "How We Work | The Payroll Studio",
+      fallbackTitle: "The Payroll Studio Approach",
       fallbackDescription:
-        "The Payroll Studio works across the full payroll governance journey — from diagnosing risk you may not fully see yet, to building the structures that make compliance sustainable, to independent oversight that holds over time.",
+        "Explore The Payroll Studio approach to payroll advisory: diagnose risk, establish governance, prepare for change and maintain independent oversight.",
       path: "/how-we-work",
       settings,
     });
   } catch {
-    return { title: "How We Work | The Payroll Studio" };
+    return { title: "The Payroll Studio Approach" };
   }
 }
 
@@ -95,7 +95,7 @@ const STAGES = [
       "Quarterly governance and risk reports, periodic maturity re-assessment, review of open issues and governance artefacts, and an annual independent opinion on payroll governance health.",
     trigger:
       "Follows a governance design sprint, the completion of a remediation program, or any point where an organisation wants ongoing independent assurance rather than point-in-time reviews.",
-    serviceHref: "/services/stay-ahead",
+    serviceHref: "/services/stay-ahead-of-problems",
   },
 ];
 
@@ -106,7 +106,7 @@ export default function HowWeWorkPage() {
       <Hero
         data={{
           eyebrow: "How We Work",
-          headline: "Payroll governance is not a single problem with a single fix.",
+          headline: "The Payroll Studio approach. *From risk to oversight.*",
           subheadline:
             "It is a progression. From exposure that is often invisible until it surfaces, through structures that make compliance sustainable, to oversight you can defend and assurance that holds over time.",
           body: `Most organisations come to The Payroll Studio at a specific point in that progression. Some have a growing sense that their payroll is more exposed than they can prove. Some are mid-way through a remediation or system change that is moving faster than the governance around it. Some have done the work of cleaning things up and want to make sure it stays that way.
@@ -175,7 +175,7 @@ Where you start depends on where you are.`,
         </SectionWrapper>
       ))}
 
-      {/* Not sure where you fit? */}
+      {/* Your payroll advisory engagement: where to start */}
       <SectionWrapper backgroundColor="#1e3a2a" textColor="#ffffff" paddingSize="large">
         <div className="max-w-3xl">
           <div className="mb-4 flex items-center gap-3">
@@ -185,7 +185,7 @@ Where you start depends on where you are.`,
             </span>
           </div>
           <h2 className="font-heading text-3xl font-normal text-foreground sm:text-4xl">
-            Not sure where you fit?
+            Your payroll advisory engagement: where to start
           </h2>
           <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground">
             <p>

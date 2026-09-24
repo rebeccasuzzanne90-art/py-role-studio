@@ -30,7 +30,7 @@ const MODULE_MAP: Record<string, React.ComponentType<{ data: any }>> = {
 };
 
 interface Props {
-  sections: SectionData[];
+  sections: (SectionData & { anchorId?: string })[];
 }
 
 export function ModuleRenderer({ sections }: Props) {
@@ -46,6 +46,14 @@ export function ModuleRenderer({ sections }: Props) {
                 Unknown module: <code>{section._type}</code>
               </p>
             </SectionWrapper>
+          );
+        }
+
+        if (section.anchorId) {
+          return (
+            <div key={idx} id={section.anchorId} className="scroll-mt-28">
+              <Component data={section} />
+            </div>
           );
         }
 

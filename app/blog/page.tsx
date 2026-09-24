@@ -3,8 +3,9 @@ import { BlogListClient } from "@/components/blog-list-client";
 import { getAllArticles } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Blog",
-  description: "Insights, guides, and news on payroll compliance from The Payroll Studio team.",
+  title: { absolute: "Payroll Governance Insights | The Payroll Studio" },
+  description: "Read payroll governance insights and Australian payroll articles covering compliance, operating models, risk and remediation.",
+  alternates: { canonical: "https://www.thepayrollstudio.com.au/blog" },
 };
 
 export default function BlogPage() {
@@ -14,7 +15,7 @@ export default function BlogPage() {
     <>
       <section className="py-20 text-foreground" style={{ backgroundColor: "var(--muted)" }}>
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Blog</h1>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Payroll governance insights</h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
             Insights, guides, and news on payroll compliance
           </p>

@@ -10,6 +10,7 @@ type Params = Promise<{ slug: string[] }>;
 export function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   return params.then(({ slug }) => {
     const fullSlug = slug.join("/");
+    if (fullSlug === "home") return { title: "Page Not Found", robots: { index: false } };
     try {
       const [page, settings] = [getPageBySlug(fullSlug), getSiteSettings()];
       if (page) {
@@ -30,6 +31,9 @@ export function generateMetadata({ params }: { params: Params }): Promise<Metada
 export default async function CatchAllPage({ params }: { params: Params }) {
   const { slug } = await params;
   const fullSlug = slug.join("/");
+
+  // The homepage content is rendered only by the root route.
+  if (fullSlug === "home") notFound();
 
   const page = getPageBySlug(fullSlug);
 

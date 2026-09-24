@@ -12,9 +12,9 @@ import {
 import ReactMarkdown from "react-markdown";
 
 export const metadata: Metadata = {
-  title: "FAQ",
-  description:
-    "Frequently asked questions about payroll compliance and governance.",
+  title: { absolute: "The Payroll Studio FAQs" },
+  description: "The Payroll Studio FAQs: answers to payroll advisory questions about governance, compliance, training, service scope and working with our team.",
+  alternates: { canonical: "https://www.thepayrollstudio.com.au/faq" },
 };
 
 export default function FaqPage() {
@@ -28,9 +28,7 @@ export default function FaqPage() {
     <>
       <section className="py-20 text-foreground" style={{ backgroundColor: "var(--muted)" }}>
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Frequently Asked Questions
-          </h1>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">The Payroll Studio FAQs</h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
             Common questions about payroll compliance and governance
           </p>
@@ -39,6 +37,7 @@ export default function FaqPage() {
 
       <section className="py-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <h2 className="mb-8 font-heading text-2xl font-semibold">Payroll advisory questions</h2>
           <Accordion className="w-full">
             {items.map((item, i) => {
               if (!item.question) return null;
@@ -60,7 +59,7 @@ export default function FaqPage() {
           <div className="mt-12 rounded-xl border bg-muted/30 p-8 text-center">
             <h3 className="text-xl font-bold">Still Have Questions?</h3>
             <p className="mt-2 text-muted-foreground">
-              Get in touch and we'll be happy to help.
+              Get in touch and we&apos;ll be happy to help.
             </p>
             <Link href="/contact" className="mt-4 inline-block">
               <Button>Contact Us</Button>

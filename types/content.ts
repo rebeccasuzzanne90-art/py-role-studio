@@ -35,6 +35,8 @@ export interface HeroData {
   primaryCta?: CtaData;
   secondaryCta?: CtaData;
   backgroundImagePath?: string;
+  imageUrl?: string;
+  imageAlt?: string;
   textColor?: string;
   layout?: "default" | "split";
 }
@@ -111,7 +113,13 @@ export interface DuplexSectionData extends SectionStyleData {
   eyebrow?: string;
   heading?: string;
   items: FeatureCardData[];
-  variant?: "default" | "boxed";
+  variant?: "default" | "boxed" | "editorial";
+  subheading?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  imageCaption?: string;
+  imagePosition?: "left" | "right";
+  cta?: CtaData;
 }
 
 export interface TriplexSectionData {
@@ -244,6 +252,12 @@ export interface ArticleData {
   excerpt?: string;
   category?: string;
   publishDate?: string;
+  modifiedDate?: string;
+  answer?: string;
+  contributor?: string;
+  parentSlug?: string;
+  relatedSlugs?: string[];
+  faqs?: FaqItemData[];
   imagePath?: string;
   author?: AuthorData;
   seo?: SeoData;
