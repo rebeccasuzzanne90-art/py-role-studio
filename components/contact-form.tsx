@@ -3,15 +3,13 @@
 import { useRef, useState, type FormEvent } from "react";
 import { sendGAEvent } from "@next/third-parties/google";
 import { Button } from "@/components/ui/button";
-import { phoneCountries } from "@/lib/contact";
 import { createContactConversionTracker } from "@/lib/contact-conversion";
 
 const reportConversion = createContactConversionTracker(sendGAEvent);
 
 const inputClass = "mt-2 min-h-12 w-full rounded-lg border border-input bg-white px-3 py-2 text-base text-foreground";
 
-export function ContactForm() {
-  const [country, setCountry] = useState("AU");
+export function ContactForm({ courseTitle }: { courseTitle?: string }) {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [error, setError] = useState("");
   const submitting = useRef(false);
@@ -37,7 +35,6 @@ export function ContactForm() {
         reportConversion(response.ok, result);
       }
       form.reset();
-      setCountry("AU");
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Unable to send your message. Please try again.");
       setStatus("error");
@@ -48,36 +45,32 @@ export function ContactForm() {
 
   return (
     <form onSubmit={submit} className="rounded-xl border bg-white p-6 shadow-sm sm:p-10" aria-label="Contact Us" aria-busy={status === "sending"}>
-      <h2 className="text-2xl font-semibold tracking-tight">Contact Us</h2>
+      <h2 className="text-2xl font-semibold tracking-tight">{courseTitle ? "Request a training quote" : "Contact Us"}</h2>
+      {courseTitle && <p className="mt-3 font-medium text-primary">{courseTitle}</p>}
       <p className="mt-3 text-muted-foreground">We&apos;d love to hear from you! Please fill out the form and we&apos;ll get back to you as soon as possible.</p>
       <p className="mt-3 text-sm text-muted-foreground">Fields marked * are required.</p>
       <fieldset disabled={status === "sending"} className="mt-8 grid gap-6 disabled:opacity-70 sm:grid-cols-2">
         <legend className="sr-only">Your contact details</legend>
         {[
-          { name: "firstName", label: "First Name", autoComplete: "given-name" },
-          { name: "lastName", label: "Last Name", autoComplete: "family-name" },
-          { name: "email", label: "Email", autoComplete: "email" },
-          { name: "company", label: "Company name", autoComplete: "organization" },
+          { name: "firstName", label: "First Name", autoComplete: "given-name", required: true },
+          { name: "lastName", label: "Last Name", autoComplete: "family-name", required: true },
+          { name: "email", label: "Email", autoComplete: "email", required: true },
+          { name: "company", label: "Company name", autoComplete: "organization", required: false },
+          { name: "role", label: "Role", autoComplete: "organization-title", required: false },
         ].map(field => (
           <label key={field.name} className="text-sm font-medium" htmlFor={field.name}>
-            {field.label} *
-            <input id={field.name} name={field.name} type={field.name === "email" ? "email" : "text"} autoComplete={field.autoComplete} maxLength={254} required className={inputClass} />
+            {field.label}{field.required ? " *" : " (optional)"}
+            <input id={field.name} name={field.name} type={field.name === "email" ? "email" : "text"} autoComplete={field.autoComplete} maxLength={254} required={field.required} className={inputClass} />
           </label>
         ))}
-        <label className="text-sm font-medium" htmlFor="country">
-          Phone country *
-          <select id="country" name="country" value={country} onChange={e => setCountry(e.target.value)} className={inputClass} required>
-            {phoneCountries.map(c => <option key={c.code} value={c.code}>{c.label}{c.dial ? ` (${c.dial})` : ""}</option>)}
-          </select>
-        </label>
         <label className="text-sm font-medium" htmlFor="phone">
-          Phone Number *
-          <input id="phone" name="phone" type="tel" autoComplete="tel" required minLength={7} maxLength={30} aria-describedby="phone-hint" className={inputClass} />
-          <span id="phone-hint" className="mt-2 block text-xs font-normal text-muted-foreground">{country === "OTHER" ? "Include your country code, starting with +." : `Country code ${phoneCountries.find(c => c.code === country)?.dial}. You can enter a local or international number.`}</span>
+          Phone Number (optional)
+          <input id="phone" name="phone" type="tel" autoComplete="tel" defaultValue="+61 " maxLength={30} aria-describedby="phone-hint" className={inputClass} />
+          <span id="phone-hint" className="mt-2 block text-xs font-normal text-muted-foreground">Enter your number after +61, or change the country code for an international number.</span>
         </label>
         <label className="text-sm font-medium sm:col-span-2" htmlFor="message">
           Message *
-          <textarea id="message" name="message" rows={6} required maxLength={5000} className={`${inputClass} resize-y`} />
+          <textarea id="message" name="message" rows={6} required maxLength={5000} defaultValue={courseTitle ? `I would like a quote for ${courseTitle}.\n\nNumber of participants: \nPreferred delivery (in-house or virtual): \nPreferred timing: \nWhat our team would like to focus on: ` : ""} className={`${inputClass} resize-y`} />
         </label>
         <label className="flex items-start gap-3 text-sm sm:col-span-2" htmlFor="newsSignup">
           <input id="newsSignup" name="newsSignup" type="checkbox" className="mt-0.5 size-4 accent-primary" />

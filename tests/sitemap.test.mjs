@@ -5,10 +5,20 @@ import os from 'node:os';
 import path from 'node:path';
 import { getSitemapContent } from '../lib/sitemap-content.ts';
 
-test('includes current MDX pages, six payroll services and all six articles', () => {
+test('includes current MDX pages, six payroll services and the current article collection', () => {
  const entries=getSitemapContent(path.resolve('content'),'https://www.thepayrollstudio.com.au');
  assert.equal(entries.filter(e=>e.path.startsWith('/services/')).length,6);
- assert.equal(entries.filter(e=>e.path.startsWith('/blog/')).length,6);
+ const expectedArticles = [
+  'modern-award-interpretation-mistakes', 'payroll-accountability-hr-finance',
+  'payroll-compliance', 'payroll-governance', 'payroll-governance-capability-uplift',
+  'payroll-governance-training-guide', 'payroll-governed-or-managed',
+  'payroll-in-the-boardroom', 'payroll-model-inhouse-outsourced-hybrid',
+  'payroll-remediation', 'payroll-remediation/checklist',
+  'payroll-remediation/employee-communications', 'payroll-remediation/root-causes',
+  'payroll-remediation/validating-results', 'payroll-risk-vs-payroll-error',
+ ];
+ assert.deepEqual(entries.filter(e=>e.path.startsWith('/blog/')).map(e=>e.path).sort(),
+  expectedArticles.map(slug=>`/blog/${slug}`).sort());
  assert.ok(entries.some(e=>e.path==='/'));
  assert.ok(entries.some(e=>e.path==='/about'));
  assert.ok(!entries.some(e=>e.path==='/services/hipaa'));

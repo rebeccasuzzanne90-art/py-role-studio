@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 interface BlogCardProps {
+  author?: { name: string };
   title: string;
   slug: string;
   excerpt?: string;
@@ -14,6 +15,7 @@ interface BlogCardProps {
 }
 
 export function BlogCard({
+  author,
   title,
   slug,
   excerpt,
@@ -40,13 +42,14 @@ export function BlogCard({
           <div className="flex items-center gap-2">
             {category && <Badge variant="secondary">{category}</Badge>}
             {displayDate && (
-              <span className="text-xs text-muted-foreground">
-                {new Date(displayDate).toLocaleDateString("en-US", {
+              <time dateTime={displayDate} className="text-xs text-muted-foreground">
+                {new Date(displayDate).toLocaleDateString("en-AU", {
+                  timeZone: "UTC",
                   year: "numeric",
                   month: "short",
                   day: "numeric",
                 })}
-              </span>
+              </time>
             )}
           </div>
         </CardHeader>
@@ -54,6 +57,7 @@ export function BlogCard({
           <h3 className="mb-2 text-lg font-semibold leading-tight group-hover:text-primary">
             {title}
           </h3>
+          {author && <p className="mb-2 text-xs text-muted-foreground">By {author.name}</p>}
           {excerpt && (
             <p className="line-clamp-2 text-sm text-muted-foreground">
               {excerpt}

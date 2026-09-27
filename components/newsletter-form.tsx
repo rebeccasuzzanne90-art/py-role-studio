@@ -18,7 +18,7 @@ interface NewsletterFormProps {
 export function NewsletterForm({
   variant = "default",
   heading = "Stay Up to Date",
-  description = "Subscribe to our newsletter for data security and compliance updates.",
+  description = "Subscribe for payroll governance and compliance updates.",
   buttonLabel = "Subscribe",
   headingProps,
   descriptionProps,
@@ -28,33 +28,47 @@ export function NewsletterForm({
   const [name, setName] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (status === "loading") return;
     setStatus("loading");
+    setErrorMessage("");
     try {
-      await subscribeToNewsletter(name, email);
+      const result = await subscribeToNewsletter(name, email);
+      if (!result.success) {
+        setErrorMessage(result.error ?? "Something went wrong. Please try again.");
+        setStatus("error");
+        return;
+      }
       setStatus("success");
       setEmail("");
       setName("");
     } catch {
+      setErrorMessage("Something went wrong. Please try again.");
       setStatus("error");
     }
   }
 
   if (status === "success") {
     return (
-      <p className="text-sm font-medium text-green-600">
-        Thank you for subscribing! Check your email to confirm.
+      <p role="status" className="text-sm font-medium text-green-600">
+        Thank you for subscribing to The Payroll Studio updates!
       </p>
     );
   }
 
   if (variant === "footer") {
     return (
-      <form onSubmit={handleSubmit} className="flex max-w-sm flex-col gap-2 sm:flex-row">
+      <div className="max-w-sm">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 sm:flex-row">
         <Input
           type="email"
           placeholder="Enter your email"
+          aria-label="Email address for newsletter"
+          autoComplete="email"
+          maxLength={254}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -64,6 +78,8 @@ export function NewsletterForm({
           {status === "loading" ? "..." : buttonLabel}
         </Button>
       </form>
+      {status === "error" && <p role="alert" className="mt-2 text-sm text-destructive">{errorMessage}</p>}
+      </div>
     );
   }
 
@@ -77,6 +93,8 @@ export function NewsletterForm({
         <Input
           type="text"
           placeholder="First name"
+          aria-label="First name"
+          maxLength={100}
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="h-11"
@@ -84,6 +102,9 @@ export function NewsletterForm({
         <Input
           type="email"
           placeholder="Email address"
+          aria-label="Email address for newsletter"
+          autoComplete="email"
+          maxLength={254}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -94,8 +115,8 @@ export function NewsletterForm({
         </Button>
       </form>
       {status === "error" && (
-        <p className="mt-2 text-sm text-destructive">
-          Something went wrong. Please try again.
+        <p role="alert" className="mt-2 text-sm text-destructive">
+          {errorMessage}
         </p>
       )}
     </div>

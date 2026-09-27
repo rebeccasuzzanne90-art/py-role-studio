@@ -78,23 +78,15 @@ export function Footer() {
             &copy; {new Date().getFullYear()} The Payroll Studio. All rights
             reserved.
           </p>
-          <div className="flex gap-6 text-xs text-muted-foreground">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground sm:justify-end">
             <Link href="/privacy" className="hover:text-foreground">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-foreground">
-              Terms of Service
-            </Link>
-            <Link href="/accessibility" className="hover:text-foreground">
-              Accessibility
-            </Link>
+            <a href="https://www.citeagentic.com/" className="underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">
+              Website maintained by CiteAgentic.com
+            </a>
           </div>
         </div>
-        <p className="mt-5 text-center text-xs text-muted-foreground sm:text-right">
-          <a href="https://www.citeagentic.com/" className="underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">
-            Website maintained by CiteAgentic.com
-          </a>
-        </p>
       </div>
     </footer>
   );

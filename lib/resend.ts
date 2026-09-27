@@ -15,12 +15,3 @@ export async function sendContactEmail(data: {
     text: `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`,
   });
 }
-
-export async function sendNewsletterConfirmation(email: string, name: string) {
-  return resend.emails.send({
-    from: "VanRein Compliance <noreply@vanreincompliance.com>",
-    to: [email],
-    subject: "Welcome to VanRein Compliance Newsletter",
-    text: `Hi ${name},\n\nThank you for subscribing to our newsletter! You'll receive the latest updates on data security and compliance.\n\nBest regards,\nVanRein Compliance Team`,
-  });
-}

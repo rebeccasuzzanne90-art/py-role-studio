@@ -99,6 +99,7 @@ export function getAllArticles(): ArticleCardData[] {
         category: data.category,
         imagePath: data.imagePath,
         publishDate: data.publishDate,
+        author: resolveAuthor(data.author as unknown as string | AuthorData | undefined),
       } satisfies ArticleCardData & { publishDate?: string };
     })
     .sort((a, b) => {
@@ -109,8 +110,7 @@ export function getAllArticles(): ArticleCardData[] {
         ? new Date((b as { publishDate?: string }).publishDate!).getTime()
         : 0;
       return db - da;
-    })
-    .map(({ publishDate: _pd, ...rest }) => rest) as ArticleCardData[];
+    });
 }
 
 export function getArticleBySlug(slug: string): ArticleData | null {

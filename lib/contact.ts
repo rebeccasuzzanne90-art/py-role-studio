@@ -1,20 +1,9 @@
-export const phoneCountries = [
-  { code: "AU", label: "Australia", dial: "+61" },
-  { code: "NZ", label: "New Zealand", dial: "+64" },
-  { code: "GB", label: "United Kingdom", dial: "+44" },
-  { code: "US", label: "United States", dial: "+1" },
-  { code: "CA", label: "Canada", dial: "+1" },
-  { code: "SG", label: "Singapore", dial: "+65" },
-  { code: "IN", label: "India", dial: "+91" },
-  { code: "OTHER", label: "Other (include country code)", dial: "" },
-];
-
 export type ContactData = {
   firstName: string;
   lastName: string;
   email: string;
   company: string;
-  country: string;
+  role: string;
   phone: string;
   message: string;
   newsSignup: boolean;
@@ -23,30 +12,34 @@ export type ContactData = {
 export function validateContact(input: unknown): ContactData | null {
   if (!input || typeof input !== "object") return null;
   const raw = input as Record<string, unknown>;
-  const fields = ["firstName", "lastName", "email", "company", "country", "phone", "message"] as const;
+  const fields = ["firstName", "lastName", "email", "company", "role", "phone", "message"] as const;
   const result = {} as ContactData;
   for (const field of fields) {
-    const value = raw[field];
-    if (typeof value !== "string" || !value.trim() || value.length > (field === "message" ? 5000 : 254)) return null;
+    const required = ["firstName", "lastName", "email", "message"].includes(field);
+    const value = raw[field] ?? (required ? undefined : "");
+    if (typeof value !== "string" || (required && !value.trim()) || value.length > (field === "message" ? 5000 : field === "phone" ? 30 : 254)) return null;
     result[field] = value.trim();
   }
   if (/[\r\n]/.test(result.email + result.firstName + result.lastName) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(result.email)) return null;
-  const country = phoneCountries.find(c => c.code === result.country);
-  if (!country || !/^[+\d\s().-]+$/.test(result.phone)) return null;
-  const digits = result.phone.replace(/\D/g, "");
-  if (digits.length < 7 || digits.length > 15 || (country.code === "OTHER" && !result.phone.startsWith("+"))) return null;
+  // The untouched default country prefix is an omitted optional phone number.
+  if (result.phone === "+61") result.phone = "";
+  if (result.phone) {
+    if (!/^\+?[\d\s().-]+$/.test(result.phone)) return null;
+    const phone = result.phone.startsWith("+") ? result.phone : `+61 ${result.phone.replace(/^0/, "")}`;
+    const digits = phone.replace(/\D/g, "");
+    if (digits.length < 7 || digits.length > 15) return null;
+    result.phone = phone;
+  }
   if (typeof raw.newsSignup !== "boolean") return null;
   result.newsSignup = raw.newsSignup;
   return result;
 }
 
 export function contactEmail(data: ContactData) {
-  const country = phoneCountries.find(c => c.code === data.country)!;
-  const phone = data.phone.startsWith("+") ? data.phone : `${country.dial} ${data.phone.replace(/^0/, "")}`;
   return {
-    to: ["rebeccasuzzanne90@gmail.com"],
+    to: ["rebecca@thepayrollstudio.com.au"],
     replyTo: data.email,
     subject: `Payroll Studio enquiry: ${data.firstName} ${data.lastName}`,
-    text: `First name: ${data.firstName}\nLast name: ${data.lastName}\nEmail: ${data.email}\nCompany name: ${data.company}\nPhone country: ${country.label}\nPhone: ${phone}\nSign up for news and updates: ${data.newsSignup ? "Yes" : "No"}\n\nMessage:\n${data.message}`,
+    text: `First name: ${data.firstName}\nLast name: ${data.lastName}\nEmail: ${data.email}\nCompany name: ${data.company}\nRole: ${data.role || "Not provided"}\nPhone: ${data.phone || "Not provided"}\nSign up for news and updates: ${data.newsSignup ? "Yes" : "No"}\n\nMessage:\n${data.message}`,
   };
 }

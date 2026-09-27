@@ -123,9 +123,12 @@ export function articleJsonLd(opts: {
       ? {
           author: {
             "@type": "Person",
+            "@id": `${BASE_URL}/#author-${opts.author.slug}`,
             name: opts.author.name,
+            ...(opts.author.bio ? { description: opts.author.bio } : {}),
             ...(opts.author.role ? { jobTitle: opts.author.role } : {}),
-            ...(opts.author.linkedIn ? { url: opts.author.linkedIn } : {}),
+            ...(opts.author.profilePath ? { url: `${BASE_URL}${opts.author.profilePath}` } : {}),
+            ...(opts.author.linkedIn ? { sameAs: [opts.author.linkedIn] } : {}),
           },
         }
       : {}),

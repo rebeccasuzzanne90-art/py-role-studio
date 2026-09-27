@@ -188,6 +188,8 @@ export interface NewsletterSectionData {
 }
 
 export interface ArticleCardData {
+  author?: AuthorData;
+  publishDate?: string;
   slug: string;
   title: string;
   excerpt?: string;
@@ -241,6 +243,7 @@ export interface PageData {
 
 // ─── Blog ───────────────────────────────────────────────────────────
 export interface AuthorData {
+  profilePath?: string;
   name: string;
   slug: string;
   role?: string;

@@ -5,6 +5,7 @@ import { BlogCard } from "@/components/blog-card";
 import { Search, X } from "lucide-react";
 
 interface BlogPost {
+  author?: { name: string };
   title: string;
   slug: string;
   excerpt?: string;

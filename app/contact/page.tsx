@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getCourse } from "@/content/courses";
 import { ContactForm } from "@/components/contact-form";
 
 export const metadata: Metadata = {
@@ -7,7 +8,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.thepayrollstudio.com.au/contact" },
 };
 
-export default function ContactPage() {
+export default async function ContactPage({ searchParams }: { searchParams: Promise<{ course?: string | string[] }> }) {
+  const course = getCourse((await searchParams).course);
   return (
     <>
       <section className="py-20 text-foreground" style={{ backgroundColor: "var(--muted)" }}>
@@ -19,9 +21,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="py-16">
+      <section id="enquiry" className="scroll-mt-24 py-16">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <ContactForm />
+          <ContactForm key={course?.slug ?? "general"} courseTitle={course?.title} />
         </div>
       </section>
     </>

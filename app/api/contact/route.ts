@@ -26,11 +26,11 @@ export async function POST(request: Request) {
   }
   if (raw?.website) return Response.json({ error: "Unable to submit this form." }, { status: 400 });
   const data = validateContact(raw);
-  if (!data) return Response.json({ error: "Please complete all required fields with a valid email and phone number." }, { status: 400 });
+  if (!data) return Response.json({ error: "Please enter your name, a valid email and a message. If you include a phone number, check that it is valid." }, { status: 400 });
 
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_FROM_EMAIL;
-  const unavailable = "We couldn't send your message. Please try again, or email rebeccasuzzanne90@gmail.com directly.";
+  const unavailable = "We couldn't send your message. Please try again, or email rebecca@thepayrollstudio.com.au directly.";
   if (!apiKey || !from) return Response.json({ error: unavailable }, { status: 503 });
   try {
     const { data: sent, error } = await new Resend(apiKey).emails.send({ from, ...contactEmail(data) });

@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     path: `/blog/${slug}`,
     settings: getSiteSettings(),
   });
-  return { ...metadata, openGraph: { ...metadata.openGraph, type: "article",
+  return { ...metadata, authors: article.author ? [{ name: article.author.name, url: article.author.profilePath }] : undefined, openGraph: { ...metadata.openGraph, type: "article",
     ...(article.publishDate ? { publishedTime: article.publishDate } : {}),
     ...(article.modifiedDate ? { modifiedTime: article.modifiedDate } : {}),
   } };
@@ -76,12 +76,12 @@ export default async function BlogPostPage({ params }: { params: Params }) {
           <h1>{article.title}</h1>
           {article.answer && <div className="article-answer"><p>{article.answer}</p></div>}
           <div className="article-meta">
-            <span>{article.author ? `By ${article.author.name}` : "The Payroll Studio"}</span>
+            <span>By {article.author?.profilePath ? <Link href={article.author.profilePath} rel="author" className="underline underline-offset-4">{article.author.name}</Link> : article.author?.name ?? "The Payroll Studio"}</span>
             <span>{readingMinutes} min read</span>
-            {article.modifiedDate ? <span>Updated <time dateTime={article.modifiedDate}>{displayDate(article.modifiedDate)}</time></span>
-              : article.publishDate && <span>Published <time dateTime={article.publishDate}>{displayDate(article.publishDate)}</time></span>}
+            {article.publishDate && <span>Published <time dateTime={article.publishDate}>{displayDate(article.publishDate)}</time></span>}
+            {article.modifiedDate && article.modifiedDate !== article.publishDate && <span>Updated <time dateTime={article.modifiedDate}>{displayDate(article.modifiedDate)}</time></span>}
           </div>
-          {article.contributor && <p className="article-contributor">With practitioner input from <Link href="/about">{article.contributor}</Link></p>}
+          {article.contributor && article.contributor !== article.author?.name && <p className="article-contributor">With practitioner input from <Link href="/about">{article.contributor}</Link></p>}
           {article.imagePath && <div className="relative mt-8 aspect-video max-w-3xl overflow-hidden rounded-xl"><Image src={article.imagePath} alt={article.title} fill sizes="(max-width: 768px) 100vw, 768px" className="object-cover" /></div>}
         </div>
       </header>
@@ -98,7 +98,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
             {article.faqs.map((faq) => <div className="article-faq" key={faq.question}><h3>{faq.question}</h3><p>{faq.answer}</p></div>)}
           </section>}
           {related.length > 0 && <section id="related-articles" className="article-related" aria-labelledby="related-heading">
-            <p className="article-eyebrow">The remediation collection</p><h2 id="related-heading">Continue reading</h2>
+            <p className="article-eyebrow">{isRemediation ? "The remediation collection" : "Related payroll insights"}</p><h2 id="related-heading">Continue reading</h2>
             {related.map((item) => <Link href={`/blog/${item.slug}`} key={item.slug}><span>{item.title}</span><span aria-hidden="true">↗</span></Link>)}
           </section>}
           <section className="article-cta" aria-labelledby="article-cta-heading">

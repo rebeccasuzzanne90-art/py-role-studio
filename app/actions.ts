@@ -1,6 +1,8 @@
 "use server";
 
-import { sendContactEmail, sendNewsletterConfirmation } from "@/lib/resend";
+import { sendContactEmail } from "@/lib/resend";
+import { Resend } from "resend";
+import { saveNewsletterSubscriber, validateSubscriber } from "@/lib/newsletter";
 import { createClient } from "@supabase/supabase-js";
 
 function getServiceClient() {
@@ -20,24 +22,34 @@ function getServiceClient() {
 }
 
 export async function subscribeToNewsletter(name: string, email: string) {
-  const supabase = getServiceClient();
+  const subscriber = validateSubscriber(name, email);
+  if (!subscriber) return { success: false, error: "Please enter a valid email address." };
 
-  if (supabase) {
-    const { error } = await supabase
-      .from("subscribers")
-      .upsert(
-        { email, first_name: name, confirmed: true },
-        { onConflict: "email" }
-      );
-    if (error) throw new Error(error.message);
-  }
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.CONTACT_FROM_EMAIL;
+  const unavailable = "We couldn't complete your subscription. Please try again, or email rebeccasuzzanne90@gmail.com.";
+  if (!apiKey || !from) return { success: false, error: unavailable };
 
   try {
-    await sendNewsletterConfirmation(email, name);
+    await saveNewsletterSubscriber(subscriber, new Resend(apiKey), from);
   } catch {
-    // Email send failure shouldn't block subscription
+    return { success: false, error: unavailable };
   }
 
+  // Resend is the subscriber source of truth. Keep the existing admin list in sync
+  // when available, without failing a successfully saved and notified subscription.
+  try {
+    const supabase = getServiceClient();
+    if (supabase) {
+      const { error } = await supabase.from("subscribers").upsert(
+        { email: subscriber.email, ...(subscriber.name ? { first_name: subscriber.name } : {}), confirmed: true },
+        { onConflict: "email" }
+      );
+      if (error) console.error("Newsletter admin-list sync failed");
+    }
+  } catch {
+    console.error("Newsletter admin-list sync failed");
+  }
   return { success: true };
 }
 
