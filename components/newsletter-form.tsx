@@ -53,7 +53,7 @@ export function NewsletterForm({
 
   if (status === "success") {
     return (
-      <p role="status" className="text-sm font-medium text-green-600">
+      <p role="status" className={`text-sm font-medium ${variant === "footer" ? "text-green-300" : "text-green-600"}`}>
         Thank you for subscribing to The Payroll Studio updates!
       </p>
     );
@@ -74,7 +74,7 @@ export function NewsletterForm({
           required
           className="h-10"
         />
-        <Button type="submit" size="sm" disabled={status === "loading"}>
+        <Button type="submit" size="sm" className="h-10" disabled={status === "loading"}>
           {status === "loading" ? "..." : buttonLabel}
         </Button>
       </form>

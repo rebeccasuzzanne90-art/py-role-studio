@@ -29,7 +29,7 @@ export function TextBlockSection({ data }: Props) {
 
   if (data.layout === "split") {
     return (
-      <SectionWrapper paddingSize={data.paddingSize} containerWidth={data.containerWidth}>
+      <SectionWrapper backgroundColor={data.backgroundColor} textColor={data.textColor} paddingSize={data.paddingSize} containerWidth={data.containerWidth}>
         <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
           <div>
             <Eyebrow text={data.eyebrow} className="mb-6" />
@@ -39,7 +39,7 @@ export function TextBlockSection({ data }: Props) {
             {data.subheading && <p className="mt-6 text-lg leading-relaxed text-muted-foreground">{data.subheading}</p>}
             {ctas.length > 0 && <div className="mt-8 flex flex-wrap gap-4">{ctas.map(cta => <LinkedCtaButton key={cta.href} cta={cta} />)}</div>}
           </div>
-          {data.body && <div className="border-t border-border pt-6 text-base leading-relaxed text-muted-foreground [&_p+p]:mt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10"><ReactMarkdown>{data.body}</ReactMarkdown></div>}
+          {data.body && <div className="prose min-w-0 border-t border-border pt-6 text-base leading-relaxed text-muted-foreground [&_p+p]:mt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10"><ReactMarkdown>{data.body}</ReactMarkdown></div>}
         </div>
       </SectionWrapper>
     );

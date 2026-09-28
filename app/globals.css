@@ -136,6 +136,23 @@
   }
 }
 
+.studio-footer {
+  color-scheme: dark;
+  --background: #20252d;
+  --foreground: #ffffff;
+  --muted-foreground: #c3c9d2;
+  --border: #414955;
+  --input: #7c8797;
+  --ring: #f0b394;
+  --destructive: #fda4af;
+}
+
+.studio-footer a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
 /* ─── Prose: rich-text styling (replaces @tailwindcss/typography for v4) ── */
 @layer components {
   .prose {

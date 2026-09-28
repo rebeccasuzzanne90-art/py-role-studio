@@ -43,7 +43,7 @@ const faqs = [
 export default function HowWeWorkPage() {
   return <>
     <section className={styles.hero}>
-      <Image src="/images/services/canva-business-meeting.jpg" alt="Colleagues reviewing documents together at a meeting table" fill preload sizes="100vw" className={styles.heroImage} />
+      <Image src="/images/how-we-work/canva-document-review.webp" alt="A professional reviewing documents beside a colleague and laptop" fill preload sizes="100vw" className={styles.heroImage} />
       <div className={styles.heroShade} />
       <div className={styles.heroContent}>
         <p className={styles.eyebrow}>How we work · The Payroll Studio</p>

@@ -36,7 +36,7 @@ const FOOTER_SECTIONS = [
 
 export function Footer() {
   return (
-    <footer className="text-foreground" style={{ backgroundColor: "var(--muted)" }}>
+    <footer className="studio-footer bg-background text-foreground">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-2">
           <div className="space-y-8">
@@ -46,7 +46,7 @@ export function Footer() {
                 alt="The Payroll Studio"
                 width={160}
                 height={32}
-                className="h-8 w-auto brightness-0"
+                className="h-8 w-auto brightness-0 invert"
               />
             </Link>
             <NewsletterForm variant="footer" />
@@ -55,7 +55,7 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
             {FOOTER_SECTIONS.map((section) => (
               <div key={section.title}>
-                <h3 className="mb-4 text-sm font-semibold text-muted-foreground">{section.title}</h3>
+                <h3 className="mb-4 text-sm font-semibold text-foreground">{section.title}</h3>
                 <ul className="space-y-2.5">
                   {section.links.map((link) => (
                     <li key={link.href}>
