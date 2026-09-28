@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import ReactMarkdown from "react-markdown";
+import { LinkedCtaButton } from "@/components/linked-cta-button";
 
 interface Props {
   data: TextBlockSectionData;
@@ -25,6 +26,24 @@ export function TextBlockSection({ data }: Props) {
   const isHorizontal = data.imagePosition === "left" || data.imagePosition === "right";
   const hasDarkBg = false;
   const hasTextColor = false;
+
+  if (data.layout === "split") {
+    return (
+      <SectionWrapper paddingSize={data.paddingSize} containerWidth={data.containerWidth}>
+        <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
+          <div>
+            <Eyebrow text={data.eyebrow} className="mb-6" />
+            <h2 className="font-heading text-4xl leading-tight tracking-tight sm:text-5xl">
+              {data.heading?.split(/\*(.*?)\*/).map((part, index) => <span key={index} className={index % 2 ? "text-muted-foreground" : undefined}>{part}</span>)}
+            </h2>
+            {data.subheading && <p className="mt-6 text-lg leading-relaxed text-muted-foreground">{data.subheading}</p>}
+            {ctas.length > 0 && <div className="mt-8 flex flex-wrap gap-4">{ctas.map(cta => <LinkedCtaButton key={cta.href} cta={cta} />)}</div>}
+          </div>
+          {data.body && <div className="border-t border-border pt-6 text-base leading-relaxed text-muted-foreground [&_p+p]:mt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10"><ReactMarkdown>{data.body}</ReactMarkdown></div>}
+        </div>
+      </SectionWrapper>
+    );
+  }
 
   return (
     <SectionWrapper

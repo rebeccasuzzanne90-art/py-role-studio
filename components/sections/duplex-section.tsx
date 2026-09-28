@@ -71,10 +71,11 @@ export function DuplexSection({ data }: Props) {
     <SectionWrapper backgroundColor={data.backgroundColor} textColor={data.textColor} paddingSize={data.paddingSize}>
       <Eyebrow text={data.eyebrow} className="mb-6 flex items-center gap-3" />
       {data.heading && (
-        <h2 className="mb-12 text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+        <h2 className={`${data.subheading ? "mb-6" : "mb-12"} text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl`}>
           {data.heading}
         </h2>
       )}
+      {data.subheading && <p className="mb-10 max-w-3xl text-lg leading-relaxed text-muted-foreground">{data.subheading}</p>}
       <div className={boxed ? "grid gap-6 md:grid-cols-2" : "grid gap-12 md:grid-cols-2"}>
         {items.map((item, idx) => (
           <DuplexItem key={idx} item={item} boxed={boxed} />

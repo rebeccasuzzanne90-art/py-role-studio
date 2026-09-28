@@ -95,6 +95,7 @@ export interface ServicesSectionData extends SectionStyleData {
 
 export interface TextBlockSectionData extends SectionStyleData {
   _type: "textBlock";
+  layout?: "split";
   eyebrow?: string;
   heading?: string;
   subheading?: string;
