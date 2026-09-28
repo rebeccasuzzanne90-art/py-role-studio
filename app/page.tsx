@@ -6,6 +6,7 @@ import { buildMetadata, webPageJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/json-ld";
 import { ModuleRenderer } from "@/components/module-renderer";
 import { Hero } from "@/components/hero";
+import type { AccordionSectionData, ServicesSectionData } from "@/types/content";
 
 export function generateMetadata(): Metadata {
   try {
@@ -24,6 +25,28 @@ export function generateMetadata(): Metadata {
 
 export default function HomePage() {
   const page = getPageBySlug("home");
+  const servicesPage = getPageBySlug("services");
+  const serviceList = servicesPage?.sections?.find((section): section is ServicesSectionData => section._type === "servicesSection")?.services ?? [];
+  const priority = ["payroll-remediation", "payroll-training"];
+  const orderedServices = [...serviceList].sort((a, b) => {
+    const rank = (slug: string) => priority.includes(slug) ? priority.indexOf(slug) : priority.length;
+    return rank(a.slug) - rank(b.slug);
+  });
+  const sections = page?.sections?.map((section) => {
+    if (section._type !== "servicesSection") return section;
+    return {
+      _type: "accordionSection",
+      layout: "split",
+      eyebrow: section.eyebrow,
+      heading: section.heading,
+      subheading: section.subheading,
+      ctas: [{ label: "Explore all services", href: "/services", variant: "primary" }],
+      items: orderedServices.map(service => ({
+        question: service.title,
+        answer: `${service.shortDescription}\n\n[${service.ctaLabel ?? "Explore this service"}](/services/${service.slug})`,
+      })),
+    } satisfies AccordionSectionData;
+  });
 
   return (
     <>
@@ -35,9 +58,9 @@ export default function HomePage() {
         })}
       />
       <Hero data={page?.hero} />
-      {page?.sections && page.sections.length > 0 && (
+      {sections && sections.length > 0 && (
         <>
-          <ModuleRenderer sections={page.sections.slice(0, 2)} />
+          <ModuleRenderer sections={sections.slice(0, 1)} />
           <section aria-labelledby="meet-rebecca-heading" className="bg-[#111111] px-4 py-14 text-white sm:px-6 sm:py-20 lg:px-8">
             <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
               <figure>
@@ -53,7 +76,7 @@ export default function HomePage() {
               </div>
             </div>
           </section>
-          <ModuleRenderer sections={page.sections.slice(2)} />
+          <ModuleRenderer sections={sections.slice(1)} />
         </>
       )}
     </>

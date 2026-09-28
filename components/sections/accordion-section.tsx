@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import type { AccordionSectionData, FaqItemData } from "@/types/content";
 import { cn } from "@/lib/utils";
 import { Plus, Minus } from "lucide-react";
@@ -208,11 +208,15 @@ function AccordionItem({
   onToggle: () => void;
   hasDarkBg: boolean;
 }) {
+  const panelId = useId();
   if (!item.question) return null;
 
   return (
     <div className="group">
       <button
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={panelId}
         onClick={onToggle}
         className={cn(
           "flex w-full items-center justify-between gap-4 py-5 text-left transition-colors",
@@ -224,7 +228,7 @@ function AccordionItem({
           {isOpen ? <Minus className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
         </span>
       </button>
-      <div className={cn("grid transition-all duration-300 ease-in-out", isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}>
+      <div id={panelId} inert={!isOpen} aria-hidden={!isOpen} className={cn("grid transition-all duration-300 ease-in-out motion-reduce:transition-none", isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}>
         <div className="overflow-hidden">
           <div className={cn("pb-5 text-base leading-relaxed", hasDarkBg ? "text-muted-foreground [&_a]:text-foreground [&_a]:underline [&_p]:mb-4 [&_p:last-child]:mb-0" : "prose prose-sm max-w-none")}>
             {item.answer && <ReactMarkdown>{item.answer}</ReactMarkdown>}

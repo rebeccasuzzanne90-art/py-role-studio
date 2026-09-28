@@ -26,6 +26,7 @@ export default function AboutPage() {
   return (
     <>
       <Hero data={page?.hero} />
+      {page?.sections?.[0] && <ModuleRenderer sections={page.sections.slice(0, 1)} />}
       <section aria-labelledby="payroll-community-heading" className="border-b px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Industry connections</p>
@@ -42,7 +43,7 @@ export default function AboutPage() {
         </div>
       </section>
       {page?.sections && page.sections.length > 0 && (
-        <ModuleRenderer sections={page.sections} />
+        <ModuleRenderer sections={page.sections.slice(1)} />
       )}
     </>
   );

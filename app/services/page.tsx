@@ -29,7 +29,7 @@ export default function ServicesPage() {
           <p className={styles.eyebrow}>Payroll advisory · Australia</p>
           <h1>Payroll advisory services</h1>
           <p className="mt-6 max-w-2xl font-heading text-2xl leading-snug text-white/90 sm:text-3xl">Expert support. More confident payroll.</p>
-          <p className={styles.heroBody}>Payroll advisory services that bring clarity to risk, structure to change and confidence to the people responsible for getting pay right.</p>
+          <p className={styles.heroBody}>Payroll remediation support, training and workshops, compliance and risk reviews, governance frameworks, transformation oversight and ongoing governance support for Australian organisations.</p>
           <div className={styles.actions}>
             <Link href="/contact" className={styles.primary}>Discuss your needs <ArrowUpRight size={18} aria-hidden="true" /></Link>
             <a href="#service-options" className={styles.heroLink}>Explore our services <ArrowDown size={17} aria-hidden="true" /></a>
