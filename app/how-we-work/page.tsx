@@ -25,7 +25,7 @@ const steps = [
     lead: "Connect the technical work with the decisions your organisation needs to make.",
     body: "Depending on the engagement, we investigate underpayment drivers, establish governance, manage remediation workstreams, design validation and reconciliation approaches, or coordinate employee communications and payment readiness. We work with your existing team and specialists, with risks and unresolved questions kept visible.",
     output: "Practical outputs matched to the scope: these may include a risk register, governance framework, validation plan, corrective-action register or remediation delivery plan.",
-    href: "/services/payroll-remediation", link: "Explore remediation support" },
+    href: "/services/payroll-remediation", link: "Explore remediation services" },
   { id: "embed", label: "Embed", title: "Help the improvements hold", icon: RefreshCw,
     lead: "The work should leave your people clearer about their responsibilities and the controls they own.",
     body: "We support agreed handovers, document outstanding actions and help teams understand how to maintain the changes. Training can build capability across Payroll, HR, Finance and leadership. Where ongoing support is needed, we agree a review and reporting rhythm that fits the organisation.",
@@ -55,7 +55,7 @@ export default function HowWeWorkPage() {
     <nav aria-label="Our engagement approach" className={styles.serviceNav}><div>{steps.map(step => <a href={`#${step.id}`} key={step.id}>{step.label}<ArrowDown size={14} aria-hidden="true" /></a>)}<a href="#responsibilities">Responsibilities<ArrowDown size={14} aria-hidden="true" /></a><a href="#questions">Your questions<ArrowDown size={14} aria-hidden="true" /></a></div></nav>
     <section className={styles.intro}>
       <div><p className={styles.eyebrow}>Your starting point</p><h2>Support shaped<br />around your situation.</h2></div>
-      <div><p className={styles.introLead}>You can come to us with a concern, a set of findings or a program already in motion.</p><p>The engagement follows the work you need. You may need a focused risk review, help delivering a remediation program, independent oversight of change, or workshops for your team. We agree the combination that fits your circumstances.</p><ul><li>Use the evidence and work you already have.</li><li>Make responsibilities and boundaries explicit.</li><li>Agree practical outputs and how they will be used.</li></ul></div>
+      <div><p className={styles.introLead}>You can come to us with a concern, a set of findings or a program already in motion.</p><p>The engagement follows the work you need. You may need a focused risk review, end-to-end delivery of a remediation program, independent oversight of change, or workshops for your team. We agree the combination that fits your circumstances.</p><ul><li>Use the evidence and work you already have.</li><li>Make responsibilities and boundaries explicit.</li><li>Agree practical outputs and how they will be used.</li></ul></div>
     </section>
     <section id="our-approach" className={styles.services} aria-labelledby="approach-heading">
       <div className={styles.sectionHeading}><p className={styles.eyebrow}>From first conversation to handover</p><h2 id="approach-heading">A clear way<br />to work together.</h2></div>
@@ -68,7 +68,7 @@ export default function HowWeWorkPage() {
       <div className="mx-auto max-w-7xl"><p className={styles.eyebrow}>Responsibilities</p><h2 id="responsibilities-heading" className="max-w-3xl font-heading text-3xl tracking-tight sm:text-5xl">The right people.<br />Clear accountability.</h2><p className="mt-6 max-w-3xl leading-relaxed text-neutral-600">We agree how the work is shared before delivery begins. The employer retains accountability for its obligations and approvals, with specialist decisions owned by the appropriate people.</p>
         <div className="mt-10 grid gap-8 md:grid-cols-3">
           {[
-            ["The Payroll Studio", "Advisory, root-cause investigation, governance design, remediation program coordination, validation strategy, reconciliation approaches, communications planning and capability uplift, as agreed in scope."],
+            ["The Payroll Studio", "Advisory, root-cause investigation, governance design, end-to-end remediation leadership and partner coordination, validation strategy, reconciliation approaches, communications planning and capability uplift, as agreed in scope."],
             ["Your organisation", "Access to records and people, internal decisions and approvals, ownership of corrective actions, payroll execution and maintaining controls after the engagement."],
             ["Specialist partners", "Calculation providers supply their agreed calculations. Legal, industrial relations and tax advisers resolve matters within their remit. System owners and implementation partners own configuration and technical changes."],
           ].map(([title, text]) => <div key={title} className="border-t border-neutral-400 pt-6"><h3 className="text-xl font-medium">{title}</h3><p className="mt-4 leading-relaxed text-neutral-600">{text}</p></div>)}

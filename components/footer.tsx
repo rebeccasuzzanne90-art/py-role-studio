@@ -22,7 +22,7 @@ const FOOTER_SECTIONS = [
       { label: "Stay Ahead Of Problems", href: "/services/stay-ahead-of-problems" },
       { label: "Prepare For Change", href: "/services/prepare-for-change" },
       { label: "Payroll Training", href: "/services/payroll-training" },
-      { label: "Remediation Governance", href: "/services/payroll-remediation" },
+      { label: "Payroll Remediation", href: "/services/payroll-remediation" },
     ],
   },
   {
