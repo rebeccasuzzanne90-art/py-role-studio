@@ -6,7 +6,7 @@ test('valid enquiry produces the requested recipient, reply address and all deta
  const data = validateContact(valid);
  assert.ok(data);
  const email = contactEmail(data);
- assert.deepEqual(email.to, ['rebecca@thepayrollstudio.com.au']);
+ assert.deepEqual(email.to, ['rebecca@thepayrollstudio.com.au', 'rebeccasuzzanne90@gmail.com']);
  assert.equal(email.replyTo, valid.email);
  assert.match(email.text, /\+61 412 345 678/);
  for (const value of [valid.firstName, valid.lastName, valid.company, valid.message, valid.role, 'updates: No']) assert.ok(email.text.includes(value));
@@ -31,5 +31,21 @@ test('company, role and phone are optional, including the untouched +61 prefix',
  }
  for (const field of ['firstName', 'lastName', 'email', 'message']) {
   assert.equal(validateContact({...valid, [field]: ''}), null);
+ }
+});
+
+test('full-name enquiries preserve single names and multi-part names without requiring a surname', () => {
+ for (const name of ['Rebecca', '  Ana María de la Cruz  ']) {
+  const data=validateContact({name,email:'person@example.com',message:'Help with payroll risk.',newsSignup:false});
+  assert.ok(data);
+  assert.equal(data.firstName,name.trim());
+  assert.equal(data.lastName,'');
+  assert.equal(contactEmail(data).subject,`Payroll Studio enquiry: ${name.trim()}`);
+  assert.ok(contactEmail(data).text.includes(`Name: ${name.trim()}`));
+ }
+});
+test('rejects invalid full names even when legacy names are supplied', () => {
+ for (const name of ['', '  ', 123, 'A\nB', 'A\rB', 'x'.repeat(255)]) {
+  assert.equal(validateContact({...valid,name}),null);
  }
 });

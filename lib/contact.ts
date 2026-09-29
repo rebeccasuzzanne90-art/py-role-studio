@@ -11,11 +11,16 @@ export type ContactData = {
 
 export function validateContact(input: unknown): ContactData | null {
   if (!input || typeof input !== "object") return null;
-  const raw = input as Record<string, unknown>;
+  const source = input as Record<string, unknown>;
+  // Accept a full name without guessing which words are a family name.
+  // Keep legacy first/last-name submissions working during rollout.
+  const fullName = Object.hasOwn(source, "name");
+  if (fullName && (typeof source.name !== "string" || !source.name.trim() || source.name.length > 254 || /[\r\n]/.test(source.name))) return null;
+  const raw = fullName ? { ...source, firstName: source.name, lastName: "" } : source;
   const fields = ["firstName", "lastName", "email", "company", "role", "phone", "message"] as const;
   const result = {} as ContactData;
   for (const field of fields) {
-    const required = ["firstName", "lastName", "email", "message"].includes(field);
+    const required = ["firstName", "email", "message", ...(fullName ? [] : ["lastName"])].includes(field);
     const value = raw[field] ?? (required ? undefined : "");
     if (typeof value !== "string" || (required && !value.trim()) || value.length > (field === "message" ? 5000 : field === "phone" ? 30 : 254)) return null;
     result[field] = value.trim();
@@ -37,9 +42,9 @@ export function validateContact(input: unknown): ContactData | null {
 
 export function contactEmail(data: ContactData) {
   return {
-    to: ["rebecca@thepayrollstudio.com.au"],
+    to: ["rebecca@thepayrollstudio.com.au", "rebeccasuzzanne90@gmail.com"],
     replyTo: data.email,
-    subject: `Payroll Studio enquiry: ${data.firstName} ${data.lastName}`,
-    text: `First name: ${data.firstName}\nLast name: ${data.lastName}\nEmail: ${data.email}\nCompany name: ${data.company}\nRole: ${data.role || "Not provided"}\nPhone: ${data.phone || "Not provided"}\nSign up for news and updates: ${data.newsSignup ? "Yes" : "No"}\n\nMessage:\n${data.message}`,
+    subject: `Payroll Studio enquiry: ${[data.firstName, data.lastName].filter(Boolean).join(" ")}`,
+    text: `Name: ${[data.firstName, data.lastName].filter(Boolean).join(" ")}\nEmail: ${data.email}\nCompany name: ${data.company}\nRole: ${data.role || "Not provided"}\nPhone: ${data.phone || "Not provided"}\nSign up for news and updates: ${data.newsSignup ? "Yes" : "No"}\n\nMessage:\n${data.message}`,
   };
 }
